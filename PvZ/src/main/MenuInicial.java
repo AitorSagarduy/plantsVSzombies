@@ -3,8 +3,9 @@ package main;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.BufferedInputStream;
+import java.io.IOException;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -12,7 +13,9 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class MenuInicial extends JFrame {
 
@@ -35,7 +38,7 @@ public class MenuInicial extends JFrame {
                 BufferedImage imagen = null;
                 try {
                     // Cargar imagen de fondo
-                    imagen = ImageIO.read(getClass().getResourceAsStream("/imagenes/menu.jpg"));
+                    imagen = ImageIO.read(getClass().getResourceAsStream("/imagenes/surface.jpg"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -46,27 +49,38 @@ public class MenuInicial extends JFrame {
 
         // Usar layout nulo para poder posicionar los componentes libremente
         panel.setLayout(null);
+        // lo que pregunta el usurname
+        
+        JTextField usuario = new JTextField();
+        usuario.setBounds(30, 50, 300, 60);
+        panel.add(usuario);
+        JButton saveButton = new JButton("Guardar usuario");
+        saveButton.setBounds(30, 110, 300, 60);
+        panel.add(saveButton);
+
+        // Agregar el ActionListener al botón
+        saveButton.addActionListener(new GuardarUsuarioListener(usuario));
 
         // Crear botones rectangulares
-        JButton botonAventura1 = new JButton("Aventura 1");
+        JButton botonAventura1 = new JButton("SIMULADOR");
         botonAventura1.setBounds(350, 100, 500, 100); // Definir posición y tamaño
         botonAventura1.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         botonAventura1.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         botonAventura1.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
 
-        JButton botonAventura2 = new JButton("Aventura 2");
+        JButton botonAventura2 = new JButton("ALMANAQUE");
         botonAventura2.setBounds(350, 200, 500, 100); // Definir posición y tamaño
         botonAventura2.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         botonAventura2.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         botonAventura2.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
 
-        JButton botonAventura3 = new JButton("Aventura 3");
+        JButton botonAventura3 = new JButton("AJUSTES");
         botonAventura3.setBounds(350, 300, 500, 100); // Definir posición y tamaño
         botonAventura3.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         botonAventura3.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
-        botonAventura3.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
+        botonAventura3.setFont(new Font("Arial Black", Font.BOLD , 24)); // Establecer la fuente del texto
 
-        JButton botonAventura4 = new JButton("Aventura 4");
+        JButton botonAventura4 = new JButton("CREDITOS");
         botonAventura4.setBounds(350, 400, 500, 100); // Definir posición y tamaño
         botonAventura4.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         botonAventura4.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
