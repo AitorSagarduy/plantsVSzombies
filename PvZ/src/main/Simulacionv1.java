@@ -14,9 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv1 extends JFrame{
 	
+	public static void main(String[] args) {
+		Simulacionv1 ventana = new Simulacionv1();
+	}
 	public class Mirenderizado extends DefaultListCellRenderer {
 
 		@Override
@@ -30,9 +35,8 @@ public class Simulacionv1 extends JFrame{
 		}
 	}
 
-	public static void main(String[] args) {
-		Simulacionv1 ventana = new Simulacionv1();
-	}
+	String plantaSeleccionada = "";
+	
 	public Simulacionv1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -45,6 +49,17 @@ public class Simulacionv1 extends JFrame{
 		JList listaPlantas = new JList(plantasBasicas);
 		listaPlantas.setFixedCellWidth(200);
 		listaPlantas.setCellRenderer(new Mirenderizado());
+		listaPlantas.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO si se esta eligiendo una opcion superponer esa opcion en algun boton a selecionar
+				if(!e.getValueIsAdjusting()) {
+					System.out.println(listaPlantas.getSelectedValue().toString()+" ha sido seleccionada");
+					plantaSeleccionada = listaPlantas.getSelectedValue().toString();
+				}
+			}
+		});
 		
 		JScrollPane scroll = new JScrollPane(listaPlantas);
 		add(scroll,BorderLayout.WEST);
@@ -61,10 +76,7 @@ public class Simulacionv1 extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO funcion de interaccion del mouse 
-					if(true) {
-						espacio.setText("hola");
-						
-					}
+					espacio.setText(plantaSeleccionada);
 				}
 			});
 			panelCesped.add(espacio);
