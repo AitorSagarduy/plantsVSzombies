@@ -12,7 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -63,7 +65,12 @@ public class Simulacionv1 extends JFrame{
 		
 		JScrollPane scroll = new JScrollPane(listaPlantas);
 		add(scroll,BorderLayout.WEST);
-
+		
+		//Crear una barra de progreso como en el juego original
+		JProgressBar barraProgreso = new JProgressBar(0,100);
+		add(barraProgreso, BorderLayout.NORTH);
+		barraProgreso.setBackground(Color.gray);
+		barraProgreso.setForeground(Color.GREEN);
 		
 		JPanel panelCesped = new JPanel();
 		panelCesped.setBackground(Color.GRAY);
@@ -71,12 +78,17 @@ public class Simulacionv1 extends JFrame{
 		
 		for(int i = 0; i<50;i++) {
 			JButton espacio = new JButton(""+i);
+			espacio.setBackground(Color.GREEN);
 			espacio.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO funcion de interaccion del mouse 
-					espacio.setText(plantaSeleccionada);
+					if(plantaSeleccionada.equals("")) {
+						JOptionPane.showMessageDialog(Simulacionv1.this, "No has seleccionado una planta ha colocar", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						espacio.setText(plantaSeleccionada);						
+					}
 				}
 			});
 			panelCesped.add(espacio);
@@ -86,5 +98,16 @@ public class Simulacionv1 extends JFrame{
 		
 		
 		setVisible(true);
+		for (int i = 0; i <= 100; i++) {
+            barraProgreso.setValue(i); // Actualizar valor de la barra
+            if(barraProgreso.isMaximumSizeSet()) {
+            	barraProgreso.setForeground(Color.RED);
+            }
+            try {
+                Thread.sleep(50); // Esperar 50 ms
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 	}
 }
