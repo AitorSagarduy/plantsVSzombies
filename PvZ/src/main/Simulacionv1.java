@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -99,7 +102,7 @@ public class Simulacionv1 extends JFrame{
 		 * 
 		 */
 		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
-		MenuPlantas.cargarPlantasCSV(plantas); // cargo las plantas con el metodo que ha creado mi compañero
+		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv"); // cargo las plantas con el metodo que ha creado mi compañero
 		DefaultListModel<Planta> modelo = new DefaultListModel<Planta>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
 		for(int i = 0; i<plantas.size();i++) {
@@ -149,6 +152,7 @@ public class Simulacionv1 extends JFrame{
 					}else {
 						// cambio el texto del boton por el nombre de la planta seleccionada
 						espacio.setText(plantaSeleccionada.getNombre());
+						reproducirSonido("src/sonidos/plantado.wav");
 						try {
 							// intento ponerle el icono de la planta seleccionada
 							espacio.setIcon(getIconoPlanta(plantaSeleccionada));
@@ -157,6 +161,22 @@ public class Simulacionv1 extends JFrame{
 							e1.printStackTrace();
 						}
 					}
+				}
+
+				private void reproducirSonido(String ruta) {
+					try {
+				        // Cargar el archivo de sonido
+				        File archivoSonido = new File(ruta);
+				        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+
+				        // Preparar y reproducir el sonido
+				        Clip clip = AudioSystem.getClip();
+				        clip.open(audioStream);
+				        clip.start();  // Iniciar reproducción
+				    } catch (Exception e) {
+				        e.printStackTrace();  // Manejar excepciones
+				    }
+					
 				}
 			});
 			panelCesped.add(espacio); // añado el boton creado al panel
