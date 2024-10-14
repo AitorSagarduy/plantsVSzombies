@@ -100,6 +100,15 @@ public class MenuInicial extends JFrame {
         alphonse.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         alphonse.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         alphonse.setFont(new Font("Arial Black", Font.BOLD , 24)); // Establecer la fuente del texto
+        alphonse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Ajustes();
+				dispose();
+				
+			}
+		});
         //boton 4
         JButton mustang = new JButton("CREDITOS");
         mustang.setBounds(350, 400, 500, 100); // Definir posición y tamaño
