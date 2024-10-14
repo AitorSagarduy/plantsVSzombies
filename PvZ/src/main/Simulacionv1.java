@@ -42,7 +42,7 @@ public class Simulacionv1 extends JFrame{
 		@Override
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
-			// TODO Intento de crear una label con la que interactuar
+			// Intento de crear una label con la que interactuar
 			JLabel etiqueta = (JLabel)(super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus));
 			//me aseguro que el objeto sea una planta
 			if (value instanceof Planta) {
@@ -52,7 +52,8 @@ public class Simulacionv1 extends JFrame{
 	            setText(planta.getNombre()); // solo muestra el nombre
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
 	            try {
-					setIcon(getIconoPlanta(planta)); //le pongo un icono 
+					
+	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(24, 24, Image.SCALE_SMOOTH))); //le pongo un icono 
 				} catch (IOException e) {
 					// si no lo encuentra esntonces saco el error por consola
 					e.printStackTrace();
@@ -64,8 +65,8 @@ public class Simulacionv1 extends JFrame{
 
 	}
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
-	private Icon getIconoPlanta(Planta planta) throws IOException {
-		// TODO dandole una planta me devulve su icono que deberia estar en imagenes
+	private BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
+		// dandole una planta me devulve su icono que deberia estar en imagenes
 		//pillo la lista de ejemplos de plantas que ha metido mi compañero
 		String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezGrande", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora" };
 		//saco cada sombre de del array de los ejemplos
@@ -74,15 +75,17 @@ public class Simulacionv1 extends JFrame{
 			try {
 				// Leo la imagen en imagenLeer y lo escalo en imagen a 24x24 y devuelvo un icono creado a base de la imagen 
 				BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + planta.getTipo() + ".png"));
-				Image imagen = imagenLeer.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-				return new ImageIcon(imagen);
+				//Image imagen = imagenLeer.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+				//return new ImageIcon(imagen);
+				return imagenLeer;
 				//return new ImageIcon("src/imagenes/" + planta.getTipo() + ".png");
 			} catch (Exception e) {
 				// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada que tenemos en imagenes y hago lo mismo que en la anterior
 				//return new ImageIcon("src/imagenes/NoIdentificada.png");
 				BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/NoIdentificada.png"));
-				Image imagen = imagenLeer.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-				return new ImageIcon(imagen);
+				//Image imagen = imagenLeer.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+				//return new ImageIcon(imagen);
+				return imagenLeer;
 			}
 		}
 		return null;
@@ -151,11 +154,12 @@ public class Simulacionv1 extends JFrame{
 						JOptionPane.showMessageDialog(Simulacionv1.this, "No has seleccionado una planta ha colocar", "Error", JOptionPane.ERROR_MESSAGE);
 					}else {
 						// cambio el texto del boton por el nombre de la planta seleccionada
-						espacio.setText(plantaSeleccionada.getNombre());
+						//espacio.setText(plantaSeleccionada.getNombre());
+						espacio.setText("");
 						reproducirSonido("src/sonidos/plantado.wav");
 						try {
 							// intento ponerle el icono de la planta seleccionada
-							espacio.setIcon(getIconoPlanta(plantaSeleccionada));
+							espacio.setIcon(new ImageIcon(getBuferedimagePlanta(plantaSeleccionada).getScaledInstance(espacio.getWidth(), espacio.getHeight(), Image.SCALE_SMOOTH)));
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
