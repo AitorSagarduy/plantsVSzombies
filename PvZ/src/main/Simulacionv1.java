@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -39,6 +40,7 @@ public class Simulacionv1 extends JFrame{
 	//hago mi renderizado para interactuar como quiera con la jlist
 	public class Mirenderizado extends DefaultListCellRenderer {
 
+		
 		@Override
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
@@ -48,6 +50,7 @@ public class Simulacionv1 extends JFrame{
 			if (value instanceof Planta) {
 				// lo casteo para tener sus metodos
 	            Planta planta = (Planta) value;
+	            
 	            // hago que se muestre el nombre
 	            setText(planta.getNombre()); // solo muestra el nombre
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
@@ -95,7 +98,7 @@ public class Simulacionv1 extends JFrame{
 	// creo la ventana
 	public Simulacionv1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setLocationRelativeTo(null);
 		setTitle("ventana de simulacion");
 		setSize(640, 480);
 		/*
@@ -157,6 +160,9 @@ public class Simulacionv1 extends JFrame{
 						//espacio.setText(plantaSeleccionada.getNombre());
 						espacio.setText("");
 						reproducirSonido("src/sonidos/plantado.wav");
+						listaPlantas.getSelectedValue().setPlantando(true);
+						
+						
 						try {
 							// intento ponerle el icono de la planta seleccionada
 							espacio.setIcon(new ImageIcon(getBuferedimagePlanta(plantaSeleccionada).getScaledInstance(espacio.getWidth(), espacio.getHeight(), Image.SCALE_SMOOTH)));
@@ -164,6 +170,7 @@ public class Simulacionv1 extends JFrame{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						
 					}
 				}
 

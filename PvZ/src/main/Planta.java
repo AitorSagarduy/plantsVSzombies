@@ -9,6 +9,7 @@ public class Planta {
 	protected int danyo;
 	protected int rango;
 	protected int nivel;
+	protected boolean plantado;
 	
 	public Planta(String tipo, String nombre, int vida, int tmp_atac, int danyo, int rango, int nivel) {
 		super();
@@ -79,6 +80,14 @@ public class Planta {
 
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
+	}
+	
+	public boolean isPlantando() {
+		return plantado;
+	}
+
+	public void setPlantando(boolean plantando) {
+		this.plantado = plantando;
 	}
 
 	@Override
