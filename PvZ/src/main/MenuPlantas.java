@@ -16,8 +16,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -27,7 +25,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
@@ -86,21 +83,25 @@ public class MenuPlantas extends JFrame{
 	public MenuPlantas(ArrayList<Planta> plantas) {
 		setTitle("Menú Plantas");
 		setSize(1280, 720);
+		Color colorboton = new Color(103, 255, 102);
+		Color colorfondo = new Color(38, 116, 68);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
 		// Tamaños y fuentes que se van a usar luego
-        Dimension botontamanyo = new Dimension(317, 380); 
+        Dimension botontamanyo = new Dimension(317, 383); 
         Font fuente = new Font("Arial", Font.BOLD, 35);
         Font fuentebarra = new Font("Arial", Font.BOLD, 30);
-        String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezGrande", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora" };
+        String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezCascaraRabias", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora", "MelonpultaCongelada" };
 		FileFilter filtro = new FileNameExtensionFilter("Archivos CSV", "csv");
         
         JPanel panel = new JPanel();
+        panel.setBackground(colorfondo);
         panel.setLayout(new GridLayout(0, 4, 20, 20)); //filas, columnas, hogap, vegap 
        
         // Cada boton de plantas
         for (Planta planta : plantas) {
-        	JButton boton = new JButton(planta.getNombre());        	
+        	JButton boton = new JButton(planta.getNombre());   
+        	boton.setBackground(colorboton);
         	
         	String plantadireccionimagen = "";
         	boolean parar = false;
@@ -167,9 +168,43 @@ public class MenuPlantas extends JFrame{
 				    	// Abrir una ventana con mas datos de la planta
 						JFrame nuevaVentana = new JFrame(planta.getNombre() + " - Estadísticas");
 						nuevaVentana.setSize(700, 700);
+						nuevaVentana.setLayout(null);
 						nuevaVentana.setLocationRelativeTo(null); //null=centro
-						JPanel unaplanta = new JPanel(new BorderLayout());
+						nuevaVentana.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+						
 						ImageIcon foto = new ImageIcon(guardarrutaimagen);
+						JLabel iconoplanta = new JLabel(foto);
+						
+						JPanel unaplanta = new JPanel(new BorderLayout());
+						unaplanta.setBackground(Color.GREEN);
+						unaplanta.setBounds(600, 100, 600, 700);
+						
+						JPanel paneldos = new JPanel();
+						paneldos.setBackground(Color.LIGHT_GRAY);
+						paneldos.setPreferredSize(new Dimension(unaplanta.getWidth(), 260));
+						paneldos.setLayout(new BorderLayout());
+						
+						JPanel paneldosiz = new JPanel();
+						paneldosiz.setBackground(Color.RED);
+						paneldosiz.setPreferredSize(new Dimension(300, 260));
+						paneldosiz.setOpaque(true);
+						
+						iconoplanta.setHorizontalAlignment(JLabel.CENTER); // Centrar horizontalmente
+						iconoplanta.setVerticalAlignment(JLabel.CENTER);
+						
+						paneldosiz.add(iconoplanta, BorderLayout.CENTER);
+						
+						JPanel paneldosder = new JPanel();
+						JLabel labeltexto = new JLabel(planta.getNombre(), JLabel.CENTER);
+						labeltexto.setFont(new Font("Arial", Font.BOLD, 35));
+						paneldosder.setBackground(Color.ORANGE);
+						paneldosder.add(labeltexto);
+						paneldosder.setPreferredSize(new Dimension(300, 50));
+											
+						unaplanta.add(paneldos, BorderLayout.NORTH);
+						paneldos.add(paneldosiz, BorderLayout.WEST);
+						paneldos.add(paneldosder, BorderLayout.EAST);
+						
 						reproducirSonido("src/sonidos/sol.wav");
 
 						nuevaVentana.add(unaplanta);
@@ -249,6 +284,7 @@ public class MenuPlantas extends JFrame{
         // Boton de ELIMINAR
         JButton eliminar = new JButton("Eliminar");
         eliminar.setFont(fuentebarra);
+       // eliminar.setToolTipText("<html>Selecciona esta opción y luego pulsa la<br>planta que quieras eliminar.</html>");
         eliminar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,22 +292,31 @@ public class MenuPlantas extends JFrame{
 				abrirventana = true;
 			}
 		}); 
-        JButton atras = new JButton("Atras");
-        atras.setFont(fuentebarra);
-        atras.addActionListener(new ActionListener() {
-			
+        
+        // Lo mismo que el de añadir solo que se vacia el arraylist con las plantas para que las cargue de 0
+        JButton sustituir = new JButton("Sustituir");
+        //sustituir.setToolTipText("<html>Sustituye todas las plantas que tengas ahora<br>por las que esten en el documento csv.</html>");
+        sustituir.setFont(fuentebarra);
+        sustituir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MenuInicial();
-				dispose();
-				
+				JFileChooser ficheros = new JFileChooser();
+				ficheros.setFileFilter(filtro);
+                int continuar = ficheros.showOpenDialog(null); 
+                if (continuar == JFileChooser.APPROVE_OPTION) {
+                    File archivo = ficheros.getSelectedFile();
+                    plantas.clear();
+                    cargarPlantasCSV(plantas, archivo.getAbsolutePath());
+                    reproducirSonido("src/sonidos/sol.wav"); 
+                    recargarVentana(plantas);    
+                } 
 			}
 		});
         
-        panelbarra.add(atras);
         panelbarra.add(cargar);
         panelbarra.add(guardar);
         panelbarra.add(eliminar);
+        panelbarra.add(sustituir);
         barra.add(panelbarra);
         
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
