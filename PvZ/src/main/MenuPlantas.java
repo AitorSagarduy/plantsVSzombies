@@ -73,7 +73,8 @@ public class MenuPlantas extends JFrame{
 				
 				Planta nueva = new Planta(tipo, nombre, vida, tmp_atac, danyo, rango, nivel);
 				plantas.add(nueva);
-			}	
+			}
+			
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
