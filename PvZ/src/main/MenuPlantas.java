@@ -86,6 +86,7 @@ public class MenuPlantas extends JFrame{
 		Color colorboton = new Color(103, 255, 102);
 		Color colorfondo = new Color(38, 116, 68);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 		// Tamaños y fuentes que se van a usar luego
         Dimension botontamanyo = new Dimension(317, 383); 
@@ -172,7 +173,8 @@ public class MenuPlantas extends JFrame{
 						nuevaVentana.setLocationRelativeTo(null); //null=centro
 						nuevaVentana.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 						
-						ImageIcon foto = new ImageIcon(guardarrutaimagen);
+						//ImageIcon foto = new ImageIcon(guardarrutaimagen);
+						ImageIcon foto = new ImageIcon("src/imagenes/baila.gif");
 						JLabel iconoplanta = new JLabel(foto);
 						
 						JPanel unaplanta = new JPanel(new BorderLayout());
@@ -313,6 +315,19 @@ public class MenuPlantas extends JFrame{
 			}
 		});
         
+        JButton atras = new JButton("Atras");
+        atras.setFont(fuentebarra);
+        atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuInicial();
+				dispose();
+				
+			}
+		});
+
+        panelbarra.add(atras);
         panelbarra.add(cargar);
         panelbarra.add(guardar);
         panelbarra.add(eliminar);
@@ -374,4 +389,6 @@ public class MenuPlantas extends JFrame{
 	        e.printStackTrace();  // Manejar excepciones
 	    }
 	}
+	
+	
 }
