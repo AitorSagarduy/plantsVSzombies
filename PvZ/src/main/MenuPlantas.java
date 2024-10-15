@@ -256,7 +256,19 @@ public class MenuPlantas extends JFrame{
 				abrirventana = true;
 			}
 		}); 
+        JButton atras = new JButton("Atras");
+        atras.setFont(fuentebarra);
+        atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuInicial();
+				dispose();
+				
+			}
+		});
         
+        panelbarra.add(atras);
         panelbarra.add(cargar);
         panelbarra.add(guardar);
         panelbarra.add(eliminar);
