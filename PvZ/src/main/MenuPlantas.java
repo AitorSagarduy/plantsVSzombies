@@ -63,7 +63,7 @@ public class MenuPlantas extends JFrame{
 				int rango = Integer.parseInt(campos[5]);
 				int nivel = Integer.parseInt(campos[6]);
 				
-				// Esta puta mierda no funciona pero es para poner Girasol 1, Girasol 2...
+				// Esta puta mierda  no funciona pero es para poner Girasol 1, Girasol 2...
 				for (Planta planta : plantas) {
 					if(planta.getNombre().equals(nombre)) {
 						while(planta.getNombre().equals(nombre)) {
