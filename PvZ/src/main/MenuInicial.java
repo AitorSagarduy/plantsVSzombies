@@ -113,7 +113,7 @@ public class MenuInicial extends JFrame {
 		};
 		yoki.addActionListener(l);
         //boton 3
-        JButton alphonse = new JButton("AJUSTES");
+        JButton alphonse = new JButton("LOGROS");
         alphonse.setBounds(350, 300, 500, 100); // Definir posición y tamaño
         alphonse.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         alphonse.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
@@ -134,7 +134,16 @@ public class MenuInicial extends JFrame {
         mustang.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         mustang.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         mustang.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
-
+        mustang.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Creditos();
+				dispose();
+				player.stopPlaying();
+				
+			}
+		});
         // Añadimos botones
         panel.add(selim);
         panel.add(yoki);
