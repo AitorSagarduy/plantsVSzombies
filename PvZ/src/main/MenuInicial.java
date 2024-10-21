@@ -23,15 +23,19 @@ import javax.swing.JTextField;
 public class MenuInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
+    
+    MusicaMenu player = new MusicaMenu();
+    Thread musicThread = new Thread(player);
+    
+    
     public MenuInicial() {
         super("Ventana mínima");
-
+        musicThread.start();
         // Ajustes de la ventana
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Crear panel personalizado
+        // Crear panel 
         JPanel panel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
@@ -49,7 +53,7 @@ public class MenuInicial extends JFrame {
                 g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
             }
         };
-
+        ;
         // Usar layout nulo para poder posicionar los componentes libremente
         panel.setLayout(null);
         // lo que pregunta el usurname
@@ -67,13 +71,26 @@ public class MenuInicial extends JFrame {
         
         //botones
 
-        
+           
         //boton 1
         JButton selim = new JButton("SIMULADOR");
         selim.setBounds(350, 100, 500, 100); // Definir posición y tamaño
         selim.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         selim.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         selim.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
+        ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				player.stopPlaying();
+				ArrayList<Planta> plantas = new ArrayList<Planta>();
+				MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv");
+		        SelecPlantas ventana = new SelecPlantas(plantas);
+				
+			}
+		};
+		selim.addActionListener(s);
       
 				
         //boton 2
@@ -82,18 +99,19 @@ public class MenuInicial extends JFrame {
         yoki.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
         yoki.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         yoki.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
-        yoki.addActionListener(new ActionListener() {
+        ActionListener l = new ActionListener() {
+		
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas
 		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
 		        new MenuPlantas(sig);
+		        player.stopPlaying();
 		        dispose();
-		        
-				
 			}
-		});
+		};
+		yoki.addActionListener(l);
         //boton 3
         JButton alphonse = new JButton("AJUSTES");
         alphonse.setBounds(350, 300, 500, 100); // Definir posición y tamaño
@@ -101,14 +119,15 @@ public class MenuInicial extends JFrame {
         alphonse.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
         alphonse.setFont(new Font("Arial Black", Font.BOLD , 24)); // Establecer la fuente del texto
         alphonse.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Ajustes();
-				dispose();
-				
-			}
-		});
+
+            @Override
+
+            public void actionPerformed(ActionEvent e) {
+                new Ajustes();
+                dispose(); 
+                player.stopPlaying();
+            }
+        });
         //boton 4
         JButton mustang = new JButton("CREDITOS");
         mustang.setBounds(350, 400, 500, 100); // Definir posición y tamaño
@@ -127,22 +146,8 @@ public class MenuInicial extends JFrame {
 
         // Reproducir música de fondo
      // Reproducir música de fondo
-        Thread musica = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    java.io.InputStream winry = getClass().getResourceAsStream("/sonidos/sly.wav"); // musica input
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(winry);
-                    AudioInputStream scar = AudioSystem.getAudioInputStream(bufferedInputStream); // audio input stream
-                    javax.sound.sampled.Clip clip = javax.sound.sampled.AudioSystem.getClip();
-                    clip.open(scar);
-                    clip.loop(javax.sound.sampled.Clip.LOOP_CONTINUOUSLY); // Reproduce en bucle
-                } catch (Exception e) {
-                    System.out.println("Error al reproducir la música de fondo");
-                }
-            }
-        });
-        musica.start();
+        
+   
         
 
         // Mostrar la ventana
