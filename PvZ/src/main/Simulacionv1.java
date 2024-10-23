@@ -36,18 +36,11 @@ public class Simulacionv1 extends JFrame{
 	}
 	//hago mi renderizado para interactuar como quiera con la jlist
 	public class Mirenderizado extends DefaultListCellRenderer {
-
-		
 		@Override
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
 			// Intento de crear una label con la que interactuar
 			JLabel etiqueta = (JLabel)(super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus));
-			
-			if(isSelected) {
-				setVisible(false);
-			}
-			
 			//me aseguro que el objeto sea una planta
 			if (value instanceof Planta) {
 				// lo casteo para tener sus metodos
@@ -66,20 +59,20 @@ public class Simulacionv1 extends JFrame{
 		}
 
 	}
+
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
 	private BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
 		// dandole una planta me devulve su icono que deberia estar en imagenes
 		try {
-				// Leo la imagen en imagenLeer 
-				BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + planta.getTipo() + ".png"));
-				return imagenLeer;
-			} catch (Exception e) {
-				// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
-				BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/NoIdentificada.png"));
-				return imagenLeer;
-			}
+			// Leo la imagen en imagenLeer 
+			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + planta.getTipo() + ".png"));
+			return imagenLeer;
+		} catch (Exception e) {
+			// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
+			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/NoIdentificada.png"));
+			return imagenLeer;
+		}
 	}
-
 	Planta plantaSeleccionada = null; //variable para almacenar la planta que haya seleccionado el ussuario dentro de la lista
 	// creo la ventana
 	public Simulacionv1() {
@@ -165,7 +158,7 @@ public class Simulacionv1 extends JFrame{
 							
 						}
 					}
-					else {
+					else if(espacio.getIcon() != null){
 						modelo.addElement((Planta) espacio.getClientProperty("planta"));
 						espacio.setIcon(null);
 					}

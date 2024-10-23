@@ -123,7 +123,7 @@ public class MenuInicial extends JFrame {
             @Override
 
             public void actionPerformed(ActionEvent e) {
-                new Ajustes();
+                //new Ajustes();
                 dispose(); 
                 player.stopPlaying();
             }
