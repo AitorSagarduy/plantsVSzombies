@@ -25,9 +25,9 @@ public class GuardarUsuarioListener implements ActionListener {
                 java.io.File usernameFile = new java.io.File("username.txt");
                 try (PrintWriter writer = new PrintWriter(new FileWriter(usernameFile))) {
                     writer.println(username);
-                    JOptionPane.showMessageDialog(null, "Username saved successfully!");
+                    JOptionPane.showMessageDialog(null, "nombre añadido correctamente");
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Error saving username: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(null, "error añadiendo" + ex.getMessage());
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());

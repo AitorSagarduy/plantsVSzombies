@@ -82,11 +82,11 @@ public class Planta {
 		this.nivel = nivel;
 	}
 	
-	public boolean isPlantando() {
+	public boolean isPlantado() {
 		return plantado;
 	}
 
-	public void setPlantando(boolean plantando) {
+	public void setPlantado(boolean plantando) {
 		this.plantado = plantando;
 	}
 
