@@ -130,15 +130,11 @@ public class MenuInicial extends JFrame {
         alphonse.setBackground(java.awt.Color.GRAY);
         alphonse.setForeground(java.awt.Color.WHITE);
         alphonse.setFont(new Font("Arial Black", Font.BOLD , 24));
-        alphonse.addActionListener(new ActionListener() {
+        
 
-            @Override
 
-            public void actionPerformed(ActionEvent e) {
-                dispose(); 
-                player.stopPlaying();
-            }
-        });
+            
+      
         //boton 4
         JButton mustang = new JButton("CREDITOS"); // pele
         mustang.setBounds(350, 400, 500, 100);
