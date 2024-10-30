@@ -1,4 +1,4 @@
-package main;
+package gui;
 // del señor pellets
 import java.awt.Font;
 import java.awt.Graphics;
