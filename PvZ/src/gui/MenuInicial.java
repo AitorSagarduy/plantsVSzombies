@@ -2,6 +2,7 @@ package gui;
 // del señor pellets
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -67,7 +68,7 @@ public class MenuInicial extends JFrame {
             }
         };
         ;
-        panel.setLayout(null);
+        panel.setLayout(new GridLayout(1, 2));
         // lo que pregunta el usurname
         
         JTextField EdwardElric = new JTextField(); // save del usuario
