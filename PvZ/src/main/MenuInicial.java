@@ -20,6 +20,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+//tutorias
+/*1:
+ * -> crear proyectp
+ * -> hacer push y pulls
+ * -> acceso ajeno al proyecto
+ */
+/*2:
+ * -> botones de posicion a proporcion -- dridlayout
+ * -- 
+ * -> calcular tiempos --system.current time milis
+ * -> poner videos -- vlcj
+ * -> ajustes -- javax song technology
+ * -> organizacion por paquetes -- alud
+ * 
+ */
 public class MenuInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -44,17 +59,14 @@ public class MenuInicial extends JFrame {
                 super.paintComponent(g);
                 BufferedImage envy = null; // la imagen
                 try {
-                    // Cargar imagen de fondo
                     envy = ImageIO.read(getClass().getResourceAsStream("/imagenes/surface.jpg"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // Dibujar la imagen de fondo
                 g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
             }
         };
         ;
-        // Usar layout nulo para poder posicionar los componentes libremente
         panel.setLayout(null);
         // lo que pregunta el usurname
         
@@ -65,7 +77,7 @@ public class MenuInicial extends JFrame {
         KingBradley.setBounds(30, 110, 300, 60);
         panel.add(KingBradley);
 
-        // Agregar el ActionListener al botón
+        
         KingBradley.addActionListener(new GuardarUsuarioListener(EdwardElric));
 
         
@@ -73,11 +85,11 @@ public class MenuInicial extends JFrame {
 
            
         //boton 1
-        JButton selim = new JButton("SIMULADOR");
-        selim.setBounds(350, 100, 500, 100); // Definir posición y tamaño
-        selim.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
-        selim.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
-        selim.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
+        JButton selim = new JButton("SIMULADOR"); // eder y jhojan
+        selim.setBounds(350, 100, 500, 100);
+        selim.setBackground(java.awt.Color.GRAY);
+        selim.setForeground(java.awt.Color.WHITE);
+        selim.setFont(new Font("Arial Black", Font.BOLD, 24));
         ActionListener s = new ActionListener() {
 			
 			@Override
@@ -94,17 +106,17 @@ public class MenuInicial extends JFrame {
       
 				
         //boton 2
-        JButton yoki = new JButton("ALMANAQUE");
-        yoki.setBounds(350, 200, 500, 100); // Definir posición y tamaño
-        yoki.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
-        yoki.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
-        yoki.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
+        JButton yoki = new JButton("ALMANAQUE"); // parte de aitor
+        yoki.setBounds(350, 200, 500, 100);
+        yoki.setBackground(java.awt.Color.GRAY);
+        yoki.setForeground(java.awt.Color.WHITE);
+        yoki.setFont(new Font("Arial Black", Font.BOLD, 24)); 
         ActionListener l = new ActionListener() {
 		
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas
+				ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas 
 		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
 		        new MenuPlantas(sig);
 		        player.stopPlaying();
@@ -113,27 +125,26 @@ public class MenuInicial extends JFrame {
 		};
 		yoki.addActionListener(l);
         //boton 3
-        JButton alphonse = new JButton("LOGROS");
-        alphonse.setBounds(350, 300, 500, 100); // Definir posición y tamaño
-        alphonse.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
-        alphonse.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
-        alphonse.setFont(new Font("Arial Black", Font.BOLD , 24)); // Establecer la fuente del texto
+        JButton alphonse = new JButton("LOGROS"); // parte de pele (?)
+        alphonse.setBounds(350, 300, 500, 100); 
+        alphonse.setBackground(java.awt.Color.GRAY);
+        alphonse.setForeground(java.awt.Color.WHITE);
+        alphonse.setFont(new Font("Arial Black", Font.BOLD , 24));
         alphonse.addActionListener(new ActionListener() {
 
             @Override
 
             public void actionPerformed(ActionEvent e) {
-                new Ajustes();
                 dispose(); 
                 player.stopPlaying();
             }
         });
         //boton 4
-        JButton mustang = new JButton("CREDITOS");
-        mustang.setBounds(350, 400, 500, 100); // Definir posición y tamaño
-        mustang.setBackground(java.awt.Color.GRAY); // Establecer el color de fondo en gris
-        mustang.setForeground(java.awt.Color.WHITE); // Establecer el color del texto en blanco
-        mustang.setFont(new Font("Arial Black", Font.BOLD, 24)); // Establecer la fuente del texto
+        JButton mustang = new JButton("CREDITOS"); // pele
+        mustang.setBounds(350, 400, 500, 100);
+        mustang.setBackground(java.awt.Color.GRAY);
+        mustang.setForeground(java.awt.Color.WHITE);
+        mustang.setFont(new Font("Arial Black", Font.BOLD, 24));
         mustang.addActionListener(new ActionListener() {
 			
 			@Override
@@ -149,17 +160,9 @@ public class MenuInicial extends JFrame {
         panel.add(yoki);
         panel.add(alphonse);
         panel.add(mustang);
-
-        // Añadir el panel a la ventana
+        
         add(panel);
 
-        // Reproducir música de fondo
-     // Reproducir música de fondo
-        
-   
-        
-
-        // Mostrar la ventana
         setVisible(true);
     }
 
