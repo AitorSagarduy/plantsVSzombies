@@ -10,27 +10,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
@@ -117,7 +110,7 @@ public class MenuPlantas extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 		// Tamaños y fuentes que se van a usar luego
-        Dimension botontamanyo = new Dimension(295, 383); 
+        Dimension botontamanyo = new Dimension(295, 330); //383
         Font fuente = new Font("Arial", Font.BOLD, 35);
         Font fuentebarra = new Font("Arial", Font.BOLD, 30);
         String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezCascaraRabias", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora", "MelonpultaCongelada" };
@@ -317,108 +310,7 @@ public class MenuPlantas extends JFrame{
         
         JPanel panelbarra = new JPanel();
         
-        // Los botones que van dentro de la barra, en este caso el de AÑADIR
-      /*  JButton cargar = new JButton("Añadir");
-        cargar.setFont(fuentebarra);
-        cargar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser ficheros = new JFileChooser();
-				ficheros.setFileFilter(filtro);
-
-                int continuar = ficheros.showOpenDialog(null); 
-
-                // Si continuar vale APPROVE_OPTION significa que se ha seleccionado un archivo que cargar
-                if (continuar == JFileChooser.APPROVE_OPTION) {
-                    File archivo = ficheros.getSelectedFile();
-                    cargarPlantasCSV(plantas, archivo.getAbsolutePath());
-                    reproducirSonido("src/sonidos/sol.wav"); 
-                    recargarVentana(plantas);    
-                } 
-            }
-        });
-        
-        // Boton de GUARDAR
-  /*      JButton guardar = new JButton("Guardar");
-        guardar.setFont(fuentebarra);
-        guardar.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser ficherosguardar = new JFileChooser();
-				ficherosguardar.setFileFilter(filtro);
-				
-				 int returnValue = ficherosguardar.showSaveDialog(null); 
-				  if (returnValue == JFileChooser.APPROVE_OPTION) {
-			            File archivo = ficherosguardar.getSelectedFile();
-			            try (FileWriter writer = new FileWriter(archivo + ".csv")) {
-			                for (Planta planta : plantas) {
-			                    String linea = String.format("%s;%s;%d;%d;%d;%d;%d\n",
-			                            planta.getTipo(), planta.getNombre(), planta.getVida(),
-			                            planta.getTmp_atac(), planta.getDanyo(), planta.getRango(),
-			                            planta.getNivel());
-			                    writer.write(linea); 
-			                }
-			            } catch (IOException a) {
-							// TODO Auto-generated catch block
-							a.printStackTrace();
-						} 
-			            reproducirSonido("src/sonidos/solmas.wav"); 
-			            ImageIcon tickicon = new ImageIcon("src/imagenes/tick.png");
-			            JOptionPane.showMessageDialog(null, "¡Plantas guardadas!", "Exito al guardar", JOptionPane.PLAIN_MESSAGE, tickicon);
-			        }
-            }
-        });
-        
-        // Boton de ELIMINAR
-        JButton eliminar = new JButton("Eliminar");
-        eliminar.setFont(fuentebarra);
-       // eliminar.setToolTipText("<html>Selecciona esta opción y luego pulsa la<br>planta que quieras eliminar.</html>");
-        eliminar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				quieroeliminar = true;
-				abrirventana = true;
-			}
-		}); 
-        
-        // Lo mismo que el de añadir solo que se vacia el arraylist con las plantas para que las cargue de 0
-        JButton sustituir = new JButton("Sustituir");
-        //sustituir.setToolTipText("<html>Sustituye todas las plantas que tengas ahora<br>por las que esten en el documento csv.</html>");
-        sustituir.setFont(fuentebarra);
-        sustituir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser ficheros = new JFileChooser();
-				ficheros.setFileFilter(filtro);
-                int continuar = ficheros.showOpenDialog(null); 
-                if (continuar == JFileChooser.APPROVE_OPTION) {
-                    File archivo = ficheros.getSelectedFile();
-                    plantas.clear();
-                    cargarPlantasCSV(plantas, archivo.getAbsolutePath());
-                    reproducirSonido("src/sonidos/sol.wav"); 
-                    recargarVentana(plantas);    
-                } 
-			}
-		});
-        
-        JButton atras = new JButton("Atras");
-        atras.setFont(fuentebarra);
-        atras.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new MenuInicial();
-				dispose();
-				
-			}
-		});
-*/
-   /*     panelbarra.add(atras);
-        panelbarra.add(cargar);
-        panelbarra.add(guardar);
-        panelbarra.add(eliminar);
-        panelbarra.add(sustituir);
-    */  panelbarra.add(soleslabel);
+        panelbarra.add(soleslabel);
         barra.add(panelbarra);
         
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
