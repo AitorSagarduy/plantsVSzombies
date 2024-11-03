@@ -1,8 +1,14 @@
 package main;
 
+import java.awt.Component;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class ModeloTabla extends AbstractTableModel {
 	
@@ -13,12 +19,23 @@ public class ModeloTabla extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Planta> plantas;
-	private String[] columnas = {"Tipo", "Nombre","Vida", "Velocidad.Atc", 
+	private String[] columnas = { "Nombre","Vida", "Velocidad.Atc", 
 			"Daño", "Rango", "Nivel" };
 	
 	public ModeloTabla(ArrayList<Planta> plantas) {
 		this.plantas = plantas;
 	}
+	
+	@Override
+	public Class<?> getColumnClass(int column) {
+        // en este caso, las dos primeras columnas es String
+        // String, mientras que el dato de la última es LocalDate
+        if (column == 0) {
+            return String.class;
+        } else {
+            return Integer.class;
+        }
+    }
 
 	@Override
 	public int getRowCount() {
@@ -36,18 +53,16 @@ public class ModeloTabla extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {
 		case 0:
-			return plantas.get(rowIndex).getTipo();
-		case 1:
 			return plantas.get(rowIndex).getNombre();
-		case 2:
+		case 1:
 			return plantas.get(rowIndex).getVida();
-		case 3:
+		case 2:
 			return plantas.get(rowIndex).getTmp_atac();
-		case 4:
+		case 3:
 			return plantas.get(rowIndex).getDanyo();
-		case 5:
+		case 4:
 			return plantas.get(rowIndex).getRango();
-		case 6:
+		case 5:
 			return plantas.get(rowIndex).getNivel();
 		
 		}
@@ -60,6 +75,7 @@ public class ModeloTabla extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return columnas[column];
 	}
+	
 	
 	
 }

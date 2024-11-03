@@ -61,7 +61,7 @@ public class Simulacionv1 extends JFrame{
 	}
 
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
-	private BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
+	public static BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
 		// dandole una planta me devulve su icono que deberia estar en imagenes
 		try {
 			// Leo la imagen en imagenLeer 
