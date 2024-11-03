@@ -1,3 +1,4 @@
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -29,7 +30,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 
-public class MenuPlantasDEP extends JFrame{
+public class MenuPlantasViejo extends JFrame{
 
 	   private ArrayList<Planta> plantas; 
 	   
@@ -60,7 +61,6 @@ public class MenuPlantasDEP extends JFrame{
 				int rango = Integer.parseInt(campos[5]);
 				int nivel = Integer.parseInt(campos[6]);
 				
-				// Esta puta mierda no funciona pero es para poner Girasol 1, Girasol 2...
 				for (Planta planta : plantas) {
 					if(planta.getNombre().equals(nombre)) {
 						while(planta.getNombre().equals(nombre)) {
@@ -81,7 +81,7 @@ public class MenuPlantasDEP extends JFrame{
 		}
 	}
 	
-	public MenuPlantasDEP(ArrayList<Planta> plantas) {
+	public MenuPlantasViejo(ArrayList<Planta> plantas) {
 		setTitle("Menú Plantas");
 		setSize(1280, 720);
 		Color colorboton = new Color(103, 255, 102);
@@ -254,7 +254,7 @@ public class MenuPlantasDEP extends JFrame{
         });
         
         // Boton de GUARDAR
-  /*      JButton guardar = new JButton("Guardar");
+        JButton guardar = new JButton("Guardar");
         guardar.setFont(fuentebarra);
         guardar.addActionListener(new ActionListener(){
 			@Override
@@ -327,13 +327,13 @@ public class MenuPlantasDEP extends JFrame{
 				
 			}
 		});
-*/
-   /*     panelbarra.add(atras);
+
+        panelbarra.add(atras);
         panelbarra.add(cargar);
         panelbarra.add(guardar);
         panelbarra.add(eliminar);
         panelbarra.add(sustituir);
-    */  barra.add(panelbarra);
+        barra.add(panelbarra);
         
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
        // add(panel, BorderLayout.WEST);
