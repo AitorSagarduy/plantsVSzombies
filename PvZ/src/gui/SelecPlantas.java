@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -62,6 +63,7 @@ public class SelecPlantas extends JFrame {
         JButton agregar = new JButton("Añadir");
         JButton eliminar = new JButton("Eliminar");
         JButton batalla = new JButton("Batalla");
+        batalla.addActionListener(e -> SwingUtilities.invokeLater(() -> new Simulacionv1()));
         
 
         JPanel panel = new JPanel();

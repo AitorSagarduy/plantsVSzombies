@@ -146,21 +146,27 @@ public class Simulacionv1 extends JFrame{
 							//si es que no ha elegido ninguna todavia entonces sale error de no haber elegido ninguna planta
 							JOptionPane.showMessageDialog(Simulacionv1.this, "No has seleccionado una planta ha colocar", "Error", JOptionPane.ERROR_MESSAGE);
 						}else {
-							reproducirSonido("src/sonidos/plantado.wav");
-							modelo.removeElement(plantaSeleccionada);
-							espacio.putClientProperty("planta", plantaSeleccionada);
-							try {
-								espacio.setIcon(new ImageIcon(getBuferedimagePlanta(plantaSeleccionada).getScaledInstance(espacio.getWidth(), espacio.getHeight(), Image.SCALE_SMOOTH)));
-							} catch (IOException e1) {
-								e1.printStackTrace();
+							if(espacio.getClientProperty("planta") == null) {
+								
+								reproducirSonido("src/sonidos/plantado.wav");
+								modelo.removeElement(plantaSeleccionada);
+								espacio.putClientProperty("planta", plantaSeleccionada);
+								try {
+									espacio.setIcon(new ImageIcon(getBuferedimagePlanta(plantaSeleccionada).getScaledInstance(espacio.getWidth(), espacio.getHeight(), Image.SCALE_SMOOTH)));
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+								plantaSeleccionada = null;
+							}else {
+								JOptionPane.showMessageDialog(Simulacionv1.this, "No puedes colocar una planta encima de otra.", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-							plantaSeleccionada = null;
 							
 						}
 					}
 					else if(espacio.getIcon() != null){
 						modelo.addElement((Planta) espacio.getClientProperty("planta"));
 						espacio.setIcon(null);
+						espacio.putClientProperty("planta", null);
 					}
 					
 				}
