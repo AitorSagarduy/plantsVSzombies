@@ -68,7 +68,8 @@ public class MenuInicial extends JFrame {
             }
         };
         ;
-        panel.setLayout(new GridLayout(1, 2));
+        //panel.setLayout(new GridLayout(1, 2));
+        panel.setLayout(null);
         // lo que pregunta el usurname
         
         JTextField EdwardElric = new JTextField(); // save del usuario
