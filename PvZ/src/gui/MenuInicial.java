@@ -46,6 +46,7 @@ public class MenuInicial extends JFrame {
     
     public MenuInicial() {
         super("Ventana mínima");
+        MusicaMenu.sonidoM = "/sonidos/sly.wav";
         musicThread.start();
         // Ajustes de la ventana
         setSize(800, 600);

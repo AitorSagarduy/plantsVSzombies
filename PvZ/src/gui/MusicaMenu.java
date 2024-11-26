@@ -7,11 +7,12 @@ public class MusicaMenu implements Runnable {
 
     private volatile boolean running = true;  
     private Clip clip;
+    public static String sonidoM;
 
     @Override
     public void run() {
         try {
-            java.io.InputStream winry = getClass().getResourceAsStream("/sonidos/sly.wav"); // musica input
+            java.io.InputStream winry = getClass().getResourceAsStream(sonidoM); // musica input
             BufferedInputStream bufferedInputStream = new BufferedInputStream(winry);
             AudioInputStream scar = AudioSystem.getAudioInputStream(bufferedInputStream); // audio input stream
             clip = AudioSystem.getClip();
