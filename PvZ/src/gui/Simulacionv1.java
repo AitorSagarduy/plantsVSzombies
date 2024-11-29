@@ -36,6 +36,7 @@ public class Simulacionv1 extends JFrame{
 	public static void main(String[] args) {
 		Simulacionv1 ventana = new Simulacionv1();
 	}
+
 	//hago mi renderizado para interactuar como quiera con la jlist
 	public class Mirenderizado extends DefaultListCellRenderer {
 		@Override
@@ -203,9 +204,9 @@ public class Simulacionv1 extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i<50;i++) {
 					JButton botoncito = (JButton) panelCesped.getComponent(i);
-					System.out.println(botoncito.getClientProperty("planta"));
-					mapaFinal.put(i, plantaSeleccionada);
+					mapaFinal.put(i, (Planta) botoncito.getClientProperty("planta"));
 				}
+				System.out.println(mapaFinal);
 			}
 		});
 		pack();
