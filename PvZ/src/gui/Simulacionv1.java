@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,7 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv1 extends JFrame{
-	public static boolean desplantando = false;
+	private static boolean desplantando = false;
 	
 	public static void main(String[] args) {
 		Simulacionv1 ventana = new Simulacionv1();
@@ -83,6 +85,7 @@ public class Simulacionv1 extends JFrame{
 		
 		
 		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
+		HashMap<Integer, Planta> mapaFinal = new HashMap<Integer, Planta>();
 		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv"); // cargo las plantas con el metodo que ha creado mi compañero
 		DefaultListModel<Planta> modelo = new DefaultListModel<Planta>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
@@ -111,6 +114,8 @@ public class Simulacionv1 extends JFrame{
 				}
 			}
 		});
+		JButton finalizar = new JButton("Terminar");
+		
 		JButton pala = new JButton("Pala");
 		pala.addActionListener(new ActionListener() {
 			@Override
@@ -124,6 +129,7 @@ public class Simulacionv1 extends JFrame{
 			}
 		});
 		add(pala, BorderLayout.NORTH);
+		add(finalizar, BorderLayout.NORTH);
 		JScrollPane scroll = new JScrollPane(listaPlantas); //creo el scrollbar en el que voy a poner la jlist
 		add(scroll,BorderLayout.WEST); //lo pongo a la izquierda 
 		
@@ -131,6 +137,7 @@ public class Simulacionv1 extends JFrame{
 		panelCesped.setBackground(Color.GRAY);
 		panelCesped.setLayout(new GridLayout(5, 10)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
 		//creo los 50 botones que voy a necesitar para interactuar con el patio
+		ArrayList<JButton> botones = new ArrayList<JButton>();
 		for(int i = 0; i<50;i++) {
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
 			//espacio.setBackground(Color.GREEN); 
@@ -190,7 +197,17 @@ public class Simulacionv1 extends JFrame{
 		}
 		
 		add(panelCesped, BorderLayout.CENTER); //pongo el panel en el centro para que ocupe lo que resta
-		
+		finalizar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i = 0; i<50;i++) {
+					JButton botoncito = (JButton) panelCesped.getComponent(i);
+					System.out.println(botoncito.getClientProperty("planta"));
+					mapaFinal.put(i, plantaSeleccionada);
+				}
+			}
+		});
 		pack();
 		setVisible(true);
 	}

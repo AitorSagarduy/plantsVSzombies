@@ -26,8 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import gui.Simulacionv1.Mirenderizado;
 public class Simulacionv2 extends JFrame{
 	public static boolean desplantando = false;
 
