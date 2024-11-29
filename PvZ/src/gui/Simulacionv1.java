@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -27,12 +28,18 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv1 extends JFrame{
 	private static boolean desplantando = false;
-	private HashMap<Integer, Planta> mapaFinal;
+	private HashMap<ArrayList<Integer>, Planta> mapaFinal;
+	
+	
+	public HashMap<ArrayList<Integer>, Planta> getMapaFinal() {
+		return mapaFinal;
+	}
 	public static void main(String[] args) {
 		Simulacionv1 ventana = new Simulacionv1();
 	}
@@ -64,7 +71,7 @@ public class Simulacionv1 extends JFrame{
 	}
 
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
-	private BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
+	public static BufferedImage getBuferedimagePlanta(Planta planta) throws IOException {
 		// dandole una planta me devulve su icono que deberia estar en imagenes
 		try {
 			// Leo la imagen en imagenLeer 
@@ -86,7 +93,7 @@ public class Simulacionv1 extends JFrame{
 		
 		
 		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
-		HashMap<Integer, Planta> mapaFinal = new HashMap<Integer, Planta>();
+		HashMap<ArrayList<Integer>, Planta> mapaFinal = new HashMap<ArrayList<Integer>, Planta>();
 		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv"); // cargo las plantas con el metodo que ha creado mi compañero
 		DefaultListModel<Planta> modelo = new DefaultListModel<Planta>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
@@ -129,8 +136,11 @@ public class Simulacionv1 extends JFrame{
 				
 			}
 		});
-		add(pala, BorderLayout.NORTH);
-		add(finalizar, BorderLayout.NORTH);
+		JPanel opciones = new JPanel();
+		add(opciones, BorderLayout.NORTH);
+		opciones.setLayout(new FlowLayout());
+		opciones.add(pala);
+		opciones.add(finalizar);
 		JScrollPane scroll = new JScrollPane(listaPlantas); //creo el scrollbar en el que voy a poner la jlist
 		add(scroll,BorderLayout.WEST); //lo pongo a la izquierda 
 		
@@ -140,14 +150,21 @@ public class Simulacionv1 extends JFrame{
 		//creo los 50 botones que voy a necesitar para interactuar con el patio
 		ArrayList<JButton> botones = new ArrayList<JButton>();
 		for(int i = 0; i<50;i++) {
+			int fila = i / 10; // 10 columnas por fila
+		    int columna = i % 10;
+		    
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
+			espacio.putClientProperty("fila", fila);
+		    espacio.putClientProperty("columna", columna);
 			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// funcion de interaccion del mouse con los botones 
+					// funcion de interaccion del mouse con los botones
+					System.out.println(espacio.getClientProperty("fila"));
+					System.out.println(espacio.getClientProperty("columna"));
 					if(!desplantando) {
 						
 						if(plantaSeleccionada == null) {
@@ -199,14 +216,22 @@ public class Simulacionv1 extends JFrame{
 		
 		add(panelCesped, BorderLayout.CENTER); //pongo el panel en el centro para que ocupe lo que resta
 		finalizar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i<50;i++) {
 					JButton botoncito = (JButton) panelCesped.getComponent(i);
-					mapaFinal.put(i, (Planta) botoncito.getClientProperty("planta"));
+					ArrayList<Integer> coordenadas = new ArrayList<Integer>();
+					coordenadas.add((Integer) botoncito.getClientProperty("fila"));
+					coordenadas.add((Integer) botoncito.getClientProperty("columna"));
+					mapaFinal.put(coordenadas, (Planta) botoncito.getClientProperty("planta"));
+					
 				}
 				System.out.println(mapaFinal);
+				SwingUtilities.invokeLater(() -> {
+					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal);
+					
+				});
 			}
 		});
 		pack();
