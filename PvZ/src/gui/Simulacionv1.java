@@ -32,7 +32,7 @@ import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv1 extends JFrame{
 	private static boolean desplantando = false;
-	
+	private HashMap<Integer, Planta> mapaFinal;
 	public static void main(String[] args) {
 		Simulacionv1 ventana = new Simulacionv1();
 	}
@@ -211,5 +211,6 @@ public class Simulacionv1 extends JFrame{
 		});
 		pack();
 		setVisible(true);
+		this.mapaFinal = mapaFinal;
 	}
 }
