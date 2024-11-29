@@ -38,9 +38,6 @@ public class Creditos extends JFrame{
                 // Dibujar la imagen de fondo
                 g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
             }
-			
-			
-		
 		
 		};
 		JButton atras = new JButton("Atras");

@@ -59,6 +59,7 @@ public class ModeloTabla extends AbstractTableModel {
 			return plantas.get(rowIndex).getRango();
 		case 5:
 			return plantas.get(rowIndex).getNivel();
+			
 		
 		}
 		
