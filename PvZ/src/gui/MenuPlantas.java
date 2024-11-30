@@ -27,7 +27,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 import java.awt.Color;
 
@@ -103,8 +102,8 @@ public class MenuPlantas extends JFrame{
 	
 	public MenuPlantas(ArrayList<Planta> plantas) {
 		setTitle("Almanaque Plantas");
-		setSize(1280, 720);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setSize(Resolucion.resolucionx("src/DatosCsv/resolucion.txt"), Resolucion.resoluciony("src/DatosCsv/resolucion.txt"));
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
@@ -138,7 +137,6 @@ public class MenuPlantas extends JFrame{
         	if(regada == false) {
         		if(mapaniveles.get(planta.getNombre()) > 3) {
         			boton.setBackground(colornivelmax);
-        			
         		} else {
         			boton.setBackground(colorboton);
         		}
@@ -146,7 +144,9 @@ public class MenuPlantas extends JFrame{
         		boton.setBackground(colorregada);
         	}
         	
+        	
         	String plantadireccionimagen = "";
+        	@SuppressWarnings("unused")
         	boolean parar = false;
         	for (String nombreplanta : posiblesplantas) {
         		if(planta.getTipo().contains(nombreplanta)) {
@@ -200,7 +200,13 @@ public class MenuPlantas extends JFrame{
 					            panelbotonregadera1.remove(barra1);
 					            imagenactual =null;
 					            boton.setEnabled(true);
-					            boton.setBackground(colorboton);
+					            
+				        		if(mapaniveles.get(planta.getNombre()) > 3) {
+				        			boton.setBackground(colornivelmax);
+				        		} else {
+				        			boton.setBackground(colorboton);
+				        		}
+					            
 					            panelbotonregadera1.repaint();
 					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
@@ -229,7 +235,13 @@ public class MenuPlantas extends JFrame{
 					            panelbotonregadera2.remove(barra2);
 					            imagenactual =null;
 					            boton.setEnabled(true);
-					            boton.setBackground(colorboton);
+					            
+				        		if(mapaniveles.get(planta.getNombre()) > 3) {
+				        			boton.setBackground(colornivelmax);
+				        		} else {
+				        			boton.setBackground(colorboton);
+				        		}
+					            
 					            panelbotonregadera2.repaint();
 					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
@@ -259,7 +271,13 @@ public class MenuPlantas extends JFrame{
 					            panelbotonregadera3.remove(barra3);
 					            imagenactual =null;
 					            boton.setEnabled(true);
-					            boton.setBackground(colorboton);
+					            
+				        		if(mapaniveles.get(planta.getNombre()) > 3) {
+				        			boton.setBackground(colornivelmax);
+				        		} else {
+				        			boton.setBackground(colorboton);
+				        		}
+					            
 					            panelbotonregadera3.repaint();
 					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
@@ -288,7 +306,13 @@ public class MenuPlantas extends JFrame{
 					            panelbotonregadera4.remove(barra4);
 					            imagenactual =null;
 					            boton.setEnabled(true);
-					            boton.setBackground(colorboton);
+					            
+				        		if(mapaniveles.get(planta.getNombre()) > 3) {
+				        			boton.setBackground(colornivelmax);
+				        		} else {
+				        			boton.setBackground(colorboton);
+				        		}
+					            
 					            panelbotonregadera4.repaint();
 					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
@@ -309,21 +333,23 @@ public class MenuPlantas extends JFrame{
 				regable = false;
 				
 				// Añadir los soles aleatoriamente
-				int numrandom = (int)(Math.random() * 50 + 1);
+				int numrandom = (int)(Math.random() * 80 + 1);
 				soles = soles + numrandom;
 				reproducirSonido("src/sonidos/sol.wav");
 				soleslabel.setText("Soles: " + soles);
 				} else {
 					
 					if(mapaniveles.get(planta.getNombre()) < 4) {
-						int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres mejorar el " +planta.getNombre() + " al nivel " + nivelmasuno(mapaniveles.get(planta.getNombre())) + "?\nCuesta 100 soles", "Mejorar " +planta.getNombre(), JOptionPane.YES_NO_OPTION);
+						int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres mejorar «" +planta.getNombre() + "» al nivel " + nivelmasuno(mapaniveles.get(planta.getNombre())) + "?\nCuesta 100 soles", "Mejorar " +planta.getNombre(), JOptionPane.YES_NO_OPTION);
 					if(respuesta == JOptionPane.YES_OPTION) {
-		     			if(soles < 0) {
-		     				int respuesta1 = JOptionPane.showConfirmDialog(null, "Necesitas mas soles","¡Soles insuficientes!", JOptionPane.ERROR_MESSAGE);
+		     			if(soles < 100) {
+		     				reproducirSonido("src/sonidos/mal.wav");
+		     				JOptionPane.showMessageDialog(null, "Necesitas mas soles","¡Soles insuficientes!", JOptionPane.ERROR_MESSAGE);
 		     			} else {
 		     				subirnivel(planta, mapaniveles.get(planta.getNombre()));
 		     				mapaniveles.put(planta.getNombre(), planta.getNivel()); 
-		     				System.out.println("mas1");
+		     				soles = soles - 100;
+		     				soleslabel.setText("Soles: " + soles);
 		     				if(mapaniveles.get(planta.getNombre()) > 3) {
 		            			boton.setBackground(colornivelmax);
 		            			
@@ -332,11 +358,10 @@ public class MenuPlantas extends JFrame{
 		            		}
 		     			}
 		     		} else  {
-		     			System.out.println("nada");
 		     		}
 					} else {
-						int respuesta1 = JOptionPane.showConfirmDialog(null, "El " +planta.getNombre() + "" ,"¡ " + planta.getNombre() + " ya está al nivel máximo!", JOptionPane.ERROR_MESSAGE);
-						
+						reproducirSonido("src/sonidos/mal.wav");
+						JOptionPane.showMessageDialog(null, "¡«" + planta.getNombre() + "» ya está al nivel máximo!", "Nivel máximo", JOptionPane.ERROR_MESSAGE);
 					}
 				}
  				}

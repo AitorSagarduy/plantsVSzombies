@@ -34,8 +34,9 @@ public class MenuZombies extends JFrame{
 	   
 	   public static void main(String[] args) {
 	        ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+	        String ruta = "src/DatosCsv/zombies.csv";
 	        CargarZombies.cargarZombiesCSV(zombies, "src/DatosCsv/zombies.csv");
-	        MenuZombies ventana = new MenuZombies(zombies);
+	        MenuZombies ventana = new MenuZombies(zombies, ruta);
 	   }
 	   
 	   int soles = 0;
@@ -62,15 +63,10 @@ public class MenuZombies extends JFrame{
 	   JPanel panelbotonregadera3;
 	   JPanel panelbotonregadera4;
 	
-	public MenuZombies(ArrayList<Zombie> zombies) {
-		
-		System.out.println(zombies);
-		System.out.println("olah jeje");
-		
-		
+	public MenuZombies(ArrayList<Zombie> zombies, String rutacsv) {		
 		setTitle("Almanaque Zombies");
-		setSize(1280, 720);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setSize(Resolucion.resolucionx("src/DatosCsv/resolucion.txt"), Resolucion.resoluciony("src/DatosCsv/resolucion.txt"));
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
@@ -154,7 +150,7 @@ public class MenuZombies extends JFrame{
 					            boton.setBackground(colorboton);
 					            panelbotonregadera1.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/grunido.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -183,7 +179,7 @@ public class MenuZombies extends JFrame{
 					            boton.setBackground(colorboton);
 					            panelbotonregadera2.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/grunido.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -213,7 +209,7 @@ public class MenuZombies extends JFrame{
 					            boton.setBackground(colorboton);
 					            panelbotonregadera3.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/grunido.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -242,7 +238,7 @@ public class MenuZombies extends JFrame{
 					            boton.setBackground(colorboton);
 					            panelbotonregadera4.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/grunido.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -262,7 +258,7 @@ public class MenuZombies extends JFrame{
 				// Añadir los soles aleatoriamente
 				int numrandom = (int)(Math.random() * 50 + 1);
 				soles = soles + numrandom;
-				reproducirSonido("src/sonidos/sol.wav");
+				reproducirSonido("src/sonidos/alimentar.wav");
 				soleslabel.setText("Cerebros: " + soles);
 				}
  				}
