@@ -24,6 +24,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{
@@ -40,6 +42,7 @@ public class MenuPlantas extends JFrame{
 	   private JLabel soleslabel;
        int contador = 0;
 	   String ultimobotonseleccionado = "";
+	   int cuantasplantas = 0;
 	   
 	   boolean regada = false;
 	   boolean quieroeliminar = false;
@@ -104,6 +107,7 @@ public class MenuPlantas extends JFrame{
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(295, 330); //383
         Font fuente = new Font("Arial", Font.BOLD, 35);
+        Font fuentemini = new Font("Arial", Font.BOLD, 25);
         Font fuentebarra = new Font("Arial", Font.BOLD, 30);
 		Color colorboton = new Color(103, 255, 102);
 		Color colorfondo = new Color(38, 116, 68);
@@ -147,7 +151,12 @@ public class MenuPlantas extends JFrame{
 			boton.setVerticalTextPosition(JButton.BOTTOM); 
 			boton.setHorizontalTextPosition(JButton.CENTER);
 			boton.setIconTextGap(23);
-			boton.setFont(fuente);
+			
+			if(planta.getNombre().length() > 15) {
+				boton.setFont(fuentemini);
+			} else {
+				boton.setFont(fuente);
+			}
 			
 			// Darle click a un boton
 			boton.addActionListener(new ActionListener() {	
@@ -162,6 +171,7 @@ public class MenuPlantas extends JFrame{
 					panelbotonregadera1.repaint();
 			        
 			        Thread t = new Thread(() -> {
+			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra1 = new JProgressBar();
 			        	panelbotonregadera1.add(barra1, BorderLayout.SOUTH);
 						for(int a = 0; a < 100; a++) {
@@ -174,6 +184,7 @@ public class MenuPlantas extends JFrame{
 					            boton.setEnabled(true);
 					            boton.setBackground(colorboton);
 					            panelbotonregadera1.repaint();
+					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
@@ -189,6 +200,7 @@ public class MenuPlantas extends JFrame{
 					panelbotonregadera2.repaint();
 			        
 			        Thread t2 = new Thread(() -> {
+			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra2 = new JProgressBar();
 			        	panelbotonregadera2.add(barra2, BorderLayout.SOUTH);
 						for(int f = 0; f < 100; f++) {
@@ -201,6 +213,7 @@ public class MenuPlantas extends JFrame{
 					            boton.setEnabled(true);
 					            boton.setBackground(colorboton);
 					            panelbotonregadera2.repaint();
+					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
@@ -217,6 +230,7 @@ public class MenuPlantas extends JFrame{
 					panelbotonregadera3.repaint();
 			        
 			        Thread t3 = new Thread(() -> {
+			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra3 = new JProgressBar();
 			        	panelbotonregadera3.add(barra3, BorderLayout.SOUTH);
 						for(int g = 0; g < 100; g++) {
@@ -229,6 +243,7 @@ public class MenuPlantas extends JFrame{
 					            boton.setEnabled(true);
 					            boton.setBackground(colorboton);
 					            panelbotonregadera3.repaint();
+					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
@@ -244,6 +259,7 @@ public class MenuPlantas extends JFrame{
 				} else if(panellleno4 == false && panellleno1 == true && panellleno2 == true && panellleno3 == true) {
 					panelbotonregadera4.repaint();    
 			        Thread t4 = new Thread(() -> {
+			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra4 = new JProgressBar();
 			        	panelbotonregadera4.add(barra4, BorderLayout.SOUTH);
 						for(int h = 0; h < 100; h++) {
@@ -256,6 +272,7 @@ public class MenuPlantas extends JFrame{
 					            boton.setEnabled(true);
 					            boton.setBackground(colorboton);
 					            panelbotonregadera4.repaint();
+					            cuantasplantas = cuantasplantas -1;
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
@@ -327,9 +344,11 @@ public class MenuPlantas extends JFrame{
         botonregadera.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				regable = true;
-				aparecerpanel1 = true;
-				cogernombreplanta = true;
+				if(cuantasplantas < 4) {
+					regable = true;
+					aparecerpanel1 = true;
+					cogernombreplanta = true;
+				}
 			}
 		}); 
         
@@ -337,10 +356,9 @@ public class MenuPlantas extends JFrame{
         derecha.setBackground(Color.RED);
         
         derecha.setPreferredSize(new Dimension(180, 0));
-      //  derecha.setLayout(new GridLayout(5, 1, 600, 20));
+      //  derecha.setLayout(new GridLayout(5, 1, 600, 20));    
         
         panelbotonregadera1 = new JPanel() {
-        	
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -388,11 +406,12 @@ public class MenuPlantas extends JFrame{
             }
         };
         
+
         panelbotonregadera1.setPreferredSize(new Dimension(144, 144));
         panelbotonregadera2.setPreferredSize(new Dimension(144, 144));
         panelbotonregadera3.setPreferredSize(new Dimension(144, 144));
         panelbotonregadera4.setPreferredSize(new Dimension(144, 144));
-        
+
         derecha.add(botonregadera, BorderLayout.NORTH);
         derecha.add(panelbotonregadera1, BorderLayout.CENTER);
         derecha.add(panelbotonregadera2, BorderLayout.CENTER);
@@ -401,6 +420,8 @@ public class MenuPlantas extends JFrame{
         
         add(derecha, BorderLayout.EAST);
         
+       // MusicaMenu.sonidoM = "/sonidos/ZenGarden.wav"; new Thread(new MusicaMenu()).start();
+        setResizable(false);
         setVisible(true);
 	}
 	
