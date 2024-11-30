@@ -232,7 +232,10 @@ public class Simulacionv1 extends JFrame{
 					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal);
 					
 				});
+				dispose();
 			}
+
+			
 		});
 		pack();
 		setVisible(true);

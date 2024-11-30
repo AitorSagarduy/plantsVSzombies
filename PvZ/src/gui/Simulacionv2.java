@@ -234,6 +234,7 @@ public class Simulacionv2 extends JFrame{
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
 					Batalla ventana2 = new Batalla(mapaFinalPlanta, mapaFinalZombie);
+					dispose();
 				});
 			}
 		});
