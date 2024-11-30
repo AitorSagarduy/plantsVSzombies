@@ -34,11 +34,15 @@ import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv2 extends JFrame{
 	private static boolean desplantando = false;
-	private HashMap<ArrayList<Integer>, Planta> mapaFinal;
-	
+	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlanta;
+	private HashMap<ArrayList<Integer>, Zombie> mapaFinalZombie;
 	
 	public HashMap<ArrayList<Integer>, Planta> getMapaFinal() {
-		return mapaFinal;
+		return mapaFinalPlanta;
+	}
+	
+	public HashMap<ArrayList<Integer>, Zombie> getMapaFinalZombie() {
+		return mapaFinalZombie;
 	}
 	public static void main(String[] args) {
 	}
@@ -89,7 +93,7 @@ public class Simulacionv2 extends JFrame{
 		setLocationRelativeTo(null);
 		setTitle("ventana de simulacion");
 		setSize(640, 480);
-		
+		this.mapaFinalPlanta = mapaFinal1;
 		
 		ArrayList<Zombie> plantas = new ArrayList<Zombie>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Zombie> mapaFinal = new HashMap<ArrayList<Integer>, Zombie>();
@@ -155,7 +159,7 @@ public class Simulacionv2 extends JFrame{
 		    
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
 			espacio.putClientProperty("fila", fila);
-		    espacio.putClientProperty("columna", columna);
+		    espacio.putClientProperty("columna", columna + 10);
 			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
@@ -229,12 +233,12 @@ public class Simulacionv2 extends JFrame{
 				}
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
-					Batalla ventana2 = new Batalla(mapaFinal1);
+					Batalla ventana2 = new Batalla(mapaFinalPlanta, mapaFinalZombie);
 				});
 			}
 		});
 		pack();
 		setVisible(true);
-		this.mapaFinal = mapaFinal1;
+		this.mapaFinalZombie = mapaFinal;
 	}
 }
