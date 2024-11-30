@@ -33,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class Simulacionv2 extends JFrame{
+	private static final long serialVersionUID = 1L;
 	private static boolean desplantando = false;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlanta;
 	private HashMap<ArrayList<Integer>, Zombie> mapaFinalZombie;
@@ -49,6 +50,8 @@ public class Simulacionv2 extends JFrame{
 
 	//hago mi renderizado para interactuar como quiera con la jlist
 	public class Mirenderizado extends DefaultListCellRenderer {
+		private static final long serialVersionUID = -384283149801911558L;
+
 		@Override
 		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
@@ -158,7 +161,7 @@ public class Simulacionv2 extends JFrame{
 		    int columna = i % 10;
 		    
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
-			espacio.putClientProperty("fila", fila);
+			botones.add(espacio);			espacio.putClientProperty("fila", fila);
 		    espacio.putClientProperty("columna", columna + 10);
 			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
@@ -233,6 +236,7 @@ public class Simulacionv2 extends JFrame{
 				}
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
+					@SuppressWarnings("unused")
 					Batalla ventana2 = new Batalla(mapaFinalPlanta, mapaFinalZombie);
 					dispose();
 				});

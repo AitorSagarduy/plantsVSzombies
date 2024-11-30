@@ -3,20 +3,20 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 public class Batalla extends JFrame{
+	private static final long serialVersionUID = 1L;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlantas;
 	private HashMap<ArrayList<Integer>, Zombie> mapaFinalZombies;
 	public static void main(String[] args) {
 		
+		@SuppressWarnings("unused")
 		Simulacionv1 ventanaSimulacionv1 = new Simulacionv1();
 	}
 	public Batalla(HashMap<ArrayList<Integer>, Planta> mapaFinal1, HashMap<ArrayList<Integer>, Zombie> mapaFinal2) {
@@ -48,14 +48,12 @@ public class Batalla extends JFrame{
 		    	try {
 					botones.get(i).setIcon(new ImageIcon(Simulacionv1.getBuferedimagePlanta(mapaFinalPlantas.get(coordenadas)).getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		    } else if (mapaFinalZombies.containsKey(coordenadas)) {
 		    	try {
 					botones.get(i).setIcon(new ImageIcon(Simulacionv2.getBuferedimagePlanta(mapaFinalZombies.get(coordenadas)).getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		    }
