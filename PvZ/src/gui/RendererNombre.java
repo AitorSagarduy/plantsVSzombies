@@ -20,6 +20,8 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 			int row, int column) {
 		
 		try {
+			
+			//leer imagen correspondiente a nombre de la planta 
 			BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("\\s+", "") + ".png"));
 			setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
@@ -27,10 +29,23 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 			e.printStackTrace();
 		}
 		
+	    // Establecer el texto de la celda
+		
 		 String valor = (String) table.getValueAt(row, column);
          setText(valor);
-		
+         
+         if (isSelected) {
+             setBackground(table.getSelectionBackground()); // Fondo para selección
+             setForeground(table.getSelectionForeground()); // Color de texto para selección
+         } else {
+             setBackground(table.getBackground()); // Fondo normal
+             setForeground(table.getForeground()); // Color de texto normal
+         }
+         
+         setOpaque(true);
 		return this;
+		
 	}
+	
 	
 }
