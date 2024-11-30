@@ -81,7 +81,7 @@ public class MenuZombies extends JFrame{
 		Color colorboton = new Color(103, 255, 102);
 		Color colorfondo = new Color(38, 116, 68);
 		Color colorregada = new Color(154, 231, 244);
-        String[] posiblesplantas = {"ZombiAbande", "ZombiBuzo", "ZombiCaracono", "ZombiCaracubo", "ZombiDeportista", "ZombiLector", "ZombiPortero", "Zombistein"};
+        String[] posiblesplantas = {"ZombiAbanderado", "ZombiBuzo", "ZombiCaracono", "ZombiCaracubo", "ZombiDeportista", "ZombiLector", "ZombiPortero", "Zombistein", "ZombiBasico"};
         
         JPanel panel = new JPanel();
         panel.setBackground(colorfondo);
@@ -121,7 +121,7 @@ public class MenuZombies extends JFrame{
 			boton.setHorizontalTextPosition(JButton.CENTER);
 			boton.setIconTextGap(23);
 			
-			if(planta.getNombre().length() > 15) {
+			if(planta.getNombre().length() > 12) {
 				boton.setFont(fuentemini);
 			} else {
 				boton.setFont(fuente);

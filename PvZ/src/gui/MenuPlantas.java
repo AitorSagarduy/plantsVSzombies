@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -35,6 +38,7 @@ public class MenuPlantas extends JFrame{
 	   public static void main(String[] args) {
 	        ArrayList<Planta> plantas = new ArrayList<Planta>();
 	        cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
+	        MusicaMenu.sonidoM = "/sonidos/ZenGarden.wav"; new Thread(new MusicaMenu()).start();
 	        MenuPlantas ventana = new MenuPlantas(plantas);
 	   }
 	   
@@ -61,7 +65,6 @@ public class MenuPlantas extends JFrame{
 	   JPanel panelbotonregadera2;
 	   JPanel panelbotonregadera3;
 	   JPanel panelbotonregadera4;
-	   
 	   
 	   // Recibe un arraylist vacio y la direccion del csv que tiene que cargar
 	public static void cargarPlantasCSV(ArrayList<Planta> plantas, String rutacsv) {
@@ -110,9 +113,12 @@ public class MenuPlantas extends JFrame{
         Font fuentemini = new Font("Arial", Font.BOLD, 25);
         Font fuentebarra = new Font("Arial", Font.BOLD, 30);
 		Color colorboton = new Color(103, 255, 102);
+		Color colornivelmax = new Color(255, 216, 0);
 		Color colorfondo = new Color(38, 116, 68);
 		Color colorregada = new Color(154, 231, 244);
         String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezCascaraRabias", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora", "MelonpultaCongelada" };
+
+        HashMap<String, Integer> mapaniveles = new HashMap<>();
         
         JPanel panel = new JPanel();
         panel.setBackground(colorfondo);
@@ -120,10 +126,22 @@ public class MenuPlantas extends JFrame{
        
         // Cada boton de plantas
         for (Planta planta : plantas) {
+        	
+			if(mapaniveles.containsKey(planta.getNombre())) {
+				System.out.println("random");
+			} else {
+				mapaniveles.put(planta.getNombre(), planta.getNivel());
+			}
+        	
         	JButton boton = new JButton(planta.getNombre());
         	
         	if(regada == false) {
-        		boton.setBackground(colorboton);
+        		if(mapaniveles.get(planta.getNombre()) > 3) {
+        			boton.setBackground(colornivelmax);
+        			
+        		} else {
+        			boton.setBackground(colorboton);
+        		}
         	} else {
         		boton.setBackground(colorregada);
         	}
@@ -295,6 +313,31 @@ public class MenuPlantas extends JFrame{
 				soles = soles + numrandom;
 				reproducirSonido("src/sonidos/sol.wav");
 				soleslabel.setText("Soles: " + soles);
+				} else {
+					
+					if(mapaniveles.get(planta.getNombre()) < 4) {
+						int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres mejorar el " +planta.getNombre() + " al nivel " + nivelmasuno(mapaniveles.get(planta.getNombre())) + "?\nCuesta 100 soles", "Mejorar " +planta.getNombre(), JOptionPane.YES_NO_OPTION);
+					if(respuesta == JOptionPane.YES_OPTION) {
+		     			if(soles < 0) {
+		     				int respuesta1 = JOptionPane.showConfirmDialog(null, "Necesitas mas soles","¡Soles insuficientes!", JOptionPane.ERROR_MESSAGE);
+		     			} else {
+		     				subirnivel(planta, mapaniveles.get(planta.getNombre()));
+		     				mapaniveles.put(planta.getNombre(), planta.getNivel()); 
+		     				System.out.println("mas1");
+		     				if(mapaniveles.get(planta.getNombre()) > 3) {
+		            			boton.setBackground(colornivelmax);
+		            			
+		            		} else {
+		            			boton.setBackground(colorboton);
+		            		}
+		     			}
+		     		} else  {
+		     			System.out.println("nada");
+		     		}
+					} else {
+						int respuesta1 = JOptionPane.showConfirmDialog(null, "El " +planta.getNombre() + "" ,"¡ " + planta.getNombre() + " ya está al nivel máximo!", JOptionPane.ERROR_MESSAGE);
+						
+					}
 				}
  				}
 			});
@@ -304,6 +347,7 @@ public class MenuPlantas extends JFrame{
 
         JScrollPane scroll = new JScrollPane(panel);
         add(scroll, BorderLayout.CENTER);
+
         
         // Crear y ajustar la barra de arriba donde van los soles y el boton de atras
         JMenuBar barra = new JMenuBar(); 
@@ -317,12 +361,10 @@ public class MenuPlantas extends JFrame{
         JButton atras = new JButton("Atras");
         atras.setFont(fuentebarra);
         atras.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MenuInicial();
 				dispose();
-				
 			}
 		});
         
@@ -417,14 +459,49 @@ public class MenuPlantas extends JFrame{
         derecha.add(panelbotonregadera2, BorderLayout.CENTER);
         derecha.add(panelbotonregadera3, BorderLayout.CENTER);
         derecha.add(panelbotonregadera4, BorderLayout.CENTER);
-        
         add(derecha, BorderLayout.EAST);
         
-       // MusicaMenu.sonidoM = "/sonidos/ZenGarden.wav"; new Thread(new MusicaMenu()).start();
         setResizable(false);
         setVisible(true);
 	}
 	
+	private void subirnivel(Planta planta, Integer nivel) {
+		String nombreplanta = planta.getNombre();
+		String ruta = "src/DatosCsv/TODAS.csv";
+	    
+	    ArrayList<String[]> todaslasplantas = new ArrayList<>();
+	    try (Scanner sc = new Scanner(new File(ruta))) {
+	        while (sc.hasNextLine()) {
+	            String linea = sc.nextLine();
+	            String[] campos = linea.split(";");
+	            String nombre = campos[1];
+	            if (nombre.equals(nombreplanta)) { 
+	                campos[6] = Integer.toString(nivel + 1);
+	                planta.setNivel(nivel + 1);
+	            }
+	            todaslasplantas.add(campos);
+	        }
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    
+	    try (PrintWriter pw = new PrintWriter(new File(ruta))) {
+	        for (String[] unaplanta : todaslasplantas) {
+	            pw.println(String.join(";", unaplanta)); 
+	        }
+	        System.out.println("nivel subido");
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	private Integer nivelmasuno(Integer numero) {
+		Integer resultado = numero + 1;
+		return resultado;
+	}
+
 	
 	private void reproducirSonido(String rutaSonido) {
 	    try {
