@@ -30,7 +30,11 @@ public class Batalla extends JFrame{
 		
 		ArrayList<JButton> botones = new ArrayList<JButton>();
 		for(int i = 0; i<100;i++) {
+			int fila = i / 20; // 10 columnas por fila
+		    int columna = i % 20;
 			JButton botonCesped = new JButton();
+			botonCesped.putClientProperty("fila", fila);
+			botonCesped.putClientProperty("columna", columna);
 			botones.add(botonCesped);
 			add(botonCesped);
 		}
