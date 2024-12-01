@@ -1,8 +1,8 @@
 package gui;
 
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Properties;
 
@@ -19,17 +19,20 @@ public class Ajustes extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static int lvalue = 640;
+	private static int vvalue = 480;
 
 	public Ajustes(){
-		setSize(320, 240);
+		setSize(640,480);
+		//2560 x 1440 como maximos y 640x480 como minimo
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextField KingBradley = new JTextField("alto");
 		KingBradley.setEditable(false);
         KingBradley.setBounds(30, 110, 300, 60);
         
-		JSlider vslider = new JSlider(0, 100, 50);
-		vslider.setMajorTickSpacing(20);
-	    vslider.setMinorTickSpacing(5);
+		JSlider vslider = new JSlider(480, 1440, (1440+480)/2);
+		vslider.setMajorTickSpacing(200);
+	    vslider.setMinorTickSpacing(50);
 	    vslider.setPaintTicks(true);
 	    vslider.setPaintLabels(true);
 	    vslider.addChangeListener(new ChangeListener() {
@@ -37,7 +40,7 @@ public class Ajustes extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				int vvalue = source.getValue();
+				vvalue = source.getValue();
 				
 			}
 		});
@@ -45,9 +48,9 @@ public class Ajustes extends JFrame {
 		didley.setEditable(false);
         didley.setBounds(30, 110, 300, 60);
         
-	    JSlider lslider = new JSlider(0, 100, 50);
-		lslider.setMajorTickSpacing(20);
-	    lslider.setMinorTickSpacing(5);
+	    JSlider lslider = new JSlider(640, 2560, (2560+640)/2);
+		lslider.setMajorTickSpacing(500);
+	    lslider.setMinorTickSpacing(125);
 	    lslider.setPaintTicks(true);
 	    lslider.setPaintLabels(true);
 	    lslider.addChangeListener(new ChangeListener() {
@@ -55,7 +58,7 @@ public class Ajustes extends JFrame {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				int lvalue = source.getValue();
+				lvalue = source.getValue();
 				
 			}
 		});
@@ -70,12 +73,25 @@ public class Ajustes extends JFrame {
 	    	
 	    	
 	    });
+	    
+	    JButton aplicar = new JButton("Aplicar");
+	    aplicar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setResolucion(lvalue, vvalue);
+				setSize(lvalue, vvalue);
+			}
+		});
+	    
+	    
 		JPanel panel = new JPanel();
 		panel.add(vslider);
 		panel.add(KingBradley);
 		panel.add(lslider);
 		panel.add(didley);
 		panel.add(goback);
+		panel.add(aplicar);
 		add(panel);
 		setVisible(true);
 	
@@ -110,6 +126,16 @@ public class Ajustes extends JFrame {
 			System.out.println("Error en cargar la propiedad RESOLUCION");
 			e.printStackTrace();
 			return 480;
+		}
+	}
+	public static void setResolucion(int x, int y) {
+		Properties conexionProperties = new Properties();
+		try (FileInputStream fis = new FileInputStream("src/DatosCsv/ajustes.properties")) {
+			conexionProperties.load(fis);
+			conexionProperties.setProperty("RESOLUCION", x+","+y);
+		} catch (Exception e) {
+			System.out.println("Error en la resolucion");
+			e.printStackTrace();
 		}
 	}
 	public static void main(String[] args) {
