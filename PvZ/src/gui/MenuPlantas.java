@@ -31,14 +31,15 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{
+	private static final long serialVersionUID = 1L;
 
-	   private ArrayList<Planta> plantas; 
+	//   private ArrayList<Planta> plantas; 
 	   
 	   public static void main(String[] args) {
 	        ArrayList<Planta> plantas = new ArrayList<Planta>();
 	        cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
-	        MusicaMenu.sonidoM = "/sonidos/ZenGarden.wav"; new Thread(new MusicaMenu()).start();
 	        MenuPlantas ventana = new MenuPlantas(plantas);
+	        ventana.setLocationRelativeTo(null);
 	   }
 	   
 	   int soles = 0;
@@ -68,8 +69,7 @@ public class MenuPlantas extends JFrame{
 	   // Recibe un arraylist vacio y la direccion del csv que tiene que cargar
 	public static void cargarPlantasCSV(ArrayList<Planta> plantas, String rutacsv) {
 		File f = new File(rutacsv);
-		try {
-			Scanner sc = new Scanner(f);
+		try (Scanner sc = new Scanner(f)) {
 			while (sc.hasNextLine()) {
 				String linea = sc.nextLine();
 				String[] campos = linea.split(";");
@@ -97,14 +97,22 @@ public class MenuPlantas extends JFrame{
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
 	public MenuPlantas(ArrayList<Planta> plantas) {
 		setTitle("Almanaque Plantas");
-		setSize(Resolucion.resolucionx("src/DatosCsv/resolucion.txt"), Resolucion.resoluciony("src/DatosCsv/resolucion.txt"));
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	    MusicaMenu player = new MusicaMenu();
+	    Thread musicThread = new Thread(player);
+        MusicaMenu.sonidoM = "/sonidos/zengarden.wav";
+        musicThread.start();
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(295, 330); //383
@@ -127,7 +135,6 @@ public class MenuPlantas extends JFrame{
         for (Planta planta : plantas) {
         	
 			if(mapaniveles.containsKey(planta.getNombre())) {
-				System.out.println("random");
 			} else {
 				mapaniveles.put(planta.getNombre(), planta.getNivel());
 			}
@@ -143,7 +150,6 @@ public class MenuPlantas extends JFrame{
         	} else {
         		boton.setBackground(colorregada);
         	}
-        	
         	
         	String plantadireccionimagen = "";
         	@SuppressWarnings("unused")
@@ -165,6 +171,7 @@ public class MenuPlantas extends JFrame{
         	// Ajustar el boton (meterle fotos, el tamaño...)
 			ImageIcon imagenplanta = new ImageIcon(plantadireccionimagen);
 			boton.setIcon(imagenplanta);
+			
 			boton.setPreferredSize(botontamanyo);
 			boton.setVerticalTextPosition(JButton.BOTTOM); 
 			boton.setHorizontalTextPosition(JButton.CENTER);
@@ -191,11 +198,12 @@ public class MenuPlantas extends JFrame{
 			        Thread t = new Thread(() -> {
 			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra1 = new JProgressBar();
+			        	Integer aa = randomhilos();
+			        	barra1.setMaximum(aa);
 			        	panelbotonregadera1.add(barra1, BorderLayout.SOUTH);
-						for(int a = 0; a < 100; a++) {
+						for(int a = 0; a < aa; a++) {
 					        barra1.setValue(a);
-							System.out.println(a);
-							if(a == 99) {
+							if(a == aa-1) {
 					            panellleno1 = false;
 					            panelbotonregadera1.remove(barra1);
 					            imagenactual =null;
@@ -226,11 +234,12 @@ public class MenuPlantas extends JFrame{
 			        Thread t2 = new Thread(() -> {
 			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra2 = new JProgressBar();
+			        	Integer ff = randomhilos();
+			        	barra2.setMaximum(ff);
 			        	panelbotonregadera2.add(barra2, BorderLayout.SOUTH);
-						for(int f = 0; f < 100; f++) {
+						for(int f = 0; f < ff; f++) {
 					        barra2.setValue(f);
-							System.out.println(f);
-							if(f == 99) {
+							if(f == ff-1) {
 					            panellleno2 = false;
 					            panelbotonregadera2.remove(barra2);
 					            imagenactual =null;
@@ -247,7 +256,7 @@ public class MenuPlantas extends JFrame{
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
-								Thread.sleep(180); // poner a 210
+								Thread.sleep(180); 
 							} catch (InterruptedException e1) {
 								e1.printStackTrace();
 							}
@@ -262,11 +271,12 @@ public class MenuPlantas extends JFrame{
 			        Thread t3 = new Thread(() -> {
 			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra3 = new JProgressBar();
+			        	Integer gg = randomhilos();
+			        	barra3.setMaximum(gg);
 			        	panelbotonregadera3.add(barra3, BorderLayout.SOUTH);
-						for(int g = 0; g < 100; g++) {
+						for(int g = 0; g < gg; g++) {
 					        barra3.setValue(g);
-							System.out.println(g);
-							if(g == 99) {
+							if(g == gg-1) {
 					            panellleno3 = false;
 					            panelbotonregadera3.remove(barra3);
 					            imagenactual =null;
@@ -283,7 +293,7 @@ public class MenuPlantas extends JFrame{
 					            reproducirSonido("src/sonidos/regada.wav");
 					        }
 							try {
-								Thread.sleep(180); // poner a 210
+								Thread.sleep(180); 
 							} catch (InterruptedException e1) {
 								e1.printStackTrace();
 							}
@@ -297,11 +307,12 @@ public class MenuPlantas extends JFrame{
 			        Thread t4 = new Thread(() -> {
 			        	cuantasplantas = cuantasplantas +1;
 			        	JProgressBar barra4 = new JProgressBar();
+			        	Integer hh = randomhilos();
+			        	barra4.setMaximum(hh);
 			        	panelbotonregadera4.add(barra4, BorderLayout.SOUTH);
-						for(int h = 0; h < 100; h++) {
+						for(int h = 0; h < hh; h++) {
 					        barra4.setValue(h);
-							System.out.println(h);
-							if(h == 99) {
+							if(h == hh-1) {
 					            panellleno4 = false;
 					            panelbotonregadera4.remove(barra4);
 					            imagenactual =null;
@@ -335,7 +346,7 @@ public class MenuPlantas extends JFrame{
 				// Añadir los soles aleatoriamente
 				int numrandom = (int)(Math.random() * 80 + 1);
 				soles = soles + numrandom;
-				reproducirSonido("src/sonidos/sol.wav");
+				reproducirSonido("src/sonidos/regar.wav");
 				soleslabel.setText("Soles: " + soles);
 				} else {
 					
@@ -349,9 +360,11 @@ public class MenuPlantas extends JFrame{
 		     				subirnivel(planta, mapaniveles.get(planta.getNombre()));
 		     				mapaniveles.put(planta.getNombre(), planta.getNivel()); 
 		     				soles = soles - 100;
+		     				reproducirSonido("src/sonidos/sol.wav");
 		     				soleslabel.setText("Soles: " + soles);
 		     				if(mapaniveles.get(planta.getNombre()) > 3) {
 		            			boton.setBackground(colornivelmax);
+		            			reproducirSonido("src/sonidos/solmas.wav");
 		            			
 		            		} else {
 		            			boton.setBackground(colorboton);
@@ -361,19 +374,18 @@ public class MenuPlantas extends JFrame{
 		     		}
 					} else {
 						reproducirSonido("src/sonidos/mal.wav");
-						JOptionPane.showMessageDialog(null, "¡«" + planta.getNombre() + "» ya está al nivel máximo!", "Nivel máximo", JOptionPane.ERROR_MESSAGE);
+						ImageIcon iconomaximo = new ImageIcon("src/imagenes/solmini.png");
+						JOptionPane.showMessageDialog(null, "¡«" + planta.getNombre() + "» ya está al nivel máximo!", "Nivel máximo", JOptionPane.PLAIN_MESSAGE, iconomaximo);
 					}
 				}
  				}
 			});
-			
         	panel.add(boton);
 		}
 
         JScrollPane scroll = new JScrollPane(panel);
         add(scroll, BorderLayout.CENTER);
 
-        
         // Crear y ajustar la barra de arriba donde van los soles y el boton de atras
         JMenuBar barra = new JMenuBar(); 
         barra.setPreferredSize(new Dimension(0, 80));
@@ -388,17 +400,16 @@ public class MenuPlantas extends JFrame{
         atras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MenuInicial();
+				player.stopPlaying();
+				MenuInicial ventana = new MenuInicial();
+				ventana.setLocationRelativeTo(null);
 				dispose();
 			}
 		});
         
         barra.add(atras);
-       
-        
         panelbarra.add(soleslabel);
         barra.add(panelbarra);
-        
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         ImageIcon regadera = new ImageIcon("src/imagenes/regadera.png");
@@ -426,7 +437,8 @@ public class MenuPlantas extends JFrame{
       //  derecha.setLayout(new GridLayout(5, 1, 600, 20));    
         
         panelbotonregadera1 = new JPanel() {
-            @Override
+        	private static final long serialVersionUID = 1L;
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (imagenactual != null) {
@@ -438,6 +450,7 @@ public class MenuPlantas extends JFrame{
         };  
         
         panelbotonregadera2 = new JPanel() {
+        	private static final long serialVersionUID = 1L;
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -450,6 +463,7 @@ public class MenuPlantas extends JFrame{
         };
         
         panelbotonregadera3 = new JPanel() {
+        	private static final long serialVersionUID = 1L;
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -462,6 +476,7 @@ public class MenuPlantas extends JFrame{
         };
         
         panelbotonregadera4 = new JPanel() {
+        	private static final long serialVersionUID = 1L;
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -488,6 +503,11 @@ public class MenuPlantas extends JFrame{
         
         setResizable(false);
         setVisible(true);
+	}
+	
+	private Integer randomhilos() {
+		int resultado = 15 + (int)(Math.random() * (80 - 15 + 1));
+		return resultado;
 	}
 	
 	private void subirnivel(Planta planta, Integer nivel) {

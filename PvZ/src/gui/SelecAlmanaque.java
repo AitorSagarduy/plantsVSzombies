@@ -1,25 +1,24 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class SelecAlmanaque extends JFrame{
+	private static final long serialVersionUID = 1L;
 	
 	public SelecAlmanaque() {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setTitle("ventana de lololoion");
-		setSize(Resolucion.resolucionx("src/DatosCsv/resolucion.txt"), Resolucion.resoluciony("src/DatosCsv/resolucion.txt"));
+		setTitle("Selecciona el almanaque");
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
@@ -32,7 +31,9 @@ public class SelecAlmanaque extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Planta> sig = new ArrayList<Planta>();
 		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/TODAS.csv");
-		        new MenuPlantas(sig);
+		        MenuPlantas ventana = new MenuPlantas(sig);
+		        ventana.setLocationRelativeTo(null);
+		        dispose();
 			}
 		}); 
 		
@@ -41,8 +42,9 @@ public class SelecAlmanaque extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Zombie> sig = new ArrayList<Zombie>();
-		        new MenuZombies(sig, "src/DatosCsv/zombies.csv");
-				
+		        MenuZombies ventana = new MenuZombies(sig, "src/DatosCsv/zombies.csv");
+		        ventana.setLocationRelativeTo(null);
+		        dispose();
 			}
 		}); 
 		
@@ -53,9 +55,9 @@ public class SelecAlmanaque extends JFrame{
 		setVisible(true);
 	}
 	
-	
 	public static void main(String[] args) {
 		SelecAlmanaque ventana = new SelecAlmanaque();
+		ventana.setLocationRelativeTo(null);
 	}
 
 }

@@ -9,8 +9,7 @@ public class CargarZombies {
 
 	public static void cargarZombiesCSV(ArrayList<Zombie> zombies, String rutacsv) {
 		File f = new File(rutacsv);
-		try {
-			Scanner sc = new Scanner(f);
+		try (Scanner sc = new Scanner(f)) {
 			while (sc.hasNextLine()) {
 				String linea = sc.nextLine();
 				String[] campos = linea.split(";");
@@ -26,6 +25,9 @@ public class CargarZombies {
 				zombies.add(nuevo);
 			}
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
