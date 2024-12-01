@@ -35,6 +35,8 @@ public class Batalla extends JFrame{
 			JButton botonCesped = new JButton();
 			botonCesped.putClientProperty("fila", fila);
 			botonCesped.putClientProperty("columna", columna);
+			botonCesped.addActionListener(e -> System.out.println(botonCesped.getClientProperty("fila")+","+ botonCesped.getClientProperty("columna")));
+			
 			botones.add(botonCesped);
 			add(botonCesped);
 		}

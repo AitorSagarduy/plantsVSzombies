@@ -10,9 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -35,6 +38,7 @@ import javax.swing.event.ListSelectionListener;
 public class Simulacionv1 extends JFrame{
 	private static final long serialVersionUID = 5609494347434052978L;
 	private static boolean desplantando = false;
+	private String resolucion;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinal;
 	
 	
@@ -93,7 +97,24 @@ public class Simulacionv1 extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("ventana de simulacion");
-		setSize(640, 480);
+		// Saco la resolucion del ajustes.properties
+		Properties conexionProperties = new Properties();
+		try {
+			conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
+			resolucion = conexionProperties.getProperty("RESOLUCION");
+			String[] resolucionxy = resolucion.split(",");
+			setSize(Integer.parseInt(resolucionxy[0]), Integer.parseInt(resolucionxy[1]));
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("No se encontro el archivo");
+			setSize(640, 480);
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Fallo IO");
+			setSize(640, 480);
+			e.printStackTrace();
+		}
+		
 		
 		
 		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
@@ -243,7 +264,6 @@ public class Simulacionv1 extends JFrame{
 
 			
 		});
-		pack();
 		setVisible(true);
 		this.mapaFinal = mapaFinal;
 	}
