@@ -13,8 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
-import javax.swing.text.Position;
-
 import domain.Planta;
 
 public class SelecPlantas extends JFrame {
@@ -39,7 +37,6 @@ public class SelecPlantas extends JFrame {
 		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Selecciona Plantas");
-		setSize(1280, 720);
 		setLocationRelativeTo(null);
 		setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
 
