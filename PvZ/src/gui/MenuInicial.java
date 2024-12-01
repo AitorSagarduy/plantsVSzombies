@@ -121,14 +121,14 @@ public class MenuInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas 
 		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
-		        new MenuPlantas(sig);
+		        new SelecAlmanaque();
 		        player.stopPlaying();
 		        dispose();
 			}
 		};
 		yoki.addActionListener(l);
         //boton 3
-        JButton alphonse = new JButton("LOGROS"); // parte de pele (?)
+        JButton alphonse = new JButton("AJUSTES"); // parte de pele (?)
         alphonse.setBounds(350, 300, 500, 100); 
         alphonse.setBackground(java.awt.Color.GRAY);
         alphonse.setForeground(java.awt.Color.WHITE);
@@ -137,7 +137,7 @@ public class MenuInicial extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Logros();
+				new Ajustes();
 				dispose();
 				player.stopPlaying();
 				
