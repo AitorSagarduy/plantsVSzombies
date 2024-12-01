@@ -2,7 +2,9 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.Properties;
 
@@ -133,6 +135,10 @@ public class Ajustes extends JFrame {
 		try (FileInputStream fis = new FileInputStream("src/DatosCsv/ajustes.properties")) {
 			conexionProperties.load(fis);
 			conexionProperties.setProperty("RESOLUCION", x+","+y);
+			try (FileOutputStream fos = new FileOutputStream("src/DatosCsv/ajustes.properties")) {
+                conexionProperties.store(fos, "Actualización del valor de RESOLUCION");
+                System.out.println("El valor de 'RESOLUCION' ha sido actualizado a "+x+","+y);
+            }
 		} catch (Exception e) {
 			System.out.println("Error en la resolucion");
 			e.printStackTrace();
