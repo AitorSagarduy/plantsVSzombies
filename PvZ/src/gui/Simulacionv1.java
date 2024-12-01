@@ -31,6 +31,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import domain.Planta;
+
 public class Simulacionv1 extends JFrame{
 	private static final long serialVersionUID = 5609494347434052978L;
 	private static boolean desplantando = false;

@@ -1,6 +1,8 @@
-package gui;
+package Main;
 
 import javax.swing.SwingUtilities;
+
+import gui.MenuInicial;
 
 public class Main {
 

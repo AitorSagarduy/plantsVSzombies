@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import domain.Planta;
+
 public class ModeloTabla extends AbstractTableModel {
 	
 
@@ -22,13 +24,12 @@ public class ModeloTabla extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int column) {
-        // en este caso, las dos primeras columnas es String
-        // String, mientras que el dato de la última es LocalDate
-        if (column == 0) {
-            return String.class;
-        } else {
-            return Integer.class;
-        }
+        // le damos clases a cada columna para evitar errores
+		 if (column == 0) {
+	            return String.class;
+	        } else {
+	            return Integer.class;
+	        }
     }
 	
 	@Override

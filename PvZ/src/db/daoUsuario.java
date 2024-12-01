@@ -2,7 +2,7 @@ package db;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import gui.Planta;
+import domain.Planta;
 public class daoUsuario {
 	Conexion cx;
 	

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import domain.Zombie;
+
 public class CargarZombies {
 
 	public static void cargarZombiesCSV(ArrayList<Zombie> zombies, String rutacsv) {

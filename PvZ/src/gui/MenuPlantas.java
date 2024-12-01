@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
+import domain.Planta;
+
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{

@@ -4,29 +4,29 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import domain.Planta;
+import domain.Zombie;
 
-public class ModeloSeleccionadas extends AbstractTableModel {
+public class ModeloSelecZombies extends AbstractTableModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Planta> plantas;
+	private ArrayList<Zombie> zombies;
 	private String[] columnas = {"Nombre","Vida", "Velocidad.Atc", 
-			"Daño", "Rango", "Nivel", "Cantidad" };
+			"Daño", "Rapidez", "Nivel", "Cantidad" };
 	private ArrayList<Integer> cantidades = new ArrayList<Integer>();
 	
-	public  ModeloSeleccionadas(ArrayList<Planta> plantas) {
-		this.plantas = plantas;
-		for (int i = 0; i < plantas.size(); i++) {
+	public  ModeloSelecZombies(ArrayList<Zombie> zombies) {
+		this.zombies = zombies;
+		for (int i = 0; i < zombies.size(); i++) {
 			cantidades.add(0);
 		}
 	}
 	@Override
 	public Class<?> getColumnClass(int column) {
-        // le damos clases para q no salgan errores
+		// le damos clases para q no salgan errores
         if (column == 0) {
             return String.class;
         } else {
@@ -36,7 +36,7 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return plantas.size();
+		return zombies.size();
 	}
 	
 
@@ -45,22 +45,24 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return columnas.length;
 	}
+	
+	
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {
 		
 		case 0:
-			return plantas.get(rowIndex).getNombre();
+			return zombies.get(rowIndex).getNombre();
 		case 1:
-			return plantas.get(rowIndex).getVida();
+			return zombies.get(rowIndex).getVida();
 		case 2:
-			return plantas.get(rowIndex).getTmp_atac();
+			return zombies.get(rowIndex).getTmp_atac();
 		case 3:
-			return plantas.get(rowIndex).getDanyo();
+			return zombies.get(rowIndex).getDanyo();
 		case 4:
-			return plantas.get(rowIndex).getRango();
+			return zombies.get(rowIndex).getVelocidad();
 		case 5:
-			return plantas.get(rowIndex).getNivel();
+			return zombies.get(rowIndex).getNivel();
 		case 6:
 			return cantidades.get(rowIndex);
 		
@@ -84,12 +86,12 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 	}
 	
 	// metodo para restar cantidad con el fire notifica que se ha actualizado
-	// y tambien elimina la fila llegar a cantidad = 0
+	// y tambien elimina la fila llegar a cantidad = 0 
 	public void restarCantidad (int nFila) {
 		int cantidadRestada  = cantidades.get(nFila) - 1;
 		
 		if(cantidadRestada <= 0) {
-			plantas.remove(nFila);
+			zombies.remove(nFila);
 			cantidades.remove(nFila);
 			fireTableRowsDeleted(nFila, nFila);
 		} else {
@@ -110,8 +112,8 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 	/**
 	 * @return the plantas
 	 */
-	public ArrayList<Planta> getPlantas() {
-		return plantas;
+	public ArrayList<Zombie> getZombies() {
+		return zombies;
 	}
 	
 	

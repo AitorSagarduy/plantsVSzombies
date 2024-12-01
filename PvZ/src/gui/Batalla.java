@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import domain.Planta;
+import domain.Zombie;
+
 public class Batalla extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlantas;

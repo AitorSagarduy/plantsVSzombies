@@ -10,6 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import domain.Planta;
+import domain.Zombie;
+
 public class SelecAlmanaque extends JFrame{
 	private static final long serialVersionUID = 1L;
 	

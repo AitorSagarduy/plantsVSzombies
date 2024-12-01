@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import domain.Planta;
+
 //tutorias
 /*1:
  * -> crear proyectp
@@ -93,11 +95,7 @@ public class MenuInicial extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				player.stopPlaying();
-				ArrayList<Planta> plantas = new ArrayList<Planta>();
-				MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv");
-		        @SuppressWarnings("unused")
-				SelecPlantas ventana = new SelecPlantas(plantas);
-				
+				new SelecPlantas();	
 			}
 		};
 		selim.addActionListener(s);

@@ -21,8 +21,9 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 		
 		try {
 			
-			//leer imagen correspondiente a nombre de la planta 
+			//leer imagen correspondiente nombre
 			BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("\\s+", "") + ".png"));
+			
 			setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -35,10 +36,12 @@ class RendererNombre extends JLabel implements TableCellRenderer{
          setText(valor);
          
          if (isSelected) {
-             setBackground(table.getSelectionBackground()); // Fondo para selección
-             setForeground(table.getSelectionForeground()); // Color de texto para selección
+        	 // Fondo para selección y color de texto para selección
+             setBackground(table.getSelectionBackground()); 
+             setForeground(table.getSelectionForeground());  
          } else {
-             setBackground(table.getBackground()); // Fondo normal
+        	 // Fondo normal y Color de texto normal
+             setBackground(table.getBackground()); // 
              setForeground(table.getForeground()); // Color de texto normal
          }
          
