@@ -36,7 +36,6 @@ import domain.Planta;
 public class Simulacionv1 extends JFrame{
 	private static final long serialVersionUID = 5609494347434052978L;
 	private static boolean desplantando = false;
-	private String resolucion;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinal;
 	
 	
