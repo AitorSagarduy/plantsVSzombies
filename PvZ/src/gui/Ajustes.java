@@ -3,6 +3,8 @@ package gui;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -79,6 +81,36 @@ public class Ajustes extends JFrame {
 	
 	
 	
+	}
+	public static int resolucionx() {
+		String resolucion;
+		Properties conexionProperties = new Properties();
+		try {
+			conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
+			resolucion = conexionProperties.getProperty("RESOLUCION");
+			String[] resolucionxy = resolucion.split(",");
+			return Integer.parseInt(resolucionxy[0]);
+			
+		} catch (Exception e) {
+			System.out.println("Error en cargar la propiedad RESOLUCION");
+			e.printStackTrace();
+			return 640;
+		}
+	}
+	public static int resoluciony() {
+		String resolucion;
+		Properties conexionProperties = new Properties();
+		try {
+			conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
+			resolucion = conexionProperties.getProperty("RESOLUCION");
+			String[] resolucionxy = resolucion.split(",");
+			return Integer.parseInt(resolucionxy[1]);
+			
+		} catch (Exception e) {
+			System.out.println("Error en cargar la propiedad RESOLUCION");
+			e.printStackTrace();
+			return 480;
+		}
 	}
 	public static void main(String[] args) {
 		new Ajustes();

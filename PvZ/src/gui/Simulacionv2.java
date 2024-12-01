@@ -46,6 +46,7 @@ public class Simulacionv2 extends JFrame{
 		return mapaFinalZombie;
 	}
 	public static void main(String[] args) {
+		new Simulacionv2(null);
 	}
 
 	//hago mi renderizado para interactuar como quiera con la jlist
@@ -93,9 +94,9 @@ public class Simulacionv2 extends JFrame{
 	// creo la ventana
 	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		
 		setTitle("ventana de simulacion");
-		setSize(640, 480);
+		
 		this.mapaFinalPlanta = mapaFinal1;
 		
 		ArrayList<Zombie> plantas = new ArrayList<Zombie>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
@@ -245,5 +246,7 @@ public class Simulacionv2 extends JFrame{
 		pack();
 		setVisible(true);
 		this.mapaFinalZombie = mapaFinal;
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+		setLocationRelativeTo(null);
 	}
 }

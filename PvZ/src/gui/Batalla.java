@@ -21,9 +21,7 @@ public class Batalla extends JFrame{
 	}
 	public Batalla(HashMap<ArrayList<Integer>, Planta> mapaFinal1, HashMap<ArrayList<Integer>, Zombie> mapaFinal2) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		setTitle("ventana de batalla");
-		setSize(640, 480);
 		this.mapaFinalPlantas = mapaFinal1;
 		this.mapaFinalZombies = mapaFinal2;
 		setLayout(new GridLayout(5, 20));
@@ -65,6 +63,8 @@ public class Batalla extends JFrame{
 		
 		pack();
 		setVisible(true);
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+		setLocationRelativeTo(null);
 	}
 
 }

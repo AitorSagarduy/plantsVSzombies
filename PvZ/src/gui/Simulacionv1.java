@@ -95,27 +95,9 @@ public class Simulacionv1 extends JFrame{
 	// creo la ventana
 	public Simulacionv1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		setTitle("ventana de simulacion");
 		// Saco la resolucion del ajustes.properties
-		Properties conexionProperties = new Properties();
-		try {
-			conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
-			resolucion = conexionProperties.getProperty("RESOLUCION");
-			String[] resolucionxy = resolucion.split(",");
-			setSize(Integer.parseInt(resolucionxy[0]), Integer.parseInt(resolucionxy[1]));
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("No se encontro el archivo");
-			setSize(640, 480);
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("Fallo IO");
-			setSize(640, 480);
-			e.printStackTrace();
-		}
-		
-		
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
 		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Planta> mapaFinal = new HashMap<ArrayList<Integer>, Planta>();
@@ -266,5 +248,6 @@ public class Simulacionv1 extends JFrame{
 		});
 		setVisible(true);
 		this.mapaFinal = mapaFinal;
+		setLocationRelativeTo(null);
 	}
 }
