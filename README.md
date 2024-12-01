@@ -1,5 +1,5 @@
 
-<h3 align=center>PVZy</h3>
+<h3 align=center>PVZ</h3>
 
 <h2 align=center>AitorSagarduy : almanaque</h2>
 <h2 align=center>Redecorau : tablas de seleccion</h2>
