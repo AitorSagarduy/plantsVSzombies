@@ -2,22 +2,15 @@ package gui;
 // del señor pellets
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.TargetDataLine;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -50,6 +43,7 @@ public class MenuInicial extends JFrame {
         musicThread.start();
         // Ajustes de la ventana
         setSize(800, 600);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Crear panel 
@@ -101,7 +95,8 @@ public class MenuInicial extends JFrame {
 				player.stopPlaying();
 				ArrayList<Planta> plantas = new ArrayList<Planta>();
 				MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv");
-		        SelecPlantas ventana = new SelecPlantas(plantas);
+		        @SuppressWarnings("unused")
+				SelecPlantas ventana = new SelecPlantas(plantas);
 				
 			}
 		};
