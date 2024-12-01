@@ -28,8 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
-import domain.Planta;
-
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{
@@ -38,7 +36,7 @@ public class MenuPlantas extends JFrame{
 	//   private ArrayList<Planta> plantas; 
 	   
 	   public static void main(String[] args) {
-	        ArrayList<Planta> plantas = new ArrayList<Planta>();
+	        ArrayList<domain.Planta> plantas = new ArrayList<domain.Planta>();
 	        cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
 	        MenuPlantas ventana = new MenuPlantas(plantas);
 	        ventana.setLocationRelativeTo(null);
@@ -69,7 +67,7 @@ public class MenuPlantas extends JFrame{
 	   JPanel panelbotonregadera4;
 	   
 	   // Recibe un arraylist vacio y la direccion del csv que tiene que cargar
-	public static void cargarPlantasCSV(ArrayList<Planta> plantas, String rutacsv) {
+	public static void cargarPlantasCSV(ArrayList<domain.Planta> plantas, String rutacsv) {
 		File f = new File(rutacsv);
 		try (Scanner sc = new Scanner(f)) {
 			while (sc.hasNextLine()) {
@@ -84,7 +82,7 @@ public class MenuPlantas extends JFrame{
 				int nivel = Integer.parseInt(campos[6]);
 				
 				// No funciona pero es para poner Girasol 1, Girasol 2...
-				for (Planta planta : plantas) {
+				for (domain.Planta planta : plantas) {
 					if(planta.getNombre().equals(nombre)) {
 						while(planta.getNombre().equals(nombre)) {
 							int contador = 0;
@@ -94,7 +92,7 @@ public class MenuPlantas extends JFrame{
 					}
 				} 
 				
-				Planta nueva = new Planta(tipo, nombre, vida, tmp_atac, danyo, rango, nivel);
+				domain.Planta nueva = new domain.Planta(tipo, nombre, vida, tmp_atac, danyo, rango, nivel);
 				plantas.add(nueva);
 			}
 		} catch (FileNotFoundException e) {
@@ -105,7 +103,7 @@ public class MenuPlantas extends JFrame{
 		}
 	}
 	
-	public MenuPlantas(ArrayList<Planta> plantas) {
+	public MenuPlantas(ArrayList<domain.Planta> plantas) {
 		setTitle("Almanaque Plantas");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -134,7 +132,7 @@ public class MenuPlantas extends JFrame{
         panel.setLayout(new GridLayout(0, 4, 20, 20)); //filas, columnas, hogap, vegap 
        
         // Cada boton de plantas
-        for (Planta planta : plantas) {
+        for (domain.Planta planta : plantas) {
         	
 			if(mapaniveles.containsKey(planta.getNombre())) {
 			} else {
@@ -436,7 +434,7 @@ public class MenuPlantas extends JFrame{
         derecha.setBackground(Color.RED);
         
         derecha.setPreferredSize(new Dimension(180, 0));
-      //  derecha.setLayout(new GridLayout(5, 1, 600, 20));    
+      //  derecha.setLayout(new GridLayout(5, 1, 600, 20));  
         
         panelbotonregadera1 = new JPanel() {
         	private static final long serialVersionUID = 1L;
@@ -490,7 +488,7 @@ public class MenuPlantas extends JFrame{
             }
         };
         
-
+        //Ajustar las dimensiones
         panelbotonregadera1.setPreferredSize(new Dimension(144, 144));
         panelbotonregadera2.setPreferredSize(new Dimension(144, 144));
         panelbotonregadera3.setPreferredSize(new Dimension(144, 144));
@@ -507,12 +505,14 @@ public class MenuPlantas extends JFrame{
         setVisible(true);
 	}
 	
+	//Da un numero aleatorio para la barra de progreso de los hilos
 	private Integer randomhilos() {
 		int resultado = 15 + (int)(Math.random() * (80 - 15 + 1));
 		return resultado;
 	}
 	
-	private void subirnivel(Planta planta, Integer nivel) {
+	//Guarda en el csv el nuevo nivel
+	private void subirnivel(domain.Planta planta, Integer nivel) {
 		String nombreplanta = planta.getNombre();
 		String ruta = "src/DatosCsv/TODAS.csv";
 	    
@@ -526,13 +526,14 @@ public class MenuPlantas extends JFrame{
 	                campos[6] = Integer.toString(nivel + 1);
 	                planta.setNivel(nivel + 1);
 	            }
+	            //Carga el csv entero y a la planta seleccionada le sube el nivel
 	            todaslasplantas.add(campos);
 	        }
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();
 	    }
 
-	    
+	    //Escribe en el csv la planta con el nivel subido
 	    try (PrintWriter pw = new PrintWriter(new File(ruta))) {
 	        for (String[] unaplanta : todaslasplantas) {
 	            pw.println(String.join(";", unaplanta)); 
@@ -544,6 +545,7 @@ public class MenuPlantas extends JFrame{
 	    }
 	}
 	
+	//Le suma 1 al nivel
 	private Integer nivelmasuno(Integer numero) {
 		Integer resultado = numero + 1;
 		return resultado;

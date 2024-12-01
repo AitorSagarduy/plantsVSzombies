@@ -28,21 +28,20 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
-import domain.Zombie;
-
 import java.awt.Color;
 
 public class MenuZombies extends JFrame{
 	   private static final long serialVersionUID = 1L;
 	   
 	   public static void main(String[] args) {
-	        ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+	        ArrayList<domain.Zombie> zombies = new ArrayList<domain.Zombie>();
 	        String ruta = "src/DatosCsv/zombies.csv";
 	        CargarZombies.cargarZombiesCSV(zombies, "src/DatosCsv/zombies.csv");
 	        MenuZombies ventana = new MenuZombies(zombies, ruta);
 	        ventana.setLocationRelativeTo(null);
 	   }
 	   
+	   //Establecer las variables que se van a usar luego
 	   int soles = 0;
 	   private JLabel soleslabel;
        int contador = 0;
@@ -67,7 +66,7 @@ public class MenuZombies extends JFrame{
 	   JPanel panelbotonregadera3;
 	   JPanel panelbotonregadera4;
 	
-	public MenuZombies(ArrayList<Zombie> zombies, String rutacsv) {		
+	public MenuZombies(ArrayList<domain.Zombie> zombies, String rutacsv) {		
 		setTitle("Almanaque Zombies");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -98,7 +97,7 @@ public class MenuZombies extends JFrame{
         panel.setLayout(new GridLayout(0, 4, 20, 20)); //filas, columnas, hogap, vegap 
        
         // Cada boton de plantas
-        for (Zombie zombie : zombies) {
+        for (domain.Zombie zombie : zombies) {
         	
 			if(mapaniveles.containsKey(zombie.getNombre())) {
 			} else {
@@ -476,7 +475,7 @@ public class MenuZombies extends JFrame{
 		return resultado;
 	}
 	
-	private void subirnivel(Zombie planta, Integer nivel) {
+	private void subirnivel(domain.Zombie planta, Integer nivel) {
 		String nombreplanta = planta.getNombre();
 		String ruta = "src/DatosCsv/zombies.csv";
 	    

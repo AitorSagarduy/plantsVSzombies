@@ -19,7 +19,6 @@ public class SelecAlmanaque extends JFrame{
 	public SelecAlmanaque() {
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		setTitle("Selecciona el almanaque");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
@@ -55,6 +54,7 @@ public class SelecAlmanaque extends JFrame{
 		central.setOpaque(true);
 		central.add(plantas);
 		central.add(zombies);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
