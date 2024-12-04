@@ -16,21 +16,6 @@ import javax.swing.JTextField;
 
 import domain.Planta;
 
-//tutorias
-/*1:
- * -> crear proyectp
- * -> hacer push y pulls
- * -> acceso ajeno al proyecto
- */
-/*2:
- * -> botones de posicion a proporcion -- dridlayout
- * -- 
- * -> calcular tiempos --system.current time milis
- * -> poner videos -- vlcj
- * -> ajustes -- javax song technology
- * -> organizacion por paquetes -- alud
- * 
- */
 public class MenuInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -158,10 +143,10 @@ public class MenuInicial extends JFrame {
 			}
 		});
         // Añadimos botones
-        panel.add(selim);
-        panel.add(yoki);
-        panel.add(alphonse);
-        panel.add(mustang);
+        panel.add(selim); //1
+        panel.add(yoki); //2
+        panel.add(alphonse); //3
+        panel.add(mustang); //4
         
         add(panel);
 
