@@ -42,11 +42,13 @@ public class MenuPlantas extends JFrame{
 	        ventana.setLocationRelativeTo(null);
 	   }
 	   
+	   public static Integer solespublic = 0;
 	   int soles = 0;
 	   private JLabel soleslabel;
        int contador = 0;
 	   String ultimobotonseleccionado = "";
 	   int cuantasplantas = 0;
+	   int grids = 0;
 	   
 	   boolean regada = false;
 	   boolean quieroeliminar = false;
@@ -113,23 +115,31 @@ public class MenuPlantas extends JFrame{
 	    Thread musicThread = new Thread(player);
         MusicaMenu.sonidoM = "/sonidos/zengarden.wav";
         musicThread.start();
+        soles = solespublic;
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
-        Dimension botontamanyo = new Dimension(295, 330); //383
-        Font fuente = new Font("Arial", Font.BOLD, 35);
-        Font fuentemini = new Font("Arial", Font.BOLD, 25);
+        Dimension botontamanyo = new Dimension(290, 330); //383
+        Dimension botontamanyomini = new Dimension(184, 190);
+        Dimension botontamanyomid = new Dimension(184, 280) ;
+        Dimension botontamanyo2 = new Dimension(180, 145);
+        Dimension botontamanyo3 = new Dimension(200, 200);
+        Font fuente = new Font("Arial", Font.BOLD, 26);
+        Font fuentemini = new Font("Arial", Font.BOLD, 13);
+        Font fuentemid = new Font("Arial", Font.BOLD, 20);
         Font fuentebarra = new Font("Arial", Font.BOLD, 30);
 		Color colorboton = new Color(103, 255, 102);
 		Color colornivelmax = new Color(255, 216, 0);
 		Color colorfondo = new Color(38, 116, 68);
 		Color colorregada = new Color(154, 231, 244);
+		Color colortierra = new Color(177, 129, 86);
         String[] posiblesplantas = {"Girasol", "Lanzaguisantes", "Hielaguisantes", "Apisonaflor", "Cactus", "Coltapulta", "Guisantralladora", "Humoseta", "Jalapeno", "Melonpulta","Nuez", "NuezCascaraRabias", "Patatapum", "PlantaCarronivora", "Repetidora", "SetaDesesporadora", "Trebolador", "Tripitidora", "MelonpultaCongelada" };
 
         HashMap<String, Integer> mapaniveles = new HashMap<>();
         
         JPanel panel = new JPanel();
+        grids = sacargrids();
         panel.setBackground(colorfondo);
-        panel.setLayout(new GridLayout(0, 4, 20, 20)); //filas, columnas, hogap, vegap 
+        panel.setLayout(new GridLayout(0, sacargrids(), 20, 20)); //filas, columnas, hogap, vegap 
        
         // Cada boton de plantas
         for (domain.Planta planta : plantas) {
@@ -170,18 +180,27 @@ public class MenuPlantas extends JFrame{
         	
         	// Ajustar el boton (meterle fotos, el tamaño...)
 			ImageIcon imagenplanta = new ImageIcon(plantadireccionimagen);
+
+			//(getBuferedimagePlanta(planta).getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
+			if(grids == 2) {
+				boton.setPreferredSize(botontamanyomini);
+				imagenplanta = new ImageIcon(new ImageIcon(plantadireccionimagen).getImage().getScaledInstance(93, 93, Image.SCALE_SMOOTH));
+				boton.setFont(fuentemini);
+			} else if(grids == 4){
+				boton.setPreferredSize(botontamanyo);
+				boton.setIconTextGap(23);
+				boton.setFont(fuente);
+			} else if (grids == 3) {
+				boton.setPreferredSize(botontamanyomid);
+				boton.setIconTextGap(13);
+				imagenplanta = new ImageIcon(new ImageIcon(plantadireccionimagen).getImage().getScaledInstance(190, 190, Image.SCALE_SMOOTH));
+				boton.setFont(fuentemid);
+			}
+			
 			boton.setIcon(imagenplanta);
 			
-			boton.setPreferredSize(botontamanyo);
 			boton.setVerticalTextPosition(JButton.BOTTOM); 
 			boton.setHorizontalTextPosition(JButton.CENTER);
-			boton.setIconTextGap(23);
-			
-			if(planta.getNombre().length() > 15) {
-				boton.setFont(fuentemini);
-			} else {
-				boton.setFont(fuente);
-			}
 			
 			// Darle click a un boton
 			boton.addActionListener(new ActionListener() {	
@@ -190,7 +209,7 @@ public class MenuPlantas extends JFrame{
 				
 				if(regable == true) {
 				ultimaplantaseleccionada = "src/imagenes/" + planta.getTipo() + ".png";
-				imagenactual = new ImageIcon(ultimaplantaseleccionada).getImage();
+				imagenactual = new ImageIcon(ultimaplantaseleccionada).getImage().getScaledInstance(panelbotonregadera1.getHeight(), panelbotonregadera1.getHeight(), Image.SCALE_SMOOTH);
 				
 				if(panellleno1 == false) {
 					panelbotonregadera1.repaint();
@@ -202,7 +221,11 @@ public class MenuPlantas extends JFrame{
 			        	barra1.setMaximum(aa);
 			        	panelbotonregadera1.add(barra1, BorderLayout.SOUTH);
 						for(int a = 0; a < aa; a++) {
-					        barra1.setValue(a);
+				            if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+				                System.out.println("Hilo detenido.");
+				                break;
+				            }
+				            barra1.setValue(a);
 							if(a == aa-1) {
 					            panellleno1 = false;
 					            panelbotonregadera1.remove(barra1);
@@ -311,8 +334,13 @@ public class MenuPlantas extends JFrame{
 			        	barra4.setMaximum(hh);
 			        	panelbotonregadera4.add(barra4, BorderLayout.SOUTH);
 						for(int h = 0; h < hh; h++) {
-					        barra4.setValue(h);
+				            if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+				                System.out.println("Hilo detenido.");
+				                break;
+				            }
+				            barra4.setValue(h);
 							if(h == hh-1) {
+								
 					            panellleno4 = false;
 					            panelbotonregadera4.remove(barra4);
 					            imagenactual =null;
@@ -400,6 +428,8 @@ public class MenuPlantas extends JFrame{
         atras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(soles);
+				solespublic = soles;
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);
@@ -412,9 +442,8 @@ public class MenuPlantas extends JFrame{
         barra.add(panelbarra);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        ImageIcon regadera = new ImageIcon("src/imagenes/regadera.png");
-        
-        JButton botonregadera = new JButton("REGADERA");
+        JButton botonregadera = new JButton();
+        ImageIcon regadera = new ImageIcon(new ImageIcon("src/imagenes/regadera.png").getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH));
         botonregadera.setIcon(regadera);
         botonregadera.setVerticalTextPosition(JButton.BOTTOM); 
 		botonregadera.setHorizontalTextPosition(JButton.CENTER);
@@ -431,7 +460,7 @@ public class MenuPlantas extends JFrame{
 		}); 
         
         JPanel derecha = new JPanel();
-        derecha.setBackground(Color.RED);
+        derecha.setBackground(colortierra);
         
         derecha.setPreferredSize(new Dimension(180, 0));
       //  derecha.setLayout(new GridLayout(5, 1, 600, 20));  
@@ -442,8 +471,9 @@ public class MenuPlantas extends JFrame{
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (imagenactual != null) {
-                    // Dibuja la imagen actualizada si existe
-                    g.drawImage(imagenactual, 0, 0, getWidth(), getHeight(), this);
+                	int x = (getWidth() - imagenactual.getWidth(this)) / 2; // Centra horizontalmente
+                    int y = (getHeight() - imagenactual.getHeight(this)) / 2; // Centra verticalmente
+                    g.drawImage(imagenactual, x, y, this);
                     panellleno1 = true;
                 }
             }
@@ -456,7 +486,9 @@ public class MenuPlantas extends JFrame{
                 super.paintComponent(g);
                 if (imagenactual != null) {
                     // Dibuja la imagen actualizada si existe
-                    g.drawImage(imagenactual, 0, 0, getWidth(), getHeight(), this);
+                	int x = (getWidth() - imagenactual.getWidth(this)) / 2; // Centra horizontalmente
+                    int y = (getHeight() - imagenactual.getHeight(this)) / 2; // Centra verticalmente
+                	g.drawImage(imagenactual, x, y, this);
                     panellleno2 = true;
                 }
             }
@@ -469,7 +501,9 @@ public class MenuPlantas extends JFrame{
                 super.paintComponent(g);
                 if (imagenactual != null) {
                     // Dibuja la imagen actualizada si existe
-                    g.drawImage(imagenactual, 0, 0, getWidth(), getHeight(), this);
+                	int x = (getWidth() - imagenactual.getWidth(this)) / 2; // Centra horizontalmente
+                    int y = (getHeight() - imagenactual.getHeight(this)) / 2; // Centra verticalmente
+                	g.drawImage(imagenactual, x, y, this);
                     panellleno3 = true;
                 }
             }
@@ -482,17 +516,49 @@ public class MenuPlantas extends JFrame{
                 super.paintComponent(g);
                 if (imagenactual != null) {
                     // Dibuja la imagen actualizada si existe
-                    g.drawImage(imagenactual, 0, 0, getWidth(), getHeight(), this);
+                	int x = (getWidth() - imagenactual.getWidth(this)) / 2; // Centra horizontalmente
+                    int y = (getHeight() - imagenactual.getHeight(this)) / 2; // Centra verticalmente
+                	g.drawImage(imagenactual, x, y, this);
                     panellleno4 = true;
                 }
             }
         };
         
         //Ajustar las dimensiones
-        panelbotonregadera1.setPreferredSize(new Dimension(144, 144));
-        panelbotonregadera2.setPreferredSize(new Dimension(144, 144));
-        panelbotonregadera3.setPreferredSize(new Dimension(144, 144));
-        panelbotonregadera4.setPreferredSize(new Dimension(144, 144));
+        if(sacartamanyo() == "mini") {
+        	System.out.println("mini");
+        	botonregadera.setPreferredSize(new Dimension(90, 90));
+            panelbotonregadera1.setPreferredSize(new Dimension(144, 60));
+            panelbotonregadera2.setPreferredSize(new Dimension(144, 60));
+            panelbotonregadera3.setPreferredSize(new Dimension(144, 60));
+            panelbotonregadera4.setPreferredSize(new Dimension(144, 60));
+        } else if(sacartamanyo() == "mid") {
+        	System.out.println("mid");
+        	botonregadera.setPreferredSize(new Dimension(120, 120));
+            panelbotonregadera1.setPreferredSize(new Dimension(144, 82));
+            panelbotonregadera2.setPreferredSize(new Dimension(144, 82));
+            panelbotonregadera3.setPreferredSize(new Dimension(144, 82));
+            panelbotonregadera4.setPreferredSize(new Dimension(144, 82));
+        } else if(sacartamanyo() == "max") {
+        	System.out.println("max");
+        	botonregadera.setPreferredSize(new Dimension(150, 150));
+            panelbotonregadera1.setPreferredSize(new Dimension(144, 120));
+            panelbotonregadera2.setPreferredSize(new Dimension(144, 120));
+            panelbotonregadera3.setPreferredSize(new Dimension(144, 120));
+            panelbotonregadera4.setPreferredSize(new Dimension(144, 120));
+        }
+        
+        addWindowStateListener(e -> {
+            if (e.getNewState() == JFrame.ICONIFIED || !isFocused()) {
+                System.out.println("Adios");
+                player.stopPlaying();
+                dispose();
+                MenuInicial ventana = new MenuInicial();
+                ventana.setLocationRelativeTo(null);
+                setState(JFrame.ICONIFIED);
+                ventana.setState(JFrame.ICONIFIED);
+            }
+        });
 
         derecha.add(botonregadera, BorderLayout.NORTH);
         derecha.add(panelbotonregadera1, BorderLayout.CENTER);
@@ -500,6 +566,7 @@ public class MenuPlantas extends JFrame{
         derecha.add(panelbotonregadera3, BorderLayout.CENTER);
         derecha.add(panelbotonregadera4, BorderLayout.CENTER);
         add(derecha, BorderLayout.EAST);
+        
         
         setResizable(false);
         setVisible(true);
@@ -509,6 +576,32 @@ public class MenuPlantas extends JFrame{
 	private Integer randomhilos() {
 		int resultado = 15 + (int)(Math.random() * (80 - 15 + 1));
 		return resultado;
+	}
+	
+	private String sacartamanyo() {
+		String tamanyo = "";
+		if(Ajustes.resoluciony() > 780) {
+			tamanyo = "max";
+		} else if(Ajustes.resoluciony() > 590) {
+			tamanyo = "mid";
+		} else {
+			tamanyo = "mini";
+		}
+		return tamanyo;
+	}
+	
+	
+	private Integer sacargrids() {
+		int resultado = 0;
+		if(Ajustes.resolucionx() < 1000) {
+			resultado = 2;
+		} else if(Ajustes.resolucionx() < 1400){
+			resultado = 3;
+		} else {
+			resultado = 4;
+		}
+		return resultado;
+		
 	}
 	
 	//Guarda en el csv el nuevo nivel
@@ -550,7 +643,6 @@ public class MenuPlantas extends JFrame{
 		Integer resultado = numero + 1;
 		return resultado;
 	}
-
 	
 	private void reproducirSonido(String rutaSonido) {
 	    try {
