@@ -39,8 +39,7 @@ public class SelecPlantas extends JFrame {
 	JPanel panelUsuarioP;
 
 	public SelecPlantas() {
-		// ajustes de la ventana y
-		//cargar la lista plantas con plantas desde el csv
+		// ajustes de la ventana y cargar la lista plantas con plantas desde el csv
 		ArrayList<Planta> plantas = new ArrayList<Planta>();
 		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
