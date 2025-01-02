@@ -20,6 +20,7 @@ public class ModeloTabla extends AbstractTableModel {
 	
 	public ModeloTabla(ArrayList<Planta> plantas) {
 		this.plantas = plantas;
+		
 	}
 	
 	@Override

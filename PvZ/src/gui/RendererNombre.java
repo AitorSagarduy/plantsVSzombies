@@ -22,8 +22,7 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 		try {
 			
 			//leer imagen correspondiente nombre
-			BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("\\s+", "") + ".png"));
-			
+			BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("[\\s-]+", "") + ".png"));
 			setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
