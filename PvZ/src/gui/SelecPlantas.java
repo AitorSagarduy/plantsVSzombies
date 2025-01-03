@@ -1,17 +1,20 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import domain.Planta;
 
@@ -29,16 +32,21 @@ public class SelecPlantas extends JFrame {
         @SuppressWarnings("unused")
 		SelecPlantas ventana = new SelecPlantas();
 	}
+	JPanel panelGeneral;
+	JPanel panelBotones;
+	JPanel panelPlantas;
+	JPanel panelTodasP;
+	JPanel panelUsuarioP;
 
 	public SelecPlantas() {
-		// ajustes de la ventana y
-		//cargar la lista plantas con plantas desde el csv
+		// ajustes de la ventana y cargar la lista plantas con plantas desde el csv
 		ArrayList<Planta> plantas = new ArrayList<Planta>();
-		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv");
+		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Selecciona Plantas");
 		setLocationRelativeTo(null);
 		setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
+		
 
 		// crear el modelo con las plantas y crear la tabla con el modelo 
 		ModeloTabla modelo = new ModeloTabla(plantas);
@@ -53,6 +61,18 @@ public class SelecPlantas extends JFrame {
 		// implementar el renderer del nombre a la columna 0
 		TableColumn nombreColumn = tabla.getColumnModel().getColumn(0);
 		nombreColumn.setCellRenderer(new RendererNombre());
+		
+		TableColumn columna = tabla.getColumnModel().getColumn(0);
+		columna.setMinWidth(150);
+		
+		DefaultTableCellRenderer centralRenderer = new DefaultTableCellRenderer();
+	    centralRenderer.setHorizontalAlignment(JLabel.CENTER); 
+	    centralRenderer.setVerticalAlignment(JLabel.CENTER);   
+	    
+	    for (int i = 1; i < tabla.getColumnCount(); i++) {
+            tabla.getColumnModel().getColumn(i).setCellRenderer(centralRenderer);
+        }
+		
 		
 		//botones
 		JButton atras = new JButton("Atras");
@@ -79,9 +99,18 @@ public class SelecPlantas extends JFrame {
 		// meter la tabla en un scrollpane
 		JScrollPane scrollSelec = new JScrollPane(tablaSelec);
 		
+		TableColumn columnSelec = tablaSelec.getColumnModel().getColumn(0);
+		columnSelec.setPreferredWidth(163);
+		
+		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
+	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
+	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
+	    
+	    for (int i = 1; i < tabla.getColumnCount(); i++) {
+            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
+        }
 		
 		//colocarlo abajo y hacer que no se vea
-		add(scrollSelec, BorderLayout.SOUTH);
 		scrollSelec.setVisible(false);
 	
 		
@@ -179,16 +208,34 @@ public class SelecPlantas extends JFrame {
         
         // al pulsar continuar que se abra el SelecZombies
         JButton batalla = new JButton("Continuar");
-        batalla.addActionListener(e -> SwingUtilities.invokeLater(() -> new SelecZombies()));
+        batalla.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(() -> new SelecZombies());
+				dispose();
+			}
+		});
         
-        //Añadir todas los botones a un panel y ajustarlo yodo
-        JPanel panel = new JPanel();
-        panel.add(atras);
-        panel.add(agregar);
-        panel.add(eliminar);
-        panel.add(batalla);
-        add(panel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+
+        panelBotones = new JPanel();  
+        panelBotones.add(atras);
+        panelBotones.add(agregar);
+        panelBotones.add(eliminar);
+        panelBotones.add(batalla);
+        
+        panelBotones.setPreferredSize(new Dimension(0, 50));
+        add(panelBotones, BorderLayout.NORTH);
+        
+        
+        panelPlantas = new JPanel();
+        add(panelPlantas, BorderLayout.CENTER);
+        panelPlantas.setLayout(new GridLayout(2, 1));
+        panelPlantas.setPreferredSize(new Dimension(0, 400));
+        
+        panelPlantas.add(scrollPane);
+        panelPlantas.add(scrollSelec);  
+ 
 		setLocationRelativeTo(null);
 
         

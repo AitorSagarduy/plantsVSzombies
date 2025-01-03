@@ -22,6 +22,12 @@ public class Creditos extends JFrame{
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
+	    MusicaMenu player = new MusicaMenu();
+	    Thread musicThread = new Thread(player);
+        MusicaMenu.sonidoM = "/sonidos/animadas.wav";
+        musicThread.start();
+		
 		JPanel panel = new JPanel() {
 		
 			private static final long serialVersionUID = 1L;
@@ -50,6 +56,7 @@ public class Creditos extends JFrame{
 				
 			}
 		});
+		
 		atras.setForeground(Color.BLACK);
 		atras.setBackground(Color.WHITE);
 		panel.setLayout(new BorderLayout());

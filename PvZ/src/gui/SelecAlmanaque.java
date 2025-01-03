@@ -1,13 +1,18 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import domain.Planta;
@@ -27,7 +32,23 @@ public class SelecAlmanaque extends JFrame{
 		add(central);
 		central.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
-		JButton plantas = new JButton("Plantas");
+		JButton plantas = new JButton();
+
+		ImageIcon bannerplantas = new ImageIcon("src/imagenes/bannerplantas.png");
+		Image img = bannerplantas.getImage();
+
+		// Escucha cambios en el tamaño del botón
+		plantas.addComponentListener(new java.awt.event.ComponentAdapter() {
+		    @Override
+		    public void componentResized(java.awt.event.ComponentEvent e) {
+		        // Redimensiona la imagen al tamaño actual del botón
+		        int width = plantas.getWidth();
+		        int height = plantas.getHeight();
+		        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Ajusta tamaño
+		        plantas.setIcon(new ImageIcon(resizedImg)); // Configura el nuevo icono
+		    }
+		});
+
 		plantas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -39,7 +60,24 @@ public class SelecAlmanaque extends JFrame{
 			}
 		}); 
 		
-		JButton zombies = new JButton("Zombis");
+		JButton zombies = new JButton();
+		ImageIcon bannerzombies = new ImageIcon("src/imagenes/bannerzombies.png");
+		Image img1 = bannerzombies.getImage();
+
+		// Escucha cambios en el tamaño del botón
+		zombies.addComponentListener(new java.awt.event.ComponentAdapter() {
+		    @Override
+		    public void componentResized(java.awt.event.ComponentEvent e) {
+		        // Redimensiona la imagen al tamaño actual del botón
+		        int width = zombies.getWidth();
+		        System.out.println(width);
+		        int height = zombies.getHeight();
+		        Image resizedImg = img1.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Ajusta tamaño
+		        zombies.setIcon(new ImageIcon(resizedImg)); // Configura el nuevo icono
+		    }
+		});
+
+		// Configura el botón con el icono redimensionado
 		zombies.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

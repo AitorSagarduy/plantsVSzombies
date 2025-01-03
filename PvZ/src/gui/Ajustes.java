@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -24,16 +28,27 @@ public class Ajustes extends JFrame {
 	private static int vvalue = 480;
 
 	public Ajustes(){
-		setSize(640,480);
+		setSize(resolucionx(),resoluciony());
 		//2560 x 1440 como maximos y 640x480 como minimo
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JTextField KingBradley = new JTextField("alto");
-		KingBradley.setEditable(false);
-        KingBradley.setBounds(30, 110, 300, 60);
+		
+		JTextField explicacion = new JTextField("Ajusta la resolución que tendrán las ventanas");
+		explicacion.setEditable(false);
+		explicacion.setFont(new Font("Arial", Font.PLAIN, 20));
+		
+		JTextField textoalto = new JTextField("Alto");
+		textoalto.setEditable(false);
+		textoalto.setBounds(30, 110, 300, 60);
         
-		JSlider vslider = new JSlider(480, 1440, (1440+480)/2);
-		vslider.setMajorTickSpacing(200);
-	    vslider.setMinorTickSpacing(50);
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        System.out.println(screenWidth);
+	    System.out.println(screenHeight);
+        
+	    JSlider vslider = new JSlider(480, screenHeight - 45, (screenHeight + 480) / 2);
+	    vslider.setMajorTickSpacing((screenHeight - 45 - 480) / 2); // Espaciado entre valores
+	    vslider.setMinorTickSpacing(0); // No mostrar ticks menores
 	    vslider.setPaintTicks(true);
 	    vslider.setPaintLabels(true);
 	    vslider.addChangeListener(new ChangeListener() {
@@ -45,15 +60,15 @@ public class Ajustes extends JFrame {
 				
 			}
 		});
-	    JTextField didley = new JTextField("ancho");
+	    JTextField didley = new JTextField("Ancho");
 		didley.setEditable(false);
         didley.setBounds(30, 110, 300, 60);
         
-	    JSlider lslider = new JSlider(640, 2560, (2560+640)/2);
-		lslider.setMajorTickSpacing(500);
-	    lslider.setMinorTickSpacing(125);
-	    lslider.setPaintTicks(true);
-	    lslider.setPaintLabels(true);
+        JSlider lslider = new JSlider(640, screenWidth, (screenWidth + 640) / 2);
+        lslider.setMajorTickSpacing((screenWidth - 640) / 2); // Espaciado entre valores
+        lslider.setMinorTickSpacing(0); // No mostrar ticks menores
+        lslider.setPaintTicks(true);
+        lslider.setPaintLabels(true);
 	    lslider.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -63,8 +78,8 @@ public class Ajustes extends JFrame {
 				
 			}
 		});
-	    JButton goback = new JButton("Atras");
-	    goback.addActionListener(new ActionListener(){
+	    JButton atras = new JButton("Atras");
+	    atras.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -82,20 +97,33 @@ public class Ajustes extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setResolucion(lvalue, vvalue);
 				setSize(lvalue, vvalue);
+				setLocationRelativeTo(null);
 			}
 		});
 	    
+	    vslider.setValue(resoluciony());
+	    lslider.setValue(resolucionx());
 	    
 		JPanel panel = new JPanel();
-		panel.add(vslider);
-		panel.add(KingBradley);
-		panel.add(lslider);
-		panel.add(didley);
-		panel.add(goback);
-		panel.add(aplicar);
+		JPanel medio = new JPanel();
+		JPanel arriba = new JPanel();
+		JPanel abajo = new JPanel();
+		panel.setLayout(new BorderLayout());
+		medio.setLayout(new BorderLayout());
+		panel.add(explicacion, BorderLayout.NORTH);
+		arriba.add(vslider);
+		arriba.add(textoalto);
+		arriba.add(lslider);
+		arriba.add(didley);
+		abajo.add(atras);
+		abajo.add(aplicar);
 		add(panel);
+		medio.add(arriba, BorderLayout.NORTH); 
+		medio.add(abajo, BorderLayout.CENTER);  
+		panel.add(medio, BorderLayout.CENTER);
+
 		setVisible(true);
-	
+		setLocationRelativeTo(null);
 	
 	
 	}
@@ -129,6 +157,7 @@ public class Ajustes extends JFrame {
 			return 480;
 		}
 	}
+	
 	public static void setResolucion(int x, int y) {
 		Properties conexionProperties = new Properties();
 		try (FileInputStream fis = new FileInputStream("src/DatosCsv/ajustes.properties")) {
@@ -144,6 +173,7 @@ public class Ajustes extends JFrame {
 		}
 	}
 	public static void main(String[] args) {
-		new Ajustes();
+		Ajustes ventana = new Ajustes();
+		ventana.setLocationRelativeTo(null);
 	}
 }
