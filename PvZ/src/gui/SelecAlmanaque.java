@@ -26,6 +26,12 @@ public class SelecAlmanaque extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Selecciona el almanaque");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+
+	    MusicaMenu player = new MusicaMenu();
+	    Thread musicThread = new Thread(player);
+        MusicaMenu.sonidoM = "/sonidos/sly.wav";
+        musicThread.start();
+		
 		
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());

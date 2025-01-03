@@ -133,7 +133,7 @@ public class Simulacionv2 extends JFrame{
 				}
 			}
 		});
-		JButton finalizar = new JButton("Terminar");
+		JButton finalizar = new JButton("Batalla");
 		
 		JButton pala = new JButton("Pala");
 		pala.addActionListener(new ActionListener() {

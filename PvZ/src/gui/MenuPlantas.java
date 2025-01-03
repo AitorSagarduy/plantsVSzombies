@@ -50,6 +50,8 @@ public class MenuPlantas extends JFrame{
 	   int cuantasplantas = 0;
 	   int grids = 0;
 	   
+	   private Clip clip;
+	   boolean apagado = false;
 	   boolean regada = false;
 	   boolean quieroeliminar = false;
 	   boolean abrirventana = false;
@@ -120,7 +122,7 @@ public class MenuPlantas extends JFrame{
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(290, 330); //383
         Dimension botontamanyomini = new Dimension(184, 190);
-        Dimension botontamanyomid = new Dimension(184, 280) ;
+        Dimension botontamanyomid = new Dimension(184, 280);
         Dimension botontamanyo2 = new Dimension(180, 145);
         Dimension botontamanyo3 = new Dimension(200, 200);
         Font fuente = new Font("Arial", Font.BOLD, 26);
@@ -434,6 +436,7 @@ public class MenuPlantas extends JFrame{
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);
 				dispose();
+				apagado = true;
 			}
 		});
         
@@ -653,9 +656,15 @@ public class MenuPlantas extends JFrame{
 	        // Preparar y reproducir el sonido
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioStream);
-	        clip.start();  // Iniciar reproducción
+	        if(apagado == true) {
+	        	
+	        } else {
+	        clip.start(); // Iniciar reproducción
+	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();  // Manejar excepciones
 	    }
 	}
+	
+	
 }

@@ -2,10 +2,14 @@ package gui;
 
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +34,12 @@ public class Batalla extends JFrame implements Runnable{
 		this.mapaFinalZombies = mapaFinal2;
 		setLayout(new GridLayout(5, 20));
 		
+		//Aitor: lo de pele para reproducir una pista de audio
+		MusicaMenu player = new MusicaMenu();
+	    Thread musicThread = new Thread(player);
+        MusicaMenu.sonidoM = "/sonidos/batalla.wav";
+        musicThread.start();
+		
 		ArrayList<JButton> botones = new ArrayList<JButton>();
 		for(int i = 0; i<100;i++) {
 			int fila = i / 20; // 10 columnas por fila
@@ -43,7 +53,9 @@ public class Batalla extends JFrame implements Runnable{
 		    
 		    if(mapaFinalPlantas.get(coordenadas) instanceof Planta) {
 		    	try {
-					botonCesped.setIcon(new ImageIcon(Simulacionv1.getBuferedimagePlanta(mapaFinalPlantas.get(coordenadas)).getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
+		    		//Aitor: Para saber el tamaño exacto, usa el tamaño de la panatalla / el numero de casillas en el caso del ancho
+		    		//En el caso del alto es / 9 para que no quede demasiado estirada
+					botonCesped.setIcon(new ImageIcon(Simulacionv1.getBuferedimagePlanta(mapaFinalPlantas.get(coordenadas)).getScaledInstance(Ajustes.resolucionx()/24, Ajustes.resoluciony()/9, Image.SCALE_SMOOTH)));
 					botonCesped.putClientProperty("planta", mapaFinalPlantas.get(coordenadas));
 		    	} catch (IOException e) {
 					e.printStackTrace();
@@ -95,6 +107,8 @@ public class Batalla extends JFrame implements Runnable{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							System.out.println("TOCANDO PLANTA REPITO");
+							reproducirSonido("src/sonidos/comiendo.wav");
 							if(((Planta)botones.get(i-1).getClientProperty("planta")).getVida()<=0) {
 								botones.get(i-1).setIcon(null);
 								botones.get(i-1).putClientProperty("planta", null);
@@ -133,6 +147,7 @@ public class Batalla extends JFrame implements Runnable{
 						}else{
 							for(int u = i ; u%20 <= 19;u++ ){
 								if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
+									reproducirSonido("src/sonidos/disparo.wav");
 									System.out.println("Planta ataca a zombie"+u+i);	
 									try {
 										((Zombie)botones.get(u).getClientProperty("planta")).setVida(((Zombie)botones.get(u).getClientProperty("planta")).getVida()-((Planta)boton.getClientProperty("planta")).getDanyo());
@@ -175,6 +190,22 @@ public class Batalla extends JFrame implements Runnable{
 	public void run() {
 		SwingUtilities.invokeLater(()->new Simulacionv1());
 		
+	}
+	
+	//Aitor: el reproducir sonido que hizo pele para que suenen los efectos
+	private void reproducirSonido(String rutaSonido) {
+	    try {
+	        // Cargar el archivo de sonido
+	        File archivoSonido = new File(rutaSonido);
+	        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+
+	        // Preparar y reproducir el sonido
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioStream);
+	        clip.start(); // Iniciar reproducción
+	    } catch (Exception e) {
+	        e.printStackTrace();  // Manejar excepciones
+	    }
 	}
 
 }

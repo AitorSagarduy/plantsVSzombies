@@ -80,7 +80,7 @@ public class Simulacionv1 extends JFrame{
 		// dandole una planta me devulve su icono que deberia estar en imagenes
 		try {
 			// Leo la imagen en imagenLeer 
-			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + planta.getTipo() + ".png"));
+			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + planta.getTipo() + "PNG" + ".png"));
 			return imagenLeer;
 		} catch (Exception e) {
 			// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
@@ -126,7 +126,7 @@ public class Simulacionv1 extends JFrame{
 				}
 			}
 		});
-		JButton finalizar = new JButton("Terminar");
+		JButton finalizar = new JButton("Zombis");
 		
 		JButton pala = new JButton("Pala");
 		pala.addActionListener(new ActionListener() {
