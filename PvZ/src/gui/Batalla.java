@@ -87,17 +87,88 @@ public class Batalla extends JFrame implements Runnable{
 						if((int)(boton.getClientProperty("columna")) == 0) {
 							detener = true;
 							System.out.format("El zombie %s gana", ((Zombie)boton.getClientProperty("planta")).getTipo());
-						}else {
+						}else if(botones.get(i-1).getClientProperty("planta") instanceof Planta) {
+							((Planta)botones.get(i-1).getClientProperty("planta")).setVida(((Planta)botones.get(i-1).getClientProperty("planta")).getVida()-((Zombie)boton.getClientProperty("planta")).getDanyo());
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if(((Planta)botones.get(i-1).getClientProperty("planta")).getVida()<=0) {
+								botones.get(i-1).setIcon(null);
+								botones.get(i-1).putClientProperty("planta", null);
+							}
+						}else{
 							botones.get(i-1).setIcon(boton.getIcon());
 							boton.setIcon(null);
 							botones.get(i-1).putClientProperty("planta", boton.getClientProperty("planta"));
 							boton.putClientProperty("planta", null);
+
 						}
 					}
 				}
 				
 			}
 		});
+		Thread hilo1 = new Thread(() -> {
+			while (!detener) {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				for (int i = 0; i < 100; i++) {
+					JButton boton = botones.get(i);
+					if (boton.getClientProperty("planta") instanceof Planta) {
+						int numeroZomb = 0;
+						for (int j = 0; j < 100; j++) {
+							if (botones.get(j).getClientProperty("planta") instanceof Zombie) {
+								numeroZomb++;
+							}
+						}
+						if (numeroZomb == 0){
+							detener = true;
+							System.out.println("Las plantas ganan");
+						}else{
+							for(int u = i ; u%20 <= 19;u++ ){
+								if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
+									System.out.println("Planta ataca a zombie"+u+i);	
+									try {
+										((Zombie)botones.get(u).getClientProperty("planta")).setVida(((Zombie)botones.get(u).getClientProperty("planta")).getVida()-((Planta)boton.getClientProperty("planta")).getDanyo());
+
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										((Zombie)botones.get(u-1).getClientProperty("planta")).setVida(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()-((Planta)boton.getClientProperty("planta")).getDanyo());
+									}
+									try {
+										Thread.sleep(100);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									try {
+										if(((Zombie)botones.get(u).getClientProperty("planta")).getVida()<=0) {
+											botones.get(u).setIcon(null);
+											botones.get(u).putClientProperty("planta", null);
+										}
+									} catch (Exception e) {
+										// TODO: handle exception
+										if(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()<=0) {
+											botones.get(u-1).setIcon(null);
+											botones.get(u-1).putClientProperty("planta", null);
+										}
+									}
+									break;
+								}
+							}
+						}
+
+					}
+				}
+			}
+		});
+		hilo1.start();
 		hilo.start();
 	}
 	@Override
