@@ -19,7 +19,7 @@ public class Creditos extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	public Creditos() {
-		setSize(800, 600);
+		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
@@ -53,7 +53,7 @@ public class Creditos extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				new MenuInicial();
 				dispose();
-				
+				player.stopPlaying();	
 			}
 		});
 		
@@ -62,6 +62,7 @@ public class Creditos extends JFrame{
 		panel.setLayout(new BorderLayout());
 		add(panel);
 		panel.add(atras, BorderLayout.NORTH);
+		setLocationRelativeTo(null);
 		
 		
 	}

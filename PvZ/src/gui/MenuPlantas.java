@@ -425,6 +425,8 @@ public class MenuPlantas extends JFrame{
         soleslabel.setFont(fuentebarra);
         
         JPanel panelbarra = new JPanel();
+        JPanel panelatras = new JPanel();
+        panelatras.setLayout(new BorderLayout());
         JButton atras = new JButton("Atras");
         atras.setFont(fuentebarra);
         atras.addActionListener(new ActionListener() {
@@ -440,7 +442,8 @@ public class MenuPlantas extends JFrame{
 			}
 		});
         
-        barra.add(atras);
+        panelatras.add(atras, BorderLayout.WEST);
+        panelbarra.add(panelatras);
         panelbarra.add(soleslabel);
         barra.add(panelbarra);
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
