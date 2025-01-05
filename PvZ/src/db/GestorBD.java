@@ -224,8 +224,8 @@ public class GestorBD {
 		}
 		
 	}
-	public List<Planta> getPlantas() {
-		List<Planta> plantas = new ArrayList<>();
+	public ArrayList<Planta> getPlantas() {
+		ArrayList<Planta> plantas = new ArrayList<>();
 		String sql = "SELECT * FROM Plantas";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
@@ -259,8 +259,8 @@ public class GestorBD {
 		
 		return plantas;
 	}
-	public List<Planta> getPlantasTienda() {
-		List<Planta> plantas = new ArrayList<>();
+	public ArrayList<Planta> getPlantasTienda() {
+		ArrayList<Planta> plantas = new ArrayList<>();
 		String sql = "SELECT * FROM PlantasTienda";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
@@ -294,8 +294,8 @@ public class GestorBD {
 		
 		return plantas;
 	}
-	public List<Zombie> getZombies() {
-		List<Zombie> zombies = new ArrayList<>();
+	public ArrayList<Zombie> getZombies() {
+		ArrayList<Zombie> zombies = new ArrayList<>();
 		String sql = "SELECT * FROM Zombies";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
@@ -329,8 +329,8 @@ public class GestorBD {
 		
 		return zombies;
 	}
-	public List<Zombie> getZombiesTienda() {
-		List<Zombie> zombies = new ArrayList<>();
+	public ArrayList<Zombie> getZombiesTienda() {
+		ArrayList<Zombie> zombies = new ArrayList<>();
 		String sql = "SELECT * FROM ZombiesTienda";
 		
 		//Se abre la conexión y se crea el PreparedStatement con la sentencia SQL
