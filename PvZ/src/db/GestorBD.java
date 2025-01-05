@@ -52,7 +52,7 @@ public class GestorBD {
 		System.out.println("lol");
 		//Sólo se inicializa la BBDD si la propiedad initBBDD es true.
 		if (properties.get("loadCSV").equals("true")) {
-			System.out.println("xD");
+			System.out.println("xD lol");
 			//Se borran los datos, si existía alguno
 			this.borrarDatos();
 			ArrayList<Planta> plantas = new ArrayList<Planta>();
