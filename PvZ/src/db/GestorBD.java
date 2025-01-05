@@ -45,7 +45,7 @@ public class GestorBD {
 			
 			//Cargar el diver SQLite
 			Class.forName(driverName);
-		} catch (Exception ex) {
+		} catch (Exception ex) { //ehhh
 		}
 	}
 	public void initilizeFromCSV() {
