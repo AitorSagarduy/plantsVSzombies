@@ -32,7 +32,7 @@ public class GestorBD {
 	private String connectionString;
 	
 	public GestorBD() {
-		try (FileInputStream fis = new FileInputStream("src/db/logger.properties")) {
+		try {
 			//Inicialización del Logger
 			
 			//Lectura del fichero properties
