@@ -11,8 +11,7 @@ public class Zombie {
 	protected int nivel;
 	protected boolean colocado;
 	
-	public Zombie(String tipo, String nombre, int vida, int tmp_atac, int danyo, int velocidad, int nivel,
-			boolean colocado) {
+	public Zombie(String tipo, String nombre, int vida, int tmp_atac, int danyo, int velocidad, int nivel) {
 		super();
 		this.tipo = tipo;
 		this.nombre = nombre;
@@ -21,7 +20,6 @@ public class Zombie {
 		this.danyo = danyo;
 		this.velocidad = velocidad;
 		this.nivel = nivel;
-		this.colocado = colocado;
 	}
 
 	public String getTipo() {

@@ -10,6 +10,8 @@ public class Main {
 	public static void main(String[] args) {
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
+		System.out.println(gestorBD.getPlantas());
+		System.out.println(gestorBD.getZombies());
 		SwingUtilities.invokeLater(() -> new MenuInicial());
 	}
 

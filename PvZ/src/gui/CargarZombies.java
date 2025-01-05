@@ -23,7 +23,7 @@ public class CargarZombies {
 				int velocidad = Integer.parseInt(campos[5]);
 				int nivel = Integer.parseInt(campos[6]);
 				 
-				Zombie nuevo = new Zombie(tipo, nombre, vida, tmp_atac, danyo, velocidad, nivel, false);
+				Zombie nuevo = new Zombie(tipo, nombre, vida, tmp_atac, danyo, velocidad, nivel);
 				zombies.add(nuevo);
 			}
 		} catch (FileNotFoundException e) {

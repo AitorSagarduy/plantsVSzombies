@@ -92,7 +92,7 @@ public class Planta {
 
 	@Override
 	public String toString() {
-		return "Plantas [tipo=" + tipo + ", nombre=" + nombre + ", vida=" + vida + ", tmp_atac=" + tmp_atac + ", danyo="
+		return "Planta [tipo=" + tipo + ", nombre=" + nombre + ", vida=" + vida + ", tmp_atac=" + tmp_atac + ", danyo="
 				+ danyo + ", rango=" + rango + ", nivel=" + nivel + "]";
 	}
 	

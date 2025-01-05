@@ -12,145 +12,146 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 import domain.Planta;
 
 public class MenuInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    
+
     MusicaMenu player = new MusicaMenu();
     Thread musicThread = new Thread(player);
-    
-    
+
     public MenuInicial() {
-        super("Ventana mínima");
-        MusicaMenu.sonidoM = "/sonidos/sly.wav";
+        super("Simulador PvZ");
+        MusicaMenu.sonidoM = "/sonidos/flsh2.wav";
         musicThread.start();
         // Ajustes de la ventana
-        setSize(800, 600);
+        setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Crear panel 
-        JPanel panel = new JPanel() {
+        // Crear el panel con fondo
+        JPanel fondoPanel = new JPanel() {
             private static final long serialVersionUID = 1L;
-
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                BufferedImage envy = null; // la imagen
+                BufferedImage envy = null;
                 try {
-                    envy = ImageIO.read(getClass().getResourceAsStream("/imagenes/surface.jpg"));
+                    envy = ImageIO.read(getClass().getResourceAsStream("/imagenes/bg.jpg"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
+                g.drawImage(envy, 0, 0, getWidth(), getHeight(), null); // Aseguramos que el fondo se ajuste bien
             }
         };
-        ;
-        //panel.setLayout(new GridLayout(1, 2));
-        panel.setLayout(null);
-        // lo que pregunta el usurname
+
+        fondoPanel.setLayout(new GridBagLayout()); // Layout para los botones
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // Crear panel para los botones
+        JPanel botonPanel = new JPanel();
+        botonPanel.setLayout(new GridBagLayout());
+        botonPanel.setOpaque(false); // Hacer que el fondo de los botones sea transparente
+
+        // Crear botones
+        JButton selim = createButton("SIMULADOR");
+        JButton yoki = createButton("ALMANAQUE");
+        JButton alphonse = createButton("AJUSTES");
+        JButton mustang = createButton("CREDITOS");
+        JButton tienda = createButton("TIENDA"); // vale, me puse serio
+        gbc.fill = GridBagConstraints.HORIZONTAL;  // Para que los botones ocupen todo el ancho disponible
+        gbc.insets = new java.awt.Insets(10, 10, 10, 10); // Separación entre los botones
+
+        gbc.gridx = 0;   // Columna 0 (centrado)
+        gbc.gridy = 0;   // Fila 0
+        gbc.gridwidth = 1; // Un solo botón por celda
+        gbc.weightx = 1.0; // El botón ocupa todo el ancho de la ventana
+        botonPanel.add(selim, gbc);
         
-        JTextField EdwardElric = new JTextField(); // save del usuario
-        EdwardElric.setBounds(30, 50, 300, 60);
-        panel.add(EdwardElric);
-        JButton KingBradley = new JButton("Guardar usuario"); //usuario
-        KingBradley.setBounds(30, 110, 300, 60);
-        panel.add(KingBradley);
+        gbc.gridy = 1;   // F1
+        botonPanel.add(yoki, gbc);
 
+        gbc.gridy = 2;   // F2
+        botonPanel.add(alphonse, gbc);
+
+        gbc.gridy = 3;   // F 3
+        botonPanel.add(mustang, gbc);
         
-        KingBradley.addActionListener(new GuardarUsuarioListener(EdwardElric));
+        gbc.gridy = 4; //f4
+        botonPanel.add(tienda, gbc);
+        // Añadir el panel de botones al fondoPanel
+        fondoPanel.add(botonPanel);
 
-        
-        //botones
+        // Establecer el fondoPanel como el fondo principal y hacerlo negro
+        fondoPanel.setBackground(java.awt.Color.BLACK); // Fondo negro
 
-           
-        //boton 1
-        JButton selim = new JButton("SIMULADOR"); // eder y jhojan
-        selim.setBounds(350, 100, 500, 100);
-        selim.setBackground(java.awt.Color.GRAY);
-        selim.setForeground(java.awt.Color.WHITE);
-        selim.setFont(new Font("Arial Black", Font.BOLD, 24));
-        ActionListener s = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				player.stopPlaying();
-				new SelecPlantas();	
-			}
-		};
-		selim.addActionListener(s);
-      
-				
-        //boton 2
-        JButton yoki = new JButton("ALMANAQUE"); // parte de aitor
-        yoki.setBounds(350, 200, 500, 100);
-        yoki.setBackground(java.awt.Color.GRAY);
-        yoki.setForeground(java.awt.Color.WHITE);
-        yoki.setFont(new Font("Arial Black", Font.BOLD, 24)); 
-        ActionListener l = new ActionListener() {
-		
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas 
-		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
-		        new SelecAlmanaque();
-		        player.stopPlaying();
-		        dispose();
-			}
-		};
-		yoki.addActionListener(l);
-        //boton 3
-        JButton alphonse = new JButton("AJUSTES"); // parte de pele (?)
-        alphonse.setBounds(350, 300, 500, 100); 
-        alphonse.setBackground(java.awt.Color.GRAY);
-        alphonse.setForeground(java.awt.Color.WHITE);
-        alphonse.setFont(new Font("Arial Black", Font.BOLD , 24));
-        alphonse.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Ajustes();
-				dispose();
-				player.stopPlaying();
-				
-			}
-		});
-        
+        // Añadir fondoPanel al JFrame
+        add(fondoPanel);
 
-
-            
-      
-        //boton 4
-        JButton mustang = new JButton("CREDITOS"); // pele
-        mustang.setBounds(350, 400, 500, 100);
-        mustang.setBackground(java.awt.Color.GRAY);
-        mustang.setForeground(java.awt.Color.WHITE);
-        mustang.setFont(new Font("Arial Black", Font.BOLD, 24));
-        mustang.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Creditos();
-				dispose();
-				player.stopPlaying();
-				
-			}
-		});
-        // Añadimos botones
-        panel.add(selim); //1
-        panel.add(yoki); //2
-        panel.add(alphonse); //3
-        panel.add(mustang); //4
-        
-        add(panel);
-
+        // Hacer visible la ventana
         setVisible(true);
+    }
+
+    private JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(java.awt.Color.BLACK);
+        button.setForeground(java.awt.Color.WHITE);
+        button.setFont(new Font("Arial Black", Font.BOLD, 24));
+
+        // ActionListener para cada botón
+        if (text.equals("SIMULADOR")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    player.stopPlaying();
+                    new SelecPlantas();
+                }
+            });
+        } else if (text.equals("ALMANAQUE")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas 
+                    MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
+                    new SelecAlmanaque();
+                    player.stopPlaying();
+                    dispose();
+                }
+            });
+        } else if (text.equals("AJUSTES")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new Ajustes();
+                    dispose();
+                    player.stopPlaying();
+                }
+            });
+        } else if (text.equals("CREDITOS")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new Creditos();
+                    dispose();
+                    player.stopPlaying();
+                }
+            });
+        } else if (text.equals("TIENDA")) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new Tienda();
+                    dispose();
+                    player.stopPlaying();
+                }
+            });}
+
+        return button;
     }
 
     public static void main (String[] args) {
