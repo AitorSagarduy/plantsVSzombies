@@ -6,18 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import Main.Main;
+import db.GestorBD;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 import domain.Planta;
 
 public class MenuInicial extends JFrame {
+	
 
     private static final long serialVersionUID = 1L;
 
@@ -26,6 +32,8 @@ public class MenuInicial extends JFrame {
 
     public MenuInicial() {
         super("Simulador PvZ");
+        
+        
         MusicaMenu.sonidoM = "/sonidos/flsh2.wav";
         musicThread.start();
         // Ajustes de la ventana
@@ -97,6 +105,7 @@ public class MenuInicial extends JFrame {
     }
 
     private JButton createButton(String text) {
+    	GestorBD bdgei = new GestorBD();
         JButton button = new JButton(text);
         button.setBackground(java.awt.Color.BLACK);
         button.setForeground(java.awt.Color.WHITE);
@@ -110,6 +119,13 @@ public class MenuInicial extends JFrame {
                     dispose();
                     player.stopPlaying();
                     new SelecPlantas();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                   
                 }
             });
         } else if (text.equals("ALMANAQUE")) {
@@ -121,6 +137,13 @@ public class MenuInicial extends JFrame {
                     new SelecAlmanaque();
                     player.stopPlaying();
                     dispose();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                    
                 }
             });
         } else if (text.equals("AJUSTES")) {
@@ -130,6 +153,12 @@ public class MenuInicial extends JFrame {
                     new Ajustes();
                     dispose();
                     player.stopPlaying();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             });
         } else if (text.equals("CREDITOS")) {
@@ -139,6 +168,12 @@ public class MenuInicial extends JFrame {
                     new Creditos();
                     dispose();
                     player.stopPlaying();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             });
         } else if (text.equals("TIENDA")) {
@@ -148,6 +183,12 @@ public class MenuInicial extends JFrame {
                     new Tienda();
                     dispose();
                     player.stopPlaying();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 }
             });}
 

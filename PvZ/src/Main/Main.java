@@ -8,14 +8,16 @@ import db.GestorBD;
 import gui.MenuInicial;
 
 public class Main {
-	
-	public static int solespublic = 0;
+	public static int solespublic;
+	public static int cerebrospublic;
 
 	public static void main(String[] args) throws SQLException {
 		
 		
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
+		gestorBD.getCoins();
+		
 		System.out.println(gestorBD.getPlantas());
 		System.out.println(gestorBD.getZombies());
 		gestorBD.Level_updater_P("Lanzaguisantes", 69, 69, 69, 3, 100);

@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import Main.Main;
 import domain.Planta;
 import domain.Zombie;
 import gui.CargarZombies;
@@ -541,7 +542,7 @@ public class GestorBD {
 			rp_recurs(listaP, i, nombre, vida, tmp_atac, danyo, rango, nivel, sql1, sql2);
 		}
 	}
-	public void getCoins(int soles, int cerebros) {
+	public void getCoins() {
 		String sql = "SELECT * FROM Monedas";
 		try (Connection con = DriverManager.getConnection(connectionString);
 			     PreparedStatement pStmt = con.prepareStatement(sql)) {			
@@ -552,8 +553,8 @@ public class GestorBD {
 				
 				//Se recorre el ResultSet y se crean objetos
 				while (rs.next()) {
-							soles =rs.getInt("Soles");
-							cerebros=rs.getInt("Cerebros");
+							Main.solespublic =rs.getInt("Soles");
+							Main.cerebrospublic=rs.getInt("Cerebros");
 				}
 				
 				//Se cierra el ResultSet
@@ -566,7 +567,7 @@ public class GestorBD {
 		
 	}
 	public void updateCoins(int soles, int cerebros) throws SQLException {
-		String sql1 = "DELETE * FROM Monedas ;";
+		String sql1 = "DELETE FROM Monedas ;";
 		String sql2 ="INSERT INTO Monedas (Soles, Cerebros) VALUES (?, ?);";
 		try(Connection con1 = DriverManager.getConnection(connectionString);
 				PreparedStatement pStmt1 = con1.prepareStatement(sql1)){
