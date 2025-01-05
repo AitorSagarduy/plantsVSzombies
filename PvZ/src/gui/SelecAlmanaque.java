@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import db.GestorBD;
 import domain.Planta;
 import domain.Zombie;
 
@@ -26,6 +27,11 @@ public class SelecAlmanaque extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Selecciona el almanaque");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+		
+		GestorBD gestorBD = new GestorBD();
+        ArrayList<Planta> lol = gestorBD.getPlantasTienda();
+        System.out.println("esta abajo bro");
+        System.out.println(lol);
 		
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
@@ -52,9 +58,10 @@ public class SelecAlmanaque extends JFrame{
 		plantas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Planta> sig = new ArrayList<Planta>();
-		        MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/TODAS.csv");
-		        MenuPlantas ventana = new MenuPlantas(sig);
+		        GestorBD gestorBD = new GestorBD();
+
+		       // MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/TODAS.csv");
+		        MenuPlantas ventana = new MenuPlantas(gestorBD.getPlantas());
 		        ventana.setLocationRelativeTo(null);
 		        dispose();
 			}

@@ -73,6 +73,10 @@ public class ModeloTabla extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return columnas[column];
 	}
+
+	public Planta getPlantaAt(int rowIndex) {
+	    return plantas.get(rowIndex);
+	}
 	
 	
 }

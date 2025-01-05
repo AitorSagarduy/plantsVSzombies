@@ -28,6 +28,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
+import Main.Main;
+import db.GestorBD;
+import domain.Planta;
+
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{
@@ -36,13 +40,17 @@ public class MenuPlantas extends JFrame{
 	//   private ArrayList<Planta> plantas; 
 	   
 	   public static void main(String[] args) {
-	        ArrayList<domain.Planta> plantas = new ArrayList<domain.Planta>();
-	        cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
+	      //  ArrayList<domain.Planta> plantas = new ArrayList<domain.Planta>();
+	      //  cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
+		   
+	        GestorBD gestorBD = new GestorBD();
+	        ArrayList<domain.Planta> plantas = gestorBD.getPlantas();
+
 	        MenuPlantas ventana = new MenuPlantas(plantas);
 	        ventana.setLocationRelativeTo(null);
 	   }
 	   
-	   public static Integer solespublic = 0;
+	 //public static Integer solespublic = 0;
 	   int soles = 0;
 	   private JLabel soleslabel;
        int contador = 0;
@@ -117,7 +125,14 @@ public class MenuPlantas extends JFrame{
 	    Thread musicThread = new Thread(player);
         MusicaMenu.sonidoM = "/sonidos/zengarden.wav";
         musicThread.start();
-        soles = solespublic;
+        
+        
+        
+        Main mainInstance = new Main();
+        int solesmain = mainInstance.solespublic;
+       // int solespublic = solesmain;
+        
+        soles = solesmain;
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(290, 330); //383
@@ -433,7 +448,9 @@ public class MenuPlantas extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(soles);
-				solespublic = soles;
+				
+				Main mainInstance = new Main();
+		        mainInstance.solespublic = soles;
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);

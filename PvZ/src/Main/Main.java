@@ -8,8 +8,12 @@ import db.GestorBD;
 import gui.MenuInicial;
 
 public class Main {
+	
+	public static int solespublic = 0;
 
 	public static void main(String[] args) throws SQLException {
+		
+		
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
 		System.out.println(gestorBD.getPlantas());
