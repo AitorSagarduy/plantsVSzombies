@@ -23,6 +23,7 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 		for (int i = 0; i < plantas.size(); i++) {
 			cantidades.add(0);
 		}
+		
 	}
 	@Override
 	public Class<?> getColumnClass(int column) {
@@ -67,6 +68,7 @@ public class ModeloSeleccionadas extends AbstractTableModel {
 		}
 		return null;
 	}
+	
 	
 	
 	

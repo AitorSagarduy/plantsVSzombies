@@ -32,6 +32,7 @@ public class SelecPlantas extends JFrame {
         @SuppressWarnings("unused")
 		SelecPlantas ventana = new SelecPlantas();
 	}
+	
 	JPanel panelGeneral;
 	JPanel panelBotones;
 	JPanel panelPlantas;
@@ -100,15 +101,8 @@ public class SelecPlantas extends JFrame {
 		JScrollPane scrollSelec = new JScrollPane(tablaSelec);
 		
 		TableColumn columnSelec = tablaSelec.getColumnModel().getColumn(0);
-		columnSelec.setPreferredWidth(163);
-		
-		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
-	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
-	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
-	    
-	    for (int i = 1; i < tabla.getColumnCount(); i++) {
-            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
-        }
+		columnSelec.setPreferredWidth(172);
+	
 		
 		//colocarlo abajo y hacer que no se vea
 		scrollSelec.setVisible(false);
@@ -162,6 +156,7 @@ public class SelecPlantas extends JFrame {
 				    modeloSelec.getPlantas().add(plantaSeleccionada);
 				    modeloSelec.getCantidades().add(1);
 				    modeloSelec.fireTableRowsInserted(modeloSelec.getRowCount() - 1, modeloSelec.getRowCount() - 1);
+				    
 				}
 				// al pulsar añadir por primera vez que se vea la tabla
 				if (numeroFilas == 0) {
@@ -216,7 +211,14 @@ public class SelecPlantas extends JFrame {
 				dispose();
 			}
 		});
-        
+    	
+		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
+	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
+	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
+	    
+	    for (int i = 1; i < tabla.getColumnCount(); i++) {
+            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
+        }
 
         panelBotones = new JPanel();  
         panelBotones.add(atras);
