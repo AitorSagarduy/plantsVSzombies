@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,6 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+
+import Main.Main;
+import db.GestorBD;
 
 import java.awt.Color;
 
@@ -359,12 +363,19 @@ public class MenuZombies extends JFrame{
         soleslabel = new JLabel("Cerebros: " + soles, solicono, JLabel.LEFT);
         soleslabel.setFont(fuentebarra);
         
+        GestorBD bdgei = new GestorBD();
         JPanel panelbarra = new JPanel();
         JButton atras = new JButton("Atras");
         atras.setFont(fuentebarra);
         atras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);

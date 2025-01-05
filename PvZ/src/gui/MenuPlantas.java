@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -35,6 +36,7 @@ import domain.Planta;
 import java.awt.Color;
 
 public class MenuPlantas extends JFrame{
+	
 	private static final long serialVersionUID = 1L;
 
 	//   private ArrayList<Planta> plantas; 
@@ -439,6 +441,8 @@ public class MenuPlantas extends JFrame{
         soleslabel = new JLabel("Soles: " + soles, solicono, JLabel.LEFT);
         soleslabel.setFont(fuentebarra);
         
+        GestorBD bdgei = new GestorBD();
+        
         JPanel panelbarra = new JPanel();
         JPanel panelatras = new JPanel();
         panelatras.setLayout(new BorderLayout());
@@ -448,9 +452,13 @@ public class MenuPlantas extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(soles);
-				
-				Main mainInstance = new Main();
-		        mainInstance.solespublic = soles;
+				try {
+					bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Main.solespublic = soles;
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);

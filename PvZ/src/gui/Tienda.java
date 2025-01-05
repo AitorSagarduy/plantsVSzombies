@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,12 +96,18 @@ public class Tienda extends JFrame{
 		
 		JButton atras = new JButton("Atras");
         atras.setFont(fuentebarra);
+        GestorBD bdgei = new GestorBD();
         atras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				System.out.println(soles);
-				Main mainInstance = new Main();
-		        mainInstance.solespublic = soles;
+				Main.solespublic = soles;
 		        player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);
