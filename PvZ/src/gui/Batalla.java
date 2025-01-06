@@ -2,14 +2,11 @@ package gui;
 
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.attribute.AclEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,13 +30,6 @@ public class Batalla extends JFrame implements Runnable{
 		this.mapaFinalPlantas = mapaFinal1;
 		this.mapaFinalZombies = mapaFinal2;
 		setLayout(new GridLayout(5, 20));
-		
-		//Aitor: lo de pele para reproducir una pista de audio
-		MusicaMenu player = new MusicaMenu();
-	    Thread musicThread = new Thread(player);
-        MusicaMenu.sonidoM = "/sonidos/batalla.wav";
-        musicThread.start();
-		
 		ArrayList<JButton> botones = new ArrayList<JButton>();
 		for(int i = 0; i<100;i++) {
 			int fila = i / 20; // 10 columnas por fila
@@ -53,9 +43,7 @@ public class Batalla extends JFrame implements Runnable{
 		    
 		    if(mapaFinalPlantas.get(coordenadas) instanceof Planta) {
 		    	try {
-		    		//Aitor: Para saber el tamaño exacto, usa el tamaño de la panatalla / el numero de casillas en el caso del ancho
-		    		//En el caso del alto es / 9 para que no quede demasiado estirada
-					botonCesped.setIcon(new ImageIcon(Simulacionv1.getBuferedimagePlanta(mapaFinalPlantas.get(coordenadas)).getScaledInstance(Ajustes.resolucionx()/24, Ajustes.resoluciony()/9, Image.SCALE_SMOOTH)));
+					botonCesped.setIcon(new ImageIcon(Simulacionv1.getBuferedimagePlanta(mapaFinalPlantas.get(coordenadas)).getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 					botonCesped.putClientProperty("planta", mapaFinalPlantas.get(coordenadas));
 		    	} catch (IOException e) {
 					e.printStackTrace();
@@ -83,84 +71,94 @@ public class Batalla extends JFrame implements Runnable{
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		Thread hilo = new Thread();
 		detener = false;
-		hilo =  new Thread(() -> {
-			while(!detener) {
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				for(int i = 0; i<100;i++) {
-					JButton boton = botones.get(i);
-					if(boton.getClientProperty("planta") instanceof Zombie) {
-						if((int)(boton.getClientProperty("columna")) == 0) {
+		ArrayList<Thread> hilosZombies = new ArrayList<Thread>();
+		ArrayList<Thread> hilosPlantas = new ArrayList<Thread>();
+		for(int i = 0; i<100;i++) {
+			if (botones.get(i).getClientProperty("planta") instanceof Zombie) {
+				Thread hilo = new Thread();
+				Zombie zombie = (Zombie) botones.get(i).getClientProperty("planta");
+				int finalII = i;
+				hilo = new Thread(() -> {
+					int finalI = finalII;
+					while (!detener) {
+						if(finalI%20 == 0) {
 							detener = true;
-							System.out.format("El zombie %s gana", ((Zombie)boton.getClientProperty("planta")).getTipo());
-						}else if(botones.get(i-1).getClientProperty("planta") instanceof Planta) {
-							((Planta)botones.get(i-1).getClientProperty("planta")).setVida(((Planta)botones.get(i-1).getClientProperty("planta")).getVida()-((Zombie)boton.getClientProperty("planta")).getDanyo());
-							try {
-								Thread.sleep(100);
+							System.out.println("Los zombies ganan");
+						}
+                        try {
+                            Thread.sleep(zombie.getVelocidad()*1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(botones.get(finalI-1).getClientProperty("planta") instanceof Planta) {
+                        	Planta planta = (Planta) botones.get(finalI-1).getClientProperty("planta");
+                        	planta.setVida(planta.getVida()-zombie.getDanyo());
+							if (planta.getVida() <= 0) {
+								botones.get(finalI-1).setIcon(null);
+								botones.get(finalI-1).putClientProperty("planta", null);
+								botones.get(finalI-1).setIcon(botones.get(finalI).getIcon());
+								botones.get(finalI-1).putClientProperty("planta", zombie);
+								botones.get(finalI).setIcon(null);
+								botones.get(finalI).putClientProperty("planta", null);
+								finalI--;
+							}
+                        } else if (botones.get(finalI-1).getClientProperty("planta") instanceof Zombie) {
+                        	try {
+								hilo.sleep(100);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							System.out.println("TOCANDO PLANTA REPITO");
-							reproducirSonido("src/sonidos/comiendo.wav");
-							if(((Planta)botones.get(i-1).getClientProperty("planta")).getVida()<=0) {
-								botones.get(i-1).setIcon(null);
-								botones.get(i-1).putClientProperty("planta", null);
-							}
-						}else{
-							botones.get(i-1).setIcon(boton.getIcon());
-							boton.setIcon(null);
-							botones.get(i-1).putClientProperty("planta", boton.getClientProperty("planta"));
-							boton.putClientProperty("planta", null);
-
-						}
-					}
-				}
-				
+                        } else {
+                        	botones.get(finalI-1).setIcon(botones.get(finalI).getIcon());
+                        	botones.get(finalI-1).putClientProperty("planta", zombie);
+                        	botones.get(finalI).setIcon(null);
+                        	botones.get(finalI).putClientProperty("planta", null);
+                        	finalI--;
+                        }
+                        
+                    }
+				});
+				hilosZombies.add(hilo);
 			}
-		});
-		Thread hilo1 = new Thread(() -> {
-			while (!detener) {
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				for (int i = 0; i < 100; i++) {
-					JButton boton = botones.get(i);
-					if (boton.getClientProperty("planta") instanceof Planta) {
+		}
+		for (int i = 0; i < 100; i++) {
+			if (botones.get(i).getClientProperty("planta") instanceof Planta) {
+				Thread hilo = new Thread();
+				Planta planta = (Planta) botones.get(i).getClientProperty("planta");
+				int finalII = i;
+				hilo = new Thread(() -> {
+					int finalI = finalII;
+					while (!detener) {
+						try {
+							Thread.sleep(planta.getTmp_atac() * 1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						int numeroZomb = 0;
 						for (int j = 0; j < 100; j++) {
 							if (botones.get(j).getClientProperty("planta") instanceof Zombie) {
 								numeroZomb++;
 							}
 						}
-						if (numeroZomb == 0){
+						if (numeroZomb <= 0){
 							detener = true;
 							System.out.println("Las plantas ganan");
 						}else{
-							for(int u = i ; u%20 <= 19;u++ ){
+							for(int u = finalI ; u%20 <= 19;u++ ){
 								if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
-									reproducirSonido("src/sonidos/disparo.wav");
-									System.out.println("Planta ataca a zombie"+u+i);	
+									System.out.println("Planta ataca a zombie en la columna: "+u%20);	
+									Zombie zombie = (Zombie) botones.get(u).getClientProperty("planta");
 									try {
-										((Zombie)botones.get(u).getClientProperty("planta")).setVida(((Zombie)botones.get(u).getClientProperty("planta")).getVida()-((Planta)boton.getClientProperty("planta")).getDanyo());
-
+										zombie.setVida(zombie.getVida()-planta.getDanyo());
 									} catch (Exception e) {
-										// TODO Auto-generated catch block
-										((Zombie)botones.get(u-1).getClientProperty("planta")).setVida(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()-((Planta)boton.getClientProperty("planta")).getDanyo());
-									}
-									try {
-										Thread.sleep(100);
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										try {
+											((Zombie)botones.get(u-1).getClientProperty("planta")).setVida(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()-planta.getDanyo());
+                                            
+                                        } catch (Exception e2) {
+                                        	
+                                        }
 									}
 									try {
 										if(((Zombie)botones.get(u).getClientProperty("planta")).getVida()<=0) {
@@ -178,34 +176,22 @@ public class Batalla extends JFrame implements Runnable{
 								}
 							}
 						}
-
 					}
-				}
+				});
+				hilosPlantas.add(hilo);
 			}
-		});
-		hilo1.start();
-		hilo.start();
+		}
+		for (Thread thread : hilosZombies) {
+			thread.start();
+		}
+		for (Thread thread : hilosPlantas) {
+			thread.start();
+		}
 	}
 	@Override
 	public void run() {
 		SwingUtilities.invokeLater(()->new Simulacionv1());
 		
-	}
-	
-	//Aitor: el reproducir sonido que hizo pele para que suenen los efectos
-	private void reproducirSonido(String rutaSonido) {
-	    try {
-	        // Cargar el archivo de sonido
-	        File archivoSonido = new File(rutaSonido);
-	        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
-
-	        // Preparar y reproducir el sonido
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioStream);
-	        clip.start(); // Iniciar reproducción
-	    } catch (Exception e) {
-	        e.printStackTrace();  // Manejar excepciones
-	    }
 	}
 
 }
