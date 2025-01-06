@@ -16,8 +16,8 @@ public class Main {
 		
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
-		gestorBD.getCoins();
 		
+		gestorBD.getCoins();
 		System.out.println(gestorBD.getPlantas());
 		System.out.println(gestorBD.getZombies());
 		gestorBD.Level_updater_P("Lanzaguisantes", 69, 69, 69, 3, 100);
