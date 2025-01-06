@@ -57,6 +57,7 @@ public class GestorBD {
 			System.out.println("xD lol");
 			//Se borran los datos, si existía alguno
 			this.borrarDatos();
+			this.borrarDatosTienda();
 			ArrayList<Planta> plantas = new ArrayList<Planta>();
 			MenuPlantas.cargarPlantasCSV(plantas, CSV_PLANTAS);
 			this.insertarPlanta(plantas.toArray(new Planta[plantas.size()]));
