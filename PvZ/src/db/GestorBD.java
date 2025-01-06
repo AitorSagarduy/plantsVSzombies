@@ -443,30 +443,32 @@ public class GestorBD {
 	public ArrayList<Planta> Level_updater_P(String nombre, 
 			int vida, int tmp_atac, int danyo, int rango, int nivel) throws SQLException{
 		String r2d2 = nombre;
-		String sql1 = "DELETE FROM Plantas WHERE Nombre = ? ;";
-		String sql2 ="INSERT INTO Plantas (Tipo, Nombre, Vida, Tmp_atac, Danyo, Rango, Nivel) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String sql2 = "UPDATE Plantas "
+	            + "SET Vida = ?, Tmp_atac = ?, Danyo = ?, Rango = ?, Nivel = ? "
+	            + "WHERE Nombre = ?;";
 		ArrayList<Planta> listaP = getPlantas();
 		System.out.println(listaP.size() - 1);
 		System.out.println(listaP);
-		rp_recurs(listaP, listaP.size() - 1, r2d2, vida, tmp_atac, danyo, rango, nivel, sql1, sql2);
+		rp_recurs(listaP, listaP.size() - 1, r2d2, vida, tmp_atac, danyo, rango, nivel, sql2);
 				return listaP;
 		
 	}
 	public ArrayList<Zombie> Level_updater_Z(String nombre, 
 			int vida, int tmp_atac, int danyo, int velocidad, int nivel) throws SQLException{
 		String r2d2 = nombre;
-		String sql1 = "DELETE FROM Zombies WHERE Nombre = ? ;";
-		String sql2 ="INSERT INTO Zombies (Tipo, Nombre, Vida, Tmp_atac, Danyo, Velocidad, Nivel) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String sql2 = "UPDATE Zombies "
+	            + "SET Vida = ?, Tmp_atac = ?, Danyo = ?, Velocidad = ?, Nivel = ? "
+	            + "WHERE Nombre = ?;";
 		ArrayList<Zombie> listaZ = getZombies();
 		System.out.println(listaZ.size() - 1);
 		System.out.println(listaZ);
-		rz_recurs(listaZ, listaZ.size() - 1, r2d2, vida, tmp_atac, danyo, velocidad, nivel, sql1, sql2);
+		rz_recurs(listaZ, listaZ.size() - 1, r2d2, vida, tmp_atac, danyo, velocidad, nivel, sql2);
 		return listaZ;
 		
 	}
 	
 	public void rz_recurs(ArrayList<Zombie> listaZ, int i, String nombre,
-			int vida, int tmp_atac, int danyo, int velocidad, int nivel, String sql1, String sql2) throws SQLException {
+			int vida, int tmp_atac, int danyo, int velocidad, int nivel, String sql2) throws SQLException {
 		if(listaZ.get(i).getNombre().equals(nombre)) {
 			System.out.println("1");
 			listaZ.get(i).setVida(vida);
@@ -474,22 +476,16 @@ public class GestorBD {
 			listaZ.get(i).setDanyo(danyo);
 			listaZ.get(i).setVelocidad(velocidad);
 			listaZ.get(i).setNivel(nivel);
-			try(Connection con1 = DriverManager.getConnection(connectionString);
-					PreparedStatement pStmt1 = con1.prepareStatement(sql1)) {
-						pStmt1.setString(1, listaZ.get(i).getNombre());
-						pStmt1.executeUpdate();
-						System.out.println("2");
-			}
+			
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
 				System.out.println("3");
-						pStmt2.setString(1, listaZ.get(i).getTipo());
-						pStmt2.setString(2, listaZ.get(i).getNombre());
-						pStmt2.setInt(3, listaZ.get(i).getVida());
-						pStmt2.setInt(4, listaZ.get(i).getTmp_atac());
-						pStmt2.setInt(5, listaZ.get(i).getDanyo());
-						pStmt2.setInt(6, listaZ.get(i).getVelocidad());
-						pStmt2.setInt(7, listaZ.get(i).getNivel());
+						pStmt2.setString(1, listaZ.get(i).getNombre());
+						pStmt2.setInt(2, listaZ.get(i).getVida());
+						pStmt2.setInt(3, listaZ.get(i).getTmp_atac());
+						pStmt2.setInt(4, listaZ.get(i).getDanyo());
+						pStmt2.setInt(5, listaZ.get(i).getVelocidad());
+						pStmt2.setInt(6, listaZ.get(i).getNivel());
 						pStmt2.executeUpdate();
 						System.out.println("exito");
 					
@@ -501,11 +497,11 @@ public class GestorBD {
 				
 		}else {
 			i--;
-			rz_recurs(listaZ, i, nombre, vida, tmp_atac, danyo, velocidad, nivel, sql1, sql2);
+			rz_recurs(listaZ, i, nombre, vida, tmp_atac, danyo, velocidad, nivel, sql2);
 		}
 	}
 	public void rp_recurs(ArrayList<Planta> listaP, int i, String nombre,
-			int vida, int tmp_atac, int danyo, int rango, int nivel, String sql1, String sql2) throws SQLException {
+			int vida, int tmp_atac, int danyo, int rango, int nivel, String sql2) throws SQLException {
 		if(listaP.get(i).getNombre().equals(nombre)) {
 			System.out.println("1");
 			listaP.get(i).setVida(vida);
@@ -513,22 +509,15 @@ public class GestorBD {
 			listaP.get(i).setDanyo(danyo);
 			listaP.get(i).setRango(rango);
 			listaP.get(i).setNivel(nivel);
-			try(Connection con1 = DriverManager.getConnection(connectionString);
-					PreparedStatement pStmt1 = con1.prepareStatement(sql1)) {
-						pStmt1.setString(1, listaP.get(i).getNombre());
-						pStmt1.executeUpdate();
-						System.out.println("2");
-			}
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
 				System.out.println("3");
-						pStmt2.setString(1, listaP.get(i).getTipo());
-						pStmt2.setString(2, listaP.get(i).getNombre());
-						pStmt2.setInt(3, listaP.get(i).getVida());
-						pStmt2.setInt(4, listaP.get(i).getTmp_atac());
-						pStmt2.setInt(5, listaP.get(i).getDanyo());
-						pStmt2.setInt(6, listaP.get(i).getRango());
-						pStmt2.setInt(7, listaP.get(i).getNivel());
+						pStmt2.setString(1, listaP.get(i).getNombre());
+						pStmt2.setInt(2, listaP.get(i).getVida());
+						pStmt2.setInt(3, listaP.get(i).getTmp_atac());
+						pStmt2.setInt(4, listaP.get(i).getDanyo());
+						pStmt2.setInt(5, listaP.get(i).getRango());
+						pStmt2.setInt(6, listaP.get(i).getNivel());
 						pStmt2.executeUpdate();
 						System.out.println("exito");
 					
@@ -540,7 +529,7 @@ public class GestorBD {
 				
 		}else {
 			i--;
-			rp_recurs(listaP, i, nombre, vida, tmp_atac, danyo, rango, nivel, sql1, sql2);
+			rp_recurs(listaP, i, nombre, vida, tmp_atac, danyo, rango, nivel, sql2);
 		}
 	}
 	public void getCoins() {
