@@ -480,12 +480,12 @@ public class GestorBD {
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
 				System.out.println("3");
-						pStmt2.setString(1, listaZ.get(i).getNombre());
-						pStmt2.setInt(2, listaZ.get(i).getVida());
-						pStmt2.setInt(3, listaZ.get(i).getTmp_atac());
-						pStmt2.setInt(4, listaZ.get(i).getDanyo());
-						pStmt2.setInt(5, listaZ.get(i).getVelocidad());
-						pStmt2.setInt(6, listaZ.get(i).getNivel());
+						pStmt2.setString(6, listaZ.get(i).getNombre());
+						pStmt2.setInt(1, listaZ.get(i).getVida());
+						pStmt2.setInt(2, listaZ.get(i).getTmp_atac());
+						pStmt2.setInt(3, listaZ.get(i).getDanyo());
+						pStmt2.setInt(4, listaZ.get(i).getVelocidad());
+						pStmt2.setInt(5, listaZ.get(i).getNivel());
 						pStmt2.executeUpdate();
 						System.out.println("exito");
 					
@@ -512,12 +512,12 @@ public class GestorBD {
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
 				System.out.println("3");
-						pStmt2.setString(1, listaP.get(i).getNombre());
-						pStmt2.setInt(2, listaP.get(i).getVida());
-						pStmt2.setInt(3, listaP.get(i).getTmp_atac());
-						pStmt2.setInt(4, listaP.get(i).getDanyo());
-						pStmt2.setInt(5, listaP.get(i).getRango());
-						pStmt2.setInt(6, listaP.get(i).getNivel());
+						pStmt2.setString(6, listaP.get(i).getNombre());
+						pStmt2.setInt(1, listaP.get(i).getVida());
+						pStmt2.setInt(2, listaP.get(i).getTmp_atac());
+						pStmt2.setInt(3, listaP.get(i).getDanyo());
+						pStmt2.setInt(4, listaP.get(i).getRango());
+						pStmt2.setInt(5, listaP.get(i).getNivel());
 						pStmt2.executeUpdate();
 						System.out.println("exito");
 					
