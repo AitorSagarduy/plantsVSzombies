@@ -95,7 +95,6 @@ public class AlmanaqueZUser extends JFrame {
         add(mainPanel);
         setVisible(true);
 		
-	
 	}
 
 }

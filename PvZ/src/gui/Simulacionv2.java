@@ -49,7 +49,7 @@ public class Simulacionv2 extends JFrame{
 		return mapaFinalZombie;
 	}
 	public static void main(String[] args) {
-		new Simulacionv2(null);
+		
 	}
 
 	//hago mi renderizado para interactuar como quiera con la jlist
@@ -95,17 +95,15 @@ public class Simulacionv2 extends JFrame{
 	}
 	Zombie plantaSeleccionada = null; //variable para almacenar la planta que haya seleccionado el ussuario dentro de la lista
 	// creo la ventana
-	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1) {
+	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1, ArrayList<Zombie> resultadoZ) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setTitle("ventana de simulacion");
 		
 		this.mapaFinalPlanta = mapaFinal1;
 		
-		ArrayList<Zombie> plantas = new ArrayList<Zombie>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
+		ArrayList<Zombie> plantas = new ArrayList<Zombie>(resultadoZ); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Zombie> mapaFinal = new HashMap<ArrayList<Integer>, Zombie>();
-		//MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv"); // cargo las plantas con el metodo que ha creado mi compañero
-		CargarZombies.cargarZombiesCSV(plantas, "src/DatosCsv/zombies.csv");
 		DefaultListModel<Zombie> modelo = new DefaultListModel<Zombie>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
 		for(int i = 0; i<plantas.size();i++) {

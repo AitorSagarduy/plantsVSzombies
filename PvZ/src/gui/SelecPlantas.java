@@ -38,7 +38,7 @@ public class SelecPlantas extends JFrame {
 	JPanel panelPlantas;
 	JPanel panelTodasP;
 	JPanel panelUsuarioP;
-
+	ArrayList<Planta> plantasj = new ArrayList<Planta>();
 	public SelecPlantas() {
 		// ajustes de la ventana y cargar la lista plantas con plantas desde el csv
 		ArrayList<Planta> plantas = new ArrayList<Planta>();
@@ -90,8 +90,8 @@ public class SelecPlantas extends JFrame {
 		});
         
         // crear una lista donde el usuario la llene y pasarsela al modelo
-        ArrayList<Planta> plantasJ = new ArrayList<Planta>();
-		ModeloSeleccionadas modeloSelec = new ModeloSeleccionadas(plantasJ);
+       ArrayList<Planta> plantasJ = new ArrayList<Planta>();
+       ModeloSeleccionadas modeloSelec = new ModeloSeleccionadas(plantasJ);
 		
 		// crear la tabla con el modelo 
 		JTable tablaSelec = new JTable(modeloSelec);
@@ -107,6 +107,7 @@ public class SelecPlantas extends JFrame {
 		//colocarlo abajo y hacer que no se vea
 		scrollSelec.setVisible(false);
 	
+		
 		
 		
         JButton agregar = new JButton("Añadir");
@@ -147,7 +148,6 @@ public class SelecPlantas extends JFrame {
 					if(modeloSelec.getValueAt(i, 0).equals(nombrePlanta)) {
 						modeloSelec.sumarCantidad(i);
 						existe = true;
-						
 					}
 				}
 				// si no añadir la fila seleccionada con la cantidad a 1 
@@ -164,7 +164,8 @@ public class SelecPlantas extends JFrame {
 				    revalidate();
 				    repaint();
 				}
-				
+			    
+
 				
 			}
 		});
@@ -207,19 +208,21 @@ public class SelecPlantas extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(() -> new SelecZombies());
+				SwingUtilities.invokeLater(() -> new SelecZombies(plantasJ));
 				dispose();
 			}
 		});
-    	
-		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
 	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
 	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
+	    TableColumn column = tablaSelec.getColumnModel().getColumn(6);
+		column.setCellRenderer(nRenderer);
+    	
+
 	    
 	    for (int i = 1; i < tabla.getColumnCount(); i++) {
             tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
         }
-
         panelBotones = new JPanel();  
         panelBotones.add(atras);
         panelBotones.add(agregar);
@@ -243,6 +246,7 @@ public class SelecPlantas extends JFrame {
         
         setVisible(true);
 	}
-
+	
+	
 	
 }

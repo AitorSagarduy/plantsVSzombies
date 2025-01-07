@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import domain.Planta;
+import domain.Zombie;
 
 public class Simulacionv1 extends JFrame{
 	private static final long serialVersionUID = 5609494347434052978L;
@@ -43,8 +44,7 @@ public class Simulacionv1 extends JFrame{
 		return mapaFinal;
 	}
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		Simulacionv1 ventana = new Simulacionv1();
+
 	}
 
 	//hago mi renderizado para interactuar como quiera con la jlist
@@ -90,15 +90,15 @@ public class Simulacionv1 extends JFrame{
 	}
 	Planta plantaSeleccionada = null; //variable para almacenar la planta que haya seleccionado el ussuario dentro de la lista
 	// creo la ventana
-	public Simulacionv1() {
+	public Simulacionv1(ArrayList<Zombie> resultadoZ, ArrayList<Planta> resultadoP) {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("ventana de simulacion");
 		// Saco la resolucion del ajustes.properties
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
-		ArrayList<Planta> plantas = new ArrayList<Planta>(); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
+		ArrayList<Planta> plantas = resultadoP; // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Planta> mapaFinal = new HashMap<ArrayList<Integer>, Planta>();
-		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/plantas.csv"); // cargo las plantas con el metodo que ha creado mi compañero
 		DefaultListModel<Planta> modelo = new DefaultListModel<Planta>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
 		for(int i = 0; i<plantas.size();i++) {
@@ -235,7 +235,7 @@ public class Simulacionv1 extends JFrame{
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
 					@SuppressWarnings("unused")
-					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal);
+					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal, resultadoZ);
 					
 				});
 				dispose();

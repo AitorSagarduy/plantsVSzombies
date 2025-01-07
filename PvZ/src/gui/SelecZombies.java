@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import domain.Planta;
 import domain.Zombie;
 
 public class SelecZombies extends JFrame {
@@ -28,17 +29,19 @@ public class SelecZombies extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
-		 new SelecZombies(); 
+
 	}
 	JPanel panelGeneral;
 	JPanel panelBotones;
 	JPanel panelPlantas;
 	JPanel panelTodasZ;
 	JPanel panelUsuarioZ;
+	ArrayList<Zombie> zombiesJ = new ArrayList<Zombie>();
 	
-	public SelecZombies() {
+	public SelecZombies(ArrayList<Planta> resultadoP) {
 		//ajustes de la ventana y 
 		//cargar la lista de zombies con zombies desde el csv
+		System.out.println(resultadoP);
 		ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 		CargarZombies.cargarZombiesCSV(zombies, "src/DatosCsv/zombies.csv");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -158,7 +161,7 @@ public class SelecZombies extends JFrame {
 				    modeloSelec.getZombies().add(plantaSeleccionada);
 				    modeloSelec.getCantidades().add(1);
 				    modeloSelec.fireTableRowsInserted(modeloSelec.getRowCount() - 1, modeloSelec.getRowCount() - 1);
-				}
+				  				}
 				// al pulsar añadir por primera vez que se vea la tabla
 
 				if (numeroFilas == 0) {
@@ -166,6 +169,7 @@ public class SelecZombies extends JFrame {
 				    revalidate();
 				    repaint();
 				}
+				
 				
 				
 			}
@@ -207,13 +211,17 @@ public class SelecZombies extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 SwingUtilities.invokeLater(() -> new Simulacionv1());
+				 SwingUtilities.invokeLater(() -> new Simulacionv1(zombiesJ, resultadoP));
 				 dispose();
 				 
 			}
 		});
         
-		
+        DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
+	    Renderer.setHorizontalAlignment(JLabel.CENTER); 
+	    Renderer.setVerticalAlignment(JLabel.CENTER);   
+	    TableColumn column = tablaSelec.getColumnModel().getColumn(6);
+		column.setCellRenderer(Renderer);
       //Añadir todas los botones a un panel y ajustarlo todo
         panelBotones = new JPanel();  
         panelBotones.add(atras);

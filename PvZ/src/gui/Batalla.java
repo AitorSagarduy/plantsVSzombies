@@ -19,15 +19,13 @@ import javax.swing.SwingUtilities;
 import domain.Planta;
 import domain.Zombie;
 
-public class Batalla extends JFrame implements Runnable{
+public class Batalla extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlantas;
 	private HashMap<ArrayList<Integer>, Zombie> mapaFinalZombies;
 	
 	private static boolean detener;
-	public static void main(String[] args) {
-		new Simulacionv1();
-	}
+	
 	public class BackgroundPanel extends JPanel {
 	    /**
 		 * 
@@ -244,10 +242,6 @@ public class Batalla extends JFrame implements Runnable{
 		}
 		hilo.start();
 	}
-	@Override
-	public void run() {
-		SwingUtilities.invokeLater(()->new Simulacionv1());
-		
-	}
+	
 
 }
