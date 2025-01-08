@@ -24,6 +24,8 @@ public class Main {
 		gestorBD.Level_updater_Z("Zombi Buzo", 0, 0, 0, 0, 0);
 		System.out.println(gestorBD.getPlantas());
 		SwingUtilities.invokeLater(() -> new MenuInicial());
+		gestorBD.Name_updater_P("Girasol", "el lado luminoso");
+		gestorBD.Name_updater_Z("Zombi Buzo", "el lado oscuro");
 	}
 
 }

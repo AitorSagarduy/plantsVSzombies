@@ -1,152 +1,114 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 import java.util.Properties;
-
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class Ajustes extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static int lvalue = resolucionx(); // Leer ancho desde el archivo
-    private static int vvalue = resoluciony(); // Leer alto desde el archivo
+    private static int lvalue = 640;
+    private static int vvalue = 480;
 
     public Ajustes() {
-        setSize(lvalue, vvalue); // Aplicar la resolución inicial
+        setSize(resolucionx(), resoluciony());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Panel con fondo personalizado
-        JPanel fondoPanel = new JPanel() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                BufferedImage envy = null;
-                try {
-                    // Cambia la ruta según la ubicación real de tu imagen
-                    envy = ImageIO.read(getClass().getResourceAsStream("/imagenes/girasolxd.png"));
-                    if (envy != null) {
-                        g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        fondoPanel.setLayout(new BorderLayout());
-        setContentPane(fondoPanel); // Configurar fondoPanel como el panel principal
+        setLayout(new BorderLayout());
+        setResizable(false);
 
         // Texto explicativo
         JTextField explicacion = new JTextField("Ajusta la resolución que tendrán las ventanas");
         explicacion.setEditable(false);
-        explicacion.setFont(new Font("Arial", Font.PLAIN, 20));
-        explicacion.setHorizontalAlignment(JTextField.CENTER);
-        explicacion.setOpaque(false);
-        explicacion.setBorder(null); 
-        explicacion.setForeground(Color.WHITE); 
+        explicacion.setFont(new Font("Arial", Font.PLAIN, 18));
 
-        // Slider para la altura (alto)
-        JSlider vslider = new JSlider(480, Toolkit.getDefaultToolkit().getScreenSize().height - 45, vvalue);
-        vslider.setMajorTickSpacing((Toolkit.getDefaultToolkit().getScreenSize().height - 480) / 4); 
-        vslider.setMinorTickSpacing(10); // Espaciado pequeño
+        // Sliders y etiquetas
+        JLabel textoAlto = new JLabel("Alto:", JLabel.CENTER);
+        JLabel textoAncho = new JLabel("Ancho:", JLabel.CENTER);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
+        JSlider vslider = new JSlider(480, screenHeight - 45, resoluciony());
+        vslider.setMajorTickSpacing((screenHeight - 45 - 480) / 2);
         vslider.setPaintTicks(true);
         vslider.setPaintLabels(true);
-        vslider.setOpaque(false); // Transparente
-        vslider.setForeground(Color.GREEN); 
-        vslider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                vvalue = ((JSlider) e.getSource()).getValue();
-            }
-        });
+        vslider.addChangeListener(e -> vvalue = ((JSlider) e.getSource()).getValue());
 
-        // Slider para el ancho
-        JSlider lslider = new JSlider(640, Toolkit.getDefaultToolkit().getScreenSize().width, lvalue);
-        lslider.setMajorTickSpacing((Toolkit.getDefaultToolkit().getScreenSize().width - 640) / 4); 
-        lslider.setMinorTickSpacing(10); 
+        JSlider lslider = new JSlider(640, screenWidth, resolucionx());
+        lslider.setMajorTickSpacing((screenWidth - 640) / 2);
         lslider.setPaintTicks(true);
         lslider.setPaintLabels(true);
-        lslider.setOpaque(false);
-        lslider.setForeground(Color.GREEN); 
-        lslider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                lvalue = ((JSlider) e.getSource()).getValue();
-            }
+        lslider.addChangeListener(e -> lvalue = ((JSlider) e.getSource()).getValue());
+
+        // Botones
+        JButton atras = new JButton("Atras");
+        atras.addActionListener(e -> {
+            new MenuInicial();
+            dispose();
         });
 
-        // Botón para aplicar los cambios
         JButton aplicar = new JButton("Aplicar");
         aplicar.addActionListener(e -> {
             setResolucion(lvalue, vvalue);
             setSize(lvalue, vvalue);
             setLocationRelativeTo(null);
         });
-        aplicar.setBackground(Color.GREEN);
-        aplicar.setForeground(Color.WHITE); 
-        aplicar.setFont(new Font("Arial", Font.BOLD, 16)); 
 
-        // Botón para volver atrás
-        JButton atras = new JButton("Atrás");
-        atras.addActionListener(e -> {
-            new MenuInicial();
-            dispose();
-        });
-        atras.setBackground(Color.GREEN); 
-        atras.setForeground(Color.WHITE); 
-        atras.setFont(new Font("Arial", Font.BOLD, 16));
+        // Imagen
+        JLabel imagenLabel = new JLabel();
+        ImageIcon imagen = new ImageIcon("src/imagenes/girasolxd.png"); 
+        imagen.setImage(imagen.getImage().getScaledInstance(-1, 300, Image.SCALE_SMOOTH)); // Escalar la imagen
+        imagenLabel.setIcon(imagen);
+        imagenLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        // Panel para los controles
-        JPanel controles = new JPanel();
-        controles.setOpaque(false); 
-        controles.add(lslider);
-        controles.add(vslider);
-        controles.add(aplicar);
-        controles.add(atras);
+        // Panel de controles (parte superior)
+        JPanel panelControles = new JPanel();
+        panelControles.setLayout(new GridLayout(3, 2, 10, 10));
+        panelControles.add(textoAlto);
+        panelControles.add(vslider);
+        panelControles.add(textoAncho);
+        panelControles.add(lslider);
+        panelControles.add(atras);
+        panelControles.add(aplicar);
 
-        // Mover los controles a la parte inferior
-        fondoPanel.add(explicacion, BorderLayout.CENTER);
-        fondoPanel.add(controles, BorderLayout.SOUTH);
+        // Añadir los componentes al marco principal
+        add(explicacion, BorderLayout.NORTH);
+        add(panelControles, BorderLayout.SOUTH); // Parte superior ocupa solo el espacio necesario
+        add(imagenLabel, BorderLayout.CENTER); // Imagen ocupa el espacio restante
 
         setVisible(true);
         setLocationRelativeTo(null);
     }
 
     public static int resolucionx() {
-        return leerResolucion()[0];
+        String resolucion;
+        Properties conexionProperties = new Properties();
+        try {
+            conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
+            resolucion = conexionProperties.getProperty("RESOLUCION");
+            String[] resolucionxy = resolucion.split(",");
+            return Integer.parseInt(resolucionxy[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 640;
+        }
     }
 
     public static int resoluciony() {
-        return leerResolucion()[1];
-    }
-
-    private static int[] leerResolucion() {
+        String resolucion;
         Properties conexionProperties = new Properties();
-        try (FileReader fr = new FileReader("src/DatosCsv/ajustes.properties")) {
-            conexionProperties.load(fr);
-            String resolucion = conexionProperties.getProperty("RESOLUCION", "640,480");
-            String[] valores = resolucion.split(",");
-            return new int[] { Integer.parseInt(valores[0]), Integer.parseInt(valores[1]) };
+        try {
+            conexionProperties.load(new FileReader("src/DatosCsv/ajustes.properties"));
+            resolucion = conexionProperties.getProperty("RESOLUCION");
+            String[] resolucionxy = resolucion.split(",");
+            return Integer.parseInt(resolucionxy[1]);
         } catch (Exception e) {
             e.printStackTrace();
-            return new int[] { 640, 480 }; 
+            return 480;
         }
     }
 
@@ -156,11 +118,9 @@ public class Ajustes extends JFrame {
             conexionProperties.load(fis);
             conexionProperties.setProperty("RESOLUCION", x + "," + y);
             try (FileOutputStream fos = new FileOutputStream("src/DatosCsv/ajustes.properties")) {
-                conexionProperties.store(fos, "Actualización de la resolución");
-                System.out.println("Resolución actualizada a: " + x + "x" + y);
+                conexionProperties.store(fos, "Actualización del valor de RESOLUCION");
             }
         } catch (Exception e) {
-            System.out.println("Error al guardar la resolución");
             e.printStackTrace();
         }
     }

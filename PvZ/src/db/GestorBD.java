@@ -579,7 +579,78 @@ public class GestorBD {
 		
 		
 	}
+	public void Name_updater_P(String nombreOrigen, 
+			String nombre) throws SQLException{
+		String r2d2 = nombre;
+		String sql2 = "UPDATE Plantas "
+	            + "SET Nombre = ? "
+	            + "WHERE Nombre = ?;";
+		ArrayList<Planta> listaP = getPlantas();
+		np_recurs(listaP ,nombreOrigen, r2d2, sql2, listaP.size() - 1);
+		System.out.println(listaP.size() - 1);
+		System.out.println(listaP);
+		
 	}
+	public void np_recurs(ArrayList<Planta> listaP, String nombreO, String nombre, String sql2, int i) throws SQLException {
+		if(listaP.get(i).getNombre().equals(nombreO)) {
+			System.out.println("1");
+			listaP.get(i).setNombre(nombre);
+			try (Connection con2 = DriverManager.getConnection(connectionString);
+					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
+				System.out.println("3");
+						pStmt2.setString(1, listaP.get(i).getNombre());
+						pStmt2.setString(2, nombreO);
+						pStmt2.executeUpdate();
+						System.out.println("exito");
+					
+					
+				} catch (Exception ex) {
+					System.err.println("exito " + ex);
+					
+				}
+				
+		}else {
+			i--;
+			np_recurs(listaP, nombreO, nombre, sql2, i);
+		}
+	}
+	
+	public void Name_updater_Z(String nombreOrigen, 
+			String nombre) throws SQLException{
+		String r2d2 = nombre;
+		String sql2 = "UPDATE Zombies "
+	            + "SET Nombre = ? "
+	            + "WHERE Nombre = ?;";
+		ArrayList<Zombie> listaZ = getZombies();
+		nz_recurs(listaZ ,nombreOrigen, r2d2, sql2, listaZ.size() - 1);
+		System.out.println(listaZ.size() - 1);
+		System.out.println(listaZ);
+		
+	}
+	public void nz_recurs(ArrayList<Zombie> listaZ, String nombreO, String nombre, String sql2, int i) throws SQLException {
+		if(listaZ.get(i).getNombre().equals(nombreO)) {
+			System.out.println("1");
+			listaZ.get(i).setNombre(nombre);
+			try (Connection con2 = DriverManager.getConnection(connectionString);
+					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
+				System.out.println("3");
+						pStmt2.setString(1, listaZ.get(i).getNombre());
+						pStmt2.setString(2, nombreO);
+						pStmt2.executeUpdate();
+						System.out.println("exito");
+					
+					
+				} catch (Exception ex) {
+					System.err.println("exito " + ex);
+					
+				}
+				
+		}else {
+			i--;
+			nz_recurs(listaZ, nombreO, nombre, sql2, i);
+		}
+	}
+}
 
 	
 	
