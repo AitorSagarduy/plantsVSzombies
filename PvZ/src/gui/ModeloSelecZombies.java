@@ -36,7 +36,7 @@ public class ModeloSelecZombies extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return zombies.size();
+		return zombies.size()-1;
 	}
 	
 

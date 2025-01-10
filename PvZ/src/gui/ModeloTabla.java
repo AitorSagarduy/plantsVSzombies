@@ -36,13 +36,13 @@ public class ModeloTabla extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return plantas.size();
+		return plantas.size()-1;
 	}
 
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return columnas.length;
+		return columnas.length ;
 	}
 
 	@Override
@@ -71,7 +71,6 @@ public class ModeloTabla extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int column) {
-		// TODO Auto-generated method stub
 		return columnas[column];
 	}
 

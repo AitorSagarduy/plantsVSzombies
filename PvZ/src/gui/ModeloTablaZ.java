@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import domain.Planta;
 import domain.Zombie;
 
 public class ModeloTablaZ extends AbstractTableModel {
@@ -35,7 +36,7 @@ public class ModeloTablaZ extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return zombies.size();
+		return zombies.size() - 1;
 	}
 
 	@Override
@@ -72,6 +73,9 @@ public class ModeloTablaZ extends AbstractTableModel {
 	public String getColumnName(int column) {
 		// TODO Auto-generated method stub
 		return columnas[column];
+	}
+	public Zombie getZombieAt(int rowIndex) {
+	    return zombies.get(rowIndex);
 	}
 
 }
