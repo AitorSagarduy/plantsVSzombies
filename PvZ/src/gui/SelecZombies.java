@@ -29,7 +29,9 @@ public class SelecZombies extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
-
+		//se crea la ventana
+        @SuppressWarnings("unused")
+        SelecZombies ventana = new SelecZombies(null);
 	}
 	JPanel panelGeneral;
 	JPanel panelBotones;
@@ -44,8 +46,10 @@ public class SelecZombies extends JFrame {
 		System.out.println(resultadoP);
 		ArrayList<Zombie> zombies = new ArrayList<Zombie>();
 		CargarZombies.cargarZombiesCSV(zombies, "src/DatosCsv/zombies.csv");
+
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Selecciona Zombies");
+		setLocationRelativeTo(null);
 		setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
 		
 		
@@ -101,6 +105,8 @@ public class SelecZombies extends JFrame {
 		
 		TableColumn columnSelec = tablaSelec.getColumnModel().getColumn(0);
 		columnSelec.setPreferredWidth(163);
+		
+		scrollSelec.setVisible(false);
 		
 		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
 	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 

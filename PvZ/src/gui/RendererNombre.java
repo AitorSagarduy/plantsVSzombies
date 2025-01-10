@@ -23,21 +23,13 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 			int row, int column) {
 		
 		try {
-			
-				
 				//leer imagen correspondiente nombre
-				BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("[\\s-]+", "") + ".png"));
+				BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ]", "") + ".png"));
 				setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
-				System.out.println("me pego un tiro");
-			
 				
-				System.out.println("sisco");
-			
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("lalalala");
 		}
 		
 	    // Establecer el texto de la celda

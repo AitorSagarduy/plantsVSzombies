@@ -52,68 +52,37 @@ public class AlmanaquePUser extends JFrame {
         
 
 
-        for (Planta planta : plantas) {
-            JButton plantaButton = new JButton(planta.getNombre());
-            plantaButton.setFont(new Font("Arial", Font.BOLD, 12));
-            plantaButton.setIcon(new ImageIcon("src/imagenes/" + planta.getTipo() + ".png"));
-            plantaButton.setHorizontalTextPosition((int) CENTER_ALIGNMENT);
-            plantaButton.setVerticalTextPosition(SwingConstants.BOTTOM);
- 
-
-            plantaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(null, planta.toString(), "Estadísticas de " + planta.getNombre(), JOptionPane.INFORMATION_MESSAGE);
-                }
-            });
-
-            plantsPanel.add(plantaButton);
-        }
+        colocarBotones(plantsPanel, plantas);
+        
         // Crear el botón de ordenación
         JButton botonOrdenar = new JButton("Ordenar");
 
         // Crear el menú emergente
         JPopupMenu menuOrdenar = new JPopupMenu();
         JMenuItem ordenarNombre = new JMenuItem("Ordenar por Nombre");
-        JMenuItem ordenarTipo = new JMenuItem("Ordenar por Tipo");
+        JMenuItem ordenarNivel = new JMenuItem("Ordenar por Nivel");
         menuOrdenar.add(ordenarNombre);
-        menuOrdenar.add(ordenarTipo);
+        menuOrdenar.add(ordenarNivel);
         
 		ordenarNombre.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 // Llamar al método recursivo para ordenar la lista por nombre
 				ordenarPorNombre(plantas, plantas.size());
-
-		        // Actualizar el panel con las plantas ordenadas
-		        plantsPanel.removeAll(); // Eliminar todos los botones actuales
-		        for (Planta planta : plantas) {
-		            // Crear un botón para cada planta ordenada
-		            JButton plantaButton = new JButton(planta.getNombre());
-		            plantaButton.setFont(new Font("Arial", Font.BOLD, 12));
-		            plantaButton.setIcon(new ImageIcon("src/imagenes/" + planta.getTipo() + ".png"));
-		            plantaButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		            plantaButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-
-		            plantaButton.addActionListener(new ActionListener() {
-		                @Override
-		                public void actionPerformed(ActionEvent e) {
-		                    JOptionPane.showMessageDialog(null, planta.toString(), 
-		                        "Estadísticas de " + planta.getNombre(), JOptionPane.INFORMATION_MESSAGE);
-		                }
-		            });
-
-		            // Añadir el botón al panel
-		            plantsPanel.add(plantaButton);
-		        }
-
-		        // Refrescar la interfaz gráfica para mostrar los cambios
-		        plantsPanel.revalidate();
-		        plantsPanel.repaint();
-				
+				colocarBotones(plantsPanel, plantas);
 			}
 		});
-
+		
+		ordenarNivel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 // Llamar al método recursivo para ordenar la lista por nombre
+				ordenarPorNivel(plantas, plantas.size());
+				// Llamar al método para actualizar el panel con las plantas orden	
+				colocarBotones(plantsPanel, plantas);
+			}
+		});
+		
         // Añadir ActionListener al botón para mostrar el menú
         botonOrdenar.addActionListener(new ActionListener() {
             @Override
@@ -150,6 +119,54 @@ public class AlmanaquePUser extends JFrame {
 		
         
 	}
+	private void colocarBotones(JPanel panel, ArrayList<Planta> plantas) {
+		 // Actualizar el panel con las plantas ordenadas
+       panel.removeAll(); // Eliminar todos los botones actuales
+       for (Planta planta : plantas) {
+           // Crear un botón para cada planta ordenada
+           JButton plantaButton = new JButton(planta.getTipo());
+           plantaButton.setFont(new Font("Arial", Font.BOLD, 12));
+           plantaButton.setIcon(new ImageIcon("src/imagenes/" + planta.getTipo() + ".png"));
+           plantaButton.setHorizontalTextPosition(SwingConstants.CENTER);
+           plantaButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+
+           plantaButton.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                   JOptionPane.showMessageDialog(null, planta.toString(), 
+                       "Estadísticas de " + planta.getNombre(), JOptionPane.INFORMATION_MESSAGE);
+               }
+           });
+
+           // Añadir el botón al panel
+           panel.add(plantaButton);
+       }
+
+       // Refrescar la interfaz gráfica para mostrar los cambios
+       panel.revalidate();
+       panel.repaint();
+   
+   }
+	private void ordenarPorNivel(ArrayList<Planta> plantas, int n) {
+		    if (n == 1) {
+		        return;
+		    }
+
+		    for (int i = 0; i < n - 1; i++) {
+		        if (plantas.get(i).getNivel() < plantas.get(i + 1).getNivel()) {
+		            // Intercambiar si están en el orden incorrecto
+		            Planta temp = plantas.get(i);
+		            plantas.set(i, plantas.get(i + 1));
+		            plantas.set(i + 1, temp);
+		        }
+		    }
+
+		    // Llamada recursiva para ordenar el resto de la lista
+		    ordenarPorNivel(plantas, n - 1);
+		}
+	
+		
+	
 	private void ordenarPorNombre(ArrayList<Planta> plantas, int n) {
 	    if (n == 1) {
 	        return;

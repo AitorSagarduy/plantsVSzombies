@@ -92,8 +92,8 @@ public class Planta {
 
 	@Override
 	public String toString() {
-		return nombre +  "Vida = " + vida + "Velocidad de ataque = " + tmp_atac + "Daño = "
-				+ danyo + " Rango = " + rango + "Nivel = " + nivel;
+		return "Vida = " + vida + ", Velocidad de ataque = " + tmp_atac + ", Daño = "
+				+ danyo + ", Rango = " + rango + ", Nivel = " + nivel;
 	}
 	
 }

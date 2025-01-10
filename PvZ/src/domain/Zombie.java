@@ -88,7 +88,7 @@ public class Zombie {
 
 	@Override
 	public String toString() {
-		return nombre + "Vida = " + vida + ", Velocidad de ataque = " + tmp_atac + ", Daño = "
+		return  "Vida = " + vida + ", Velocidad de ataque = " + tmp_atac + ", Daño = "
 				+ danyo + ", Velocidad = " + velocidad + ", Nivel = " + nivel;
 	}
 
