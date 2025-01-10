@@ -15,7 +15,7 @@ public class ModeloTablaTienda extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Planta> plantas;
-	private String[] columnas = {"Nombre","Vida", "Velocidad.Atc", 
+	private String[] columnas = {"Tipo" ,"Vida", "Velocidad.Atc", 
 			"Daño", "Rango", "Nivel", "Precio" };
 	
 	public ModeloTablaTienda(ArrayList<Planta> plantas) {
@@ -50,9 +50,8 @@ public class ModeloTablaTienda extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {
-		
 		case 0:
-			return plantas.get(rowIndex).getNombre();
+			return plantas.get(rowIndex).getTipo();
 		case 1:
 			return plantas.get(rowIndex).getVida();
 		case 2:

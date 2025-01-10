@@ -9,6 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+
+import domain.Planta;
+import domain.Zombie;
 class RendererNombre extends JLabel implements TableCellRenderer{
     /**
      *
@@ -21,12 +24,20 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 		
 		try {
 			
-			//leer imagen correspondiente nombre
-			BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("[\\s-]+", "") + ".png"));
-			setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
+				
+				//leer imagen correspondiente nombre
+				BufferedImage imagenleer = ImageIO.read(new File("src/imagenes/" + value.toString().replaceAll("[\\s-]+", "") + ".png"));
+				setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
+				System.out.println("me pego un tiro");
+			
+				
+				System.out.println("sisco");
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("lalalala");
 		}
 		
 	    // Establecer el texto de la celda

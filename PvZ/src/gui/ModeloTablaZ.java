@@ -14,7 +14,7 @@ public class ModeloTablaZ extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Zombie> zombies;
-	private String[] columnas = {"Nombre","Vida", "Velocidad.Atc", 
+	private String[] columnas = {"Tipo", "Nombre","Vida", "Velocidad.Atc", 
 			"Daño", "Rapidez", "Nivel"};
 	
 	public ModeloTablaZ(ArrayList<Zombie> zombies) {
@@ -48,18 +48,19 @@ public class ModeloTablaZ extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		switch(columnIndex) {
-		
 		case 0:
+			return zombies.get(rowIndex).getTipo()
+;		case 1:
 			return zombies.get(rowIndex).getNombre();
-		case 1:
-			return zombies.get(rowIndex).getVida();
 		case 2:
-			return zombies.get(rowIndex).getTmp_atac();
+			return zombies.get(rowIndex).getVida();
 		case 3:
-			return zombies.get(rowIndex).getDanyo();
+			return zombies.get(rowIndex).getTmp_atac();
 		case 4:
-			return zombies.get(rowIndex).getVelocidad();
+			return zombies.get(rowIndex).getDanyo();
 		case 5:
+			return zombies.get(rowIndex).getVelocidad();
+		case 6:
 			return zombies.get(rowIndex).getNivel();
 		}
 		
