@@ -68,10 +68,11 @@ public class MenuInicial extends JFrame {
 
         // Crear botones
         JButton selim = createButton("SIMULADOR");
-        JButton yoki = createButton("ALMANAQUE");
+        JButton yoki = createButton("JARDIN ZEN");
         JButton alphonse = createButton("AJUSTES");
         JButton mustang = createButton("CREDITOS");
         JButton tienda = createButton("TIENDA"); // vale, me puse serio
+        JButton almanaque = createButton("ALMANAQUE");
         gbc.fill = GridBagConstraints.HORIZONTAL;  // Para que los botones ocupen todo el ancho disponible
         gbc.insets = new java.awt.Insets(10, 10, 10, 10); // Separación entre los botones
 
@@ -92,6 +93,10 @@ public class MenuInicial extends JFrame {
         
         gbc.gridy = 4; //f4
         botonPanel.add(tienda, gbc);
+        
+        gbc.gridy = 5; //f4
+        botonPanel.add(almanaque, gbc);
+        
         // Añadir el panel de botones al fondoPanel
         fondoPanel.add(botonPanel);
 
@@ -129,7 +134,7 @@ public class MenuInicial extends JFrame {
                    
                 }
             });
-        } else if (text.equals("ALMANAQUE")) {
+        } else if (text.equals("JARDIN ZEN")) {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -191,7 +196,24 @@ public class MenuInicial extends JFrame {
 						e1.printStackTrace();
 					}
                 }
-            });}
+            });
+        }else if (text.equals("ALMANAQUE")) {
+        	button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new SelectAlmanaque2();
+                    dispose();
+                    player.stopPlaying();
+                    try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                }
+            });
+        }
+        
 
         return button;
     }

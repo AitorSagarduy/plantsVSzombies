@@ -85,20 +85,21 @@ public class Minijuegos extends JFrame {
      * @param minijuego Nombre del minijuego seleccionado.
      */
     private void openMinijuegoPanel(String minijuego) {
-        JPanel newPanel = new JPanel();
-        newPanel.setBackground(Color.WHITE);
-        newPanel.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Bienvenido al minijuego: " + minijuego);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        newPanel.add(label, BorderLayout.CENTER);
-
-        // Cambiar el contenido del JFrame al nuevo panel
-        this.getContentPane().removeAll();
-        this.getContentPane().add(newPanel);
-        this.revalidate();
-        this.repaint();
-    }
+        switch (minijuego) {
+		case "plantanueces" : {
+			new Plantanueces();
+		}
+		case "plantapon" : {
+			new Plantapon();
+		}
+		case "apocalipsis" : {
+			new Apocalipsis();
+		}
+			
+		}
+		
+		}
+    
 
     public static void main(String[] args) {
         List<String> minijuegos = List.of(
