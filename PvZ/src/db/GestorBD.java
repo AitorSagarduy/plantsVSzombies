@@ -23,7 +23,7 @@ import gui.MenuPlantas;
 
 public class GestorBD {
 	private final String PROPERTIES_FILE = "src/db/app.properties";
-	private final String CSV_PLANTAS = "src/DatosCsv/plantas.csv";
+	private final String CSV_PLANTAS = "src/DatosCsv/TODAS.csv";
 	private final String CSV_ZOMBIES = "src/DatosCsv/zombies.csv";
 	private final String CSV_PLANTAS_TIENDA = "src/DatosCsv/plantasTienda.csv";
 	private final String CSV_ZOMBIES_TIENDA = "src/DatosCsv/zombiesTienda.csv";

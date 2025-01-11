@@ -16,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+
+import db.GestorBD;
 import domain.Planta;
 
 public class SelecPlantas extends JFrame {
@@ -40,9 +42,9 @@ public class SelecPlantas extends JFrame {
 	JPanel panelUsuarioP;
 	ArrayList<Planta> plantasj = new ArrayList<Planta>();
 	public SelecPlantas() {
+		GestorBD gestor = new GestorBD();
 		// ajustes de la ventana y cargar la lista plantas con plantas desde el csv
-		ArrayList<Planta> plantas = new ArrayList<Planta>();
-		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
+		ArrayList<Planta> plantas = gestor.getPlantas();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Selecciona Plantas");
 		setLocationRelativeTo(null);
