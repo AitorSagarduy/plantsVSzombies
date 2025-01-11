@@ -49,7 +49,11 @@ public class Simulacionv2 extends JFrame{
 		return mapaFinalZombie;
 	}
 	public static void main(String[] args) {
-		
+		ArrayList<Zombie> resultadoZ = new ArrayList<Zombie>();
+		CargarZombies.cargarZombiesCSV(resultadoZ, "src/DatosCsv/zombies.csv");
+		ArrayList<Planta> resultadoP = new ArrayList<Planta>();
+		MenuPlantas.cargarPlantasCSV(resultadoP, "src/DatosCsv/plantas.csv");
+		new Simulacionv1(resultadoZ, resultadoP);
 	}
 
 	//hago mi renderizado para interactuar como quiera con la jlist
@@ -66,10 +70,11 @@ public class Simulacionv2 extends JFrame{
 				// lo casteo para tener sus metodos
 	            Zombie planta = (Zombie) value;
 	            // hago que se muestre el nombre
-	            setText(planta.getNombre()); // solo muestra el nombre
+	            setText(""); // solo muestra el nombre
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
+	            etiqueta.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 	            try {
-	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(24, 24, Image.SCALE_SMOOTH))); //le pongo un icono 
+	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(Ajustes.resolucionx()/7, Ajustes.resolucionx()/7, Image.SCALE_SMOOTH))); //le pongo un icono 
 				} catch (IOException e) {
 					// si no lo encuentra esntonces saco el error por consola
 					e.printStackTrace();
@@ -90,6 +95,7 @@ public class Simulacionv2 extends JFrame{
 		} catch (Exception e) {
 			// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
 			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/NoIdentificada.png"));
+			e.printStackTrace();
 			return imagenLeer;
 		}
 	}
@@ -155,16 +161,17 @@ public class Simulacionv2 extends JFrame{
 		
 		JPanel panelCesped = new JPanel(); //creo el panel que va a simular el patio
 		panelCesped.setBackground(Color.GRAY);
-		panelCesped.setLayout(new GridLayout(5, 10)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
+		panelCesped.setLayout(new GridLayout(5, 9)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
 		//creo los 50 botones que voy a necesitar para interactuar con el patio
 		ArrayList<JButton> botones = new ArrayList<JButton>();
-		for(int i = 0; i<50;i++) {
-			int fila = i / 10; // 10 columnas por fila
-		    int columna = i % 10;
+		for(int i = 0; i<45;i++) {
+			int fila = i / 9; // 10 columnas por fila
+		    int columna = i % 9;
 		    
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
-			botones.add(espacio);			espacio.putClientProperty("fila", fila);
-		    espacio.putClientProperty("columna", columna + 10);
+			botones.add(espacio);			
+			espacio.putClientProperty("fila", fila);
+		    espacio.putClientProperty("columna", columna + 9);
 			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
@@ -228,7 +235,7 @@ public class Simulacionv2 extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(int i = 0; i<50;i++) {
+				for(int i = 0; i<45;i++) {
 					JButton botoncito = (JButton) panelCesped.getComponent(i);
 					ArrayList<Integer> coordenadas = new ArrayList<Integer>();
 					coordenadas.add((Integer) botoncito.getClientProperty("fila"));
@@ -238,8 +245,7 @@ public class Simulacionv2 extends JFrame{
 				}
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
-					@SuppressWarnings("unused")
-					Batalla ventana2 = new Batalla(mapaFinalPlanta, mapaFinalZombie);
+					new Batalla(mapaFinalPlanta, mapaFinalZombie);
 					dispose();
 				});
 			}

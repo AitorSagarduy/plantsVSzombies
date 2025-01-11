@@ -47,7 +47,8 @@ public class Ajustes extends JFrame {
         // Botones
         JButton atras = new JButton("Atras");
         atras.addActionListener(e -> {
-            new MenuInicial();
+            MenuInicial ventana = new MenuInicial();
+            ventana.setLocationRelativeTo(null);
             dispose();
         });
 
