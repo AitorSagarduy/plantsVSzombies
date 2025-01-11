@@ -39,6 +39,7 @@ public class MenuInicial extends JFrame {
         // Ajustes de la ventana
         setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
         setResizable(false);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Crear el panel con fondo

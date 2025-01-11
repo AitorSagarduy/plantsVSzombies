@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import db.GestorBD;
 import domain.Planta;
 import domain.Zombie;
 
@@ -43,9 +44,9 @@ public class SelecZombies extends JFrame {
 	public SelecZombies(ArrayList<Planta> resultadoP) {
 		//ajustes de la ventana y 
 		//cargar la lista de zombies con zombies desde el csv
+		GestorBD gestor = new GestorBD();
 		System.out.println(resultadoP);
-		ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-		CargarZombies.cargarZombiesCSV(zombies, "src/DatosCsv/zombies.csv");
+		ArrayList<Zombie> zombies = gestor.getZombies();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Selecciona Zombies");
@@ -66,9 +67,10 @@ public class SelecZombies extends JFrame {
 		// implementar el renderer del nombre a la columna 0 
 		TableColumn nombreColumn = tabla.getColumnModel().getColumn(0);
 		nombreColumn.setCellRenderer(new RendererNombre());
+		nombreColumn.setMinWidth(150);
 		
-		TableColumn columna = tabla.getColumnModel().getColumn(0);
-		columna.setMinWidth(150);
+		TableColumn columna1 = tabla.getColumnModel().getColumn(1);
+		columna1.setMinWidth(150);
 		
 		DefaultTableCellRenderer centralRenderer = new DefaultTableCellRenderer();
 	    centralRenderer.setHorizontalAlignment(JLabel.CENTER); 
@@ -106,16 +108,13 @@ public class SelecZombies extends JFrame {
 		TableColumn columnSelec = tablaSelec.getColumnModel().getColumn(0);
 		columnSelec.setPreferredWidth(163);
 		
+		TableColumn columnNombre = tablaSelec.getColumnModel().getColumn(1);
+		columnNombre.setPreferredWidth(170);
+		
 		scrollSelec.setVisible(false);
 		
-		DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
-	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
-	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
 	    
-	    for (int i = 1; i < tabla.getColumnCount(); i++) {
-            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
-        }
-		
+	    
 		//colocarlo abajo y hacer que no se vea
 		
 		scrollSelec.setVisible(false);
@@ -139,6 +138,7 @@ public class SelecZombies extends JFrame {
 				int filaSeleccionada = tabla.getSelectedRow();
 				TableColumn nombreColumn = tablaSelec.getColumnModel().getColumn(0);
 				nombreColumn.setCellRenderer(new RendererNombre());
+				
 				
 				// mensaje de error si se selecciona mal el zombie
 				//(si el getSelectedrow no tiene ninguna fila seleccionada devuelve -1)
@@ -226,8 +226,10 @@ public class SelecZombies extends JFrame {
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
 	    Renderer.setHorizontalAlignment(JLabel.CENTER); 
 	    Renderer.setVerticalAlignment(JLabel.CENTER);   
-	    TableColumn column = tablaSelec.getColumnModel().getColumn(6);
-		column.setCellRenderer(Renderer);
+	    
+		 for (int i = 1; i < tablaSelec.getColumnCount(); i++) {
+	            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(Renderer);
+	        }
       //Añadir todas los botones a un panel y ajustarlo todo
         panelBotones = new JPanel();  
         panelBotones.add(atras);

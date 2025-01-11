@@ -165,10 +165,7 @@ public class SelecPlantas extends JFrame {
 					scrollSelec.setVisible(true);
 				    revalidate();
 				    repaint();
-				}
-			    
-
-				
+				}			    
 			}
 		});
         
@@ -217,12 +214,12 @@ public class SelecPlantas extends JFrame {
         DefaultTableCellRenderer nRenderer = new DefaultTableCellRenderer();
 	    nRenderer.setHorizontalAlignment(JLabel.CENTER); 
 	    nRenderer.setVerticalAlignment(JLabel.CENTER);   
-	    TableColumn column = tablaSelec.getColumnModel().getColumn(6);
+	    TableColumn column = tablaSelec.getColumnModel().getColumn(7);
 		column.setCellRenderer(nRenderer);
     	
 
 	    
-	    for (int i = 1; i < tabla.getColumnCount(); i++) {
+	    for (int i = 1; i < tablaSelec.getColumnCount(); i++) {
             tablaSelec.getColumnModel().getColumn(i).setCellRenderer(nRenderer);
         }
         panelBotones = new JPanel();  

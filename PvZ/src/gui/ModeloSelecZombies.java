@@ -36,7 +36,7 @@ public class ModeloSelecZombies extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return zombies.size()-1;
+		return zombies.size();
 	}
 	
 
@@ -83,7 +83,7 @@ public class ModeloSelecZombies extends AbstractTableModel {
 	//firetablecellupdate para notificar que se ha actualizado
 	public void sumarCantidad(int nFila) {
 		cantidades.set(nFila, cantidades.get(nFila) + 1);
-		fireTableCellUpdated(nFila, 6);
+		fireTableCellUpdated(nFila, 7);
 	}
 	
 	// metodo para restar cantidad con el fire notifica que se ha actualizado
@@ -97,7 +97,7 @@ public class ModeloSelecZombies extends AbstractTableModel {
 			fireTableRowsDeleted(nFila, nFila);
 		} else {
 			cantidades.set(nFila, cantidadRestada);
-			fireTableCellUpdated(nFila, 6);
+			fireTableCellUpdated(nFila, 7);
 		}
 	}
 	
