@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -44,7 +47,12 @@ public class Simulacionv1 extends JFrame{
 		return mapaFinal;
 	}
 	public static void main(String[] args) {
-
+		//Simulacionv1 ventana = new Simulacionv1();
+		ArrayList<Zombie> resultadoZ = new ArrayList<Zombie>();
+		CargarZombies.cargarZombiesCSV(resultadoZ, "src/DatosCsv/zombies.csv");
+		ArrayList<Planta> resultadoP = new ArrayList<Planta>();
+		MenuPlantas.cargarPlantasCSV(resultadoP, "src/DatosCsv/TODAS.csv");
+		new Simulacionv1(resultadoZ, resultadoP);
 	}
 
 	//hago mi renderizado para interactuar como quiera con la jlist
@@ -61,10 +69,14 @@ public class Simulacionv1 extends JFrame{
 				// lo casteo para tener sus metodos
 	            Planta planta = (Planta) value;
 	            // hago que se muestre el nombre
-	            setText(planta.getNombre()); // solo muestra el nombre
+	            //setText(planta.getNombre()); // solo muestra el nombre
+	            setText("");
+	            //hacer transparente con cuadrito
+	            //etiqueta.setForeground(Color.WHITE);
+	            setAlignmentX(JLabel.CENTER_ALIGNMENT);
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
 	            try {
-	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(24, 24, Image.SCALE_SMOOTH))); //le pongo un icono 
+	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(Ajustes.resolucionx()/7, Ajustes.resolucionx()/7, Image.SCALE_SMOOTH))); //le pongo un icono 
 				} catch (IOException e) {
 					// si no lo encuentra esntonces saco el error por consola
 					e.printStackTrace();
@@ -73,6 +85,28 @@ public class Simulacionv1 extends JFrame{
 			return etiqueta;
 		}
 
+	}
+	public class BackgroundPanel extends JPanel {
+	    private static final long serialVersionUID = 1L;
+	    private Image backgroundImage;
+
+	    public BackgroundPanel(String filePath) {
+	        try {
+	            backgroundImage = ImageIO.read(new File(filePath));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        if (backgroundImage != null) {
+	            int width = getWidth();
+	            int height = getHeight();
+	            g.drawImage(backgroundImage, 0, 0, width, height, this);
+	        }
+	    }
 	}
 
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
@@ -104,9 +138,11 @@ public class Simulacionv1 extends JFrame{
 		for(int i = 0; i<plantas.size();i++) {
 			modelo.add(i, plantas.get(i));
 		}
+		BackgroundPanel panelFondo = new BackgroundPanel("src/imagenes/PvZ-CASA.PNG");
 		JList<Planta> listaPlantas = new JList<Planta>(modelo); //creo el jlist en base al modelo de lista
-		
-		listaPlantas.setFixedCellWidth(100); //le pongo una largura definida
+		listaPlantas.setOpaque(false);
+		listaPlantas.setBackground(new Color(0,0,0,0));
+		listaPlantas.setFixedCellWidth(Ajustes.resolucionx()/5); //le pongo una largura definida
 		listaPlantas.setCellRenderer(new Mirenderizado()); // le pongo mi renderizado creado previamente arriba
 		// le pongo un listener para que cuando el usuario este eligiendo una opcion el programa lo escuche y actue
 		listaPlantas.addListSelectionListener(new ListSelectionListener() { 
@@ -146,21 +182,31 @@ public class Simulacionv1 extends JFrame{
 		opciones.add(pala);
 		opciones.add(finalizar);
 		JScrollPane scroll = new JScrollPane(listaPlantas); //creo el scrollbar en el que voy a poner la jlist
-		add(scroll,BorderLayout.WEST); //lo pongo a la izquierda 
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelFondo.add(scroll);
+		add(panelFondo,BorderLayout.WEST); //lo pongo a la izquierda 
 		
-		JPanel panelCesped = new JPanel(); //creo el panel que va a simular el patio
-		panelCesped.setBackground(Color.GRAY);
-		panelCesped.setLayout(new GridLayout(5, 10)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
+		//JPanel panelCesped = new JPanel(); //creo el panel que va a simular el patio
+		//panelCesped.setBackground(Color.GRAY);
+		//panelCesped.setLayout(new GridLayout(5, 9)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
 		//creo los 50 botones que voy a necesitar para interactuar con el patio
+		BackgroundPanel panelCesped = new BackgroundPanel("src/imagenes/PvZ-CESPED.PNG");
+	    panelCesped.setLayout(new GridLayout(5, 9));
 		ArrayList<JButton> botones = new ArrayList<JButton>();
-		for(int i = 0; i<50;i++) {
-			int fila = i / 10; // 10 columnas por fila
-		    int columna = i % 10;
+		for(int i = 0; i<45;i++) {
+			int fila = i / 9; // 10 columnas por fila
+		    int columna = i % 9;
 		    
 			JButton espacio = new JButton(); //a cada boton le pongo un numero como nombre inicial
 			botones.add(espacio);
 			espacio.putClientProperty("fila", fila);
 		    espacio.putClientProperty("columna", columna);
+		    espacio.setBorder(BorderFactory.createEmptyBorder());
+	        espacio.setFocusPainted(false);
+	        espacio.setContentAreaFilled(false);
+	        espacio.setOpaque(false);
 			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
@@ -224,7 +270,7 @@ public class Simulacionv1 extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(int i = 0; i<50;i++) {
+				for(int i = 0; i<45;i++) {
 					JButton botoncito = (JButton) panelCesped.getComponent(i);
 					ArrayList<Integer> coordenadas = new ArrayList<Integer>();
 					coordenadas.add((Integer) botoncito.getClientProperty("fila"));

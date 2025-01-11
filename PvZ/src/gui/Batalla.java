@@ -37,6 +37,7 @@ public class Batalla extends JFrame{
 	        try {
 	            backgroundImage = ImageIO.read(new File(filePath));
 	        } catch (IOException e) {
+	        	e.printStackTrace();
 	        }
 	    }
 
@@ -50,23 +51,31 @@ public class Batalla extends JFrame{
 	        }
 	    }
 	}
-	
+
+	public static void main(String[] args) {
+		ArrayList<Zombie> resultadoZ = new ArrayList<Zombie>();
+		CargarZombies.cargarZombiesCSV(resultadoZ, "src/DatosCsv/zombies.csv");
+		ArrayList<Planta> resultadoP = new ArrayList<Planta>();
+		MenuPlantas.cargarPlantasCSV(resultadoP, "src/DatosCsv/plantas.csv");
+		new Simulacionv1(resultadoZ, resultadoP);
+	}
+           
 	public Batalla(HashMap<ArrayList<Integer>, Planta> mapaFinal1, HashMap<ArrayList<Integer>, Zombie> mapaFinal2) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("ventana de batalla");
 		this.mapaFinalPlantas = mapaFinal1;
 		this.mapaFinalZombies = mapaFinal2;
 		
-		BackgroundPanel backgroundPanel = new BackgroundPanel("src/imagenes/PvZ-Patio3.JPG");
-        backgroundPanel.setLayout(new GridLayout(5, 20));
+		BackgroundPanel backgroundPanel = new BackgroundPanel("src/imagenes/PvZ-Patio4.PNG");
+        backgroundPanel.setLayout(new GridLayout(5, 18));
         setContentPane(backgroundPanel);
 		//setLayout(new GridLayout(5, 20));
 		
 		
 		ArrayList<JButton> botones = new ArrayList<JButton>();
-		for(int i = 0; i<100;i++) {
-			int fila = i / 20; // 10 columnas por fila
-		    int columna = i % 20;
+		for(int i = 0; i<90;i++) {
+			int fila = i / 18; // 10 columnas por fila
+		    int columna = i % 18;
 			JButton botonCesped = new JButton();
 			botonCesped.putClientProperty("fila", fila);
 			botonCesped.putClientProperty("columna", columna);
@@ -111,7 +120,7 @@ public class Batalla extends JFrame{
 		detener = false;
 		ArrayList<Thread> hilosZombies = new ArrayList<Thread>();
 		ArrayList<Thread> hilosPlantas = new ArrayList<Thread>();
-		for(int i = 0; i<100;i++) {
+		for(int i = 0; i<90;i++) {
 			if (botones.get(i).getClientProperty("planta") instanceof Zombie) {
 				Thread hilo = new Thread();
 				Zombie zombie = (Zombie) botones.get(i).getClientProperty("planta");
@@ -155,7 +164,7 @@ public class Batalla extends JFrame{
                                 e.printStackTrace();
                             }
                         }
-                        if(finalI%20 == 0) {
+                        if(finalI%18 == 0) {
 							detener = true;
 							System.out.println("Los zombies ganan");
 						}
@@ -164,7 +173,7 @@ public class Batalla extends JFrame{
 				hilosZombies.add(hilo);
 			}
 		}
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 90; i++) {
 			if (botones.get(i).getClientProperty("planta") instanceof Planta) {
 				Thread hilo = new Thread();
 				Planta planta = (Planta) botones.get(i).getClientProperty("planta");
@@ -173,7 +182,7 @@ public class Batalla extends JFrame{
 					int finalI = finalII;
 					while (!detener) {
 						int numeroZomb = 0;
-						for (int j = 0; j < 100; j++) {
+						for (int j = 0; j < 90; j++) {
 							if (botones.get(j).getClientProperty("planta") instanceof Zombie) {
 								numeroZomb++;
 							}
@@ -182,9 +191,12 @@ public class Batalla extends JFrame{
 							detener = true;
 							System.out.println("Las plantas ganan");
 						}else{
-							for(int u = finalI ; u%19 <= finalI%20+planta.getRango();u++ ){
+							for(int u = finalI ; u%18 <= finalI%18+planta.getRango();u++ ){
+								if (finalI % 18+planta.getRango() >= 18) {
+									break;
+								}
 								if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
-									System.out.println("Planta ataca a zombie en la columna: "+u%20);	
+									System.out.println("Planta ataca a zombie en la columna: "+u%18);	
 									Zombie zombie = (Zombie) botones.get(u).getClientProperty("planta");
 									try {
 										zombie.setVida(zombie.getVida()-planta.getDanyo());
