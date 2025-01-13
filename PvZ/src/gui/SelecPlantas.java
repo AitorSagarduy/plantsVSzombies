@@ -149,12 +149,15 @@ public class SelecPlantas extends JFrame {
 				for (int i = 0; i < numeroFilas; i++) {
 					if(modeloSelec.getValueAt(i, 0).equals(nombrePlanta)) {
 						modeloSelec.sumarCantidad(i);
+						Planta plantaSeleccionada = plantas.get(filaSeleccionada);
+						plantasj.add(plantaSeleccionada);
 						existe = true;
 					}
 				}
 				// si no añadir la fila seleccionada con la cantidad a 1 
 				if (!existe) {
 				    Planta plantaSeleccionada = plantas.get(filaSeleccionada);
+				    plantasj.add(plantaSeleccionada);
 				    modeloSelec.getPlantas().add(plantaSeleccionada);
 				    modeloSelec.getCantidades().add(1);
 				    modeloSelec.fireTableRowsInserted(modeloSelec.getRowCount() - 1, modeloSelec.getRowCount() - 1);
@@ -189,6 +192,8 @@ public class SelecPlantas extends JFrame {
 				}
 				//restar la cantidad
 				modeloSelec.restarCantidad(filaSeleccionada);
+				Planta plantaSeleccionada = plantas.get(filaSeleccionada);
+				plantasj.remove(plantaSeleccionada);
 				int numeroFilas = tablaSelec.getRowCount();
 				//si la tabla se queda sin plantas se oculte la tabla
 				if(numeroFilas == 0) {
@@ -207,7 +212,7 @@ public class SelecPlantas extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(() -> new SelecZombies(plantasJ));
+				SwingUtilities.invokeLater(() -> new SelecZombies(plantasj));
 				dispose();
 			}
 		});

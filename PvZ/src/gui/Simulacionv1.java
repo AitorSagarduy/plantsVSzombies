@@ -176,9 +176,23 @@ public class Simulacionv1 extends JFrame{
 				
 			}
 		});
+		JButton atras = new JButton("Volver");
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(() -> {
+					new SelecZombies(resultadoP);
+					
+				});
+				dispose();
+				
+			}
+		});
 		JPanel opciones = new JPanel();
 		add(opciones, BorderLayout.NORTH);
 		opciones.setLayout(new FlowLayout());
+		opciones.add(atras);
 		opciones.add(pala);
 		opciones.add(finalizar);
 		JScrollPane scroll = new JScrollPane(listaPlantas); //creo el scrollbar en el que voy a poner la jlist
@@ -207,7 +221,6 @@ public class Simulacionv1 extends JFrame{
 	        espacio.setFocusPainted(false);
 	        espacio.setContentAreaFilled(false);
 	        espacio.setOpaque(false);
-			//espacio.setBackground(Color.GREEN); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
 				
@@ -281,7 +294,7 @@ public class Simulacionv1 extends JFrame{
 				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
 					@SuppressWarnings("unused")
-					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal, resultadoZ);
+					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal, resultadoZ, resultadoP);
 					
 				});
 				dispose();

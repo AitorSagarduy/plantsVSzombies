@@ -39,7 +39,7 @@ public class SelecZombies extends JFrame {
 	JPanel panelPlantas;
 	JPanel panelTodasZ;
 	JPanel panelUsuarioZ;
-	ArrayList<Zombie> zombiesJ = new ArrayList<Zombie>();
+	ArrayList<Zombie> zombiesj = new ArrayList<Zombie>();
 	
 	public SelecZombies(ArrayList<Planta> resultadoP) {
 		//ajustes de la ventana y 
@@ -157,6 +157,8 @@ public class SelecZombies extends JFrame {
 				for (int i = 0; i < numeroFilas; i++) {
 					if(modeloSelec.getValueAt(i, 0).equals(nombreZombie)) {
 						modeloSelec.sumarCantidad(i);
+						Zombie plantaSeleccionada = zombies.get(filaSeleccionada);
+						zombiesj.add(plantaSeleccionada);
 						existe = true;
 						
 					}
@@ -164,6 +166,7 @@ public class SelecZombies extends JFrame {
 				// si no añadir la fila seleccionada con la cantidad a 1
 				if (!existe) {
 				    Zombie plantaSeleccionada = zombies.get(filaSeleccionada);
+				    zombiesj.add(plantaSeleccionada);
 				    modeloSelec.getZombies().add(plantaSeleccionada);
 				    modeloSelec.getCantidades().add(1);
 				    modeloSelec.fireTableRowsInserted(modeloSelec.getRowCount() - 1, modeloSelec.getRowCount() - 1);
@@ -199,6 +202,8 @@ public class SelecZombies extends JFrame {
 				}
 				//restar la cantidad
 				modeloSelec.restarCantidad(filaSeleccionada);
+				Zombie plantaSeleccionada = zombies.get(filaSeleccionada);
+				zombiesj.remove(plantaSeleccionada);
 				int numeroFilas = tablaSelec.getRowCount();
 				//si la tabla se queda sin plantas se oculte la tabla
 				if(numeroFilas == 0) {
@@ -217,7 +222,7 @@ public class SelecZombies extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 SwingUtilities.invokeLater(() -> new Simulacionv1(zombiesJ, resultadoP));
+				 SwingUtilities.invokeLater(() -> new Simulacionv1(zombiesj, resultadoP));
 				 dispose();
 				 
 			}

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -34,6 +36,7 @@ import javax.swing.event.ListSelectionListener;
 
 import domain.Planta;
 import domain.Zombie;
+import gui.Simulacionv1.BackgroundPanel;
 
 public class Simulacionv2 extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -84,6 +87,28 @@ public class Simulacionv2 extends JFrame{
 		}
 
 	}
+	public class BackgroundPanel extends JPanel {
+	    private static final long serialVersionUID = 1L;
+	    private Image backgroundImage;
+
+	    public BackgroundPanel(String filePath) {
+	        try {
+	            backgroundImage = ImageIO.read(new File(filePath));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        if (backgroundImage != null) {
+	            int width = getWidth();
+	            int height = getHeight();
+	            g.drawImage(backgroundImage, 0, 0, width, height, this);
+	        }
+	    }
+	}
 
 	//Metodo para pillar su imagen de la carpeta de imagenes y como voy a leer le digo que puede dar error al leer
 	public static BufferedImage getBuferedimagePlanta(Zombie zombie) throws IOException {
@@ -95,29 +120,30 @@ public class Simulacionv2 extends JFrame{
 		} catch (Exception e) {
 			// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
 			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/NoIdentificada.png"));
-			e.printStackTrace();
 			return imagenLeer;
 		}
 	}
 	Zombie plantaSeleccionada = null; //variable para almacenar la planta que haya seleccionado el ussuario dentro de la lista
 	// creo la ventana
-	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1, ArrayList<Zombie> resultadoZ) {
+	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1, ArrayList<Zombie> resultadoZ, ArrayList<Planta> plantas) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setTitle("ventana de simulacion");
 		
 		this.mapaFinalPlanta = mapaFinal1;
 		
-		ArrayList<Zombie> plantas = new ArrayList<Zombie>(resultadoZ); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
+		ArrayList<Zombie> zombies = new ArrayList<Zombie>(resultadoZ); // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Zombie> mapaFinal = new HashMap<ArrayList<Integer>, Zombie>();
 		DefaultListModel<Zombie> modelo = new DefaultListModel<Zombie>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
-		for(int i = 0; i<plantas.size();i++) {
-			modelo.add(i, plantas.get(i));
+		for(int i = 0; i<zombies.size();i++) {
+			modelo.add(i, zombies.get(i));
 		}
+		BackgroundPanel panelFondo = new BackgroundPanel("src/imagenes/PvZ-CALLE.PNG");
 		JList<Zombie> listaPlantas = new JList<Zombie>(modelo); //creo el jlist en base al modelo de lista
-		
-		listaPlantas.setFixedCellWidth(100); //le pongo una largura definida
+		listaPlantas.setOpaque(false);
+		listaPlantas.setBackground(new Color(0,0,0,0));
+		listaPlantas.setFixedCellWidth(Ajustes.resolucionx()/5); //le pongo una largura definida
 		listaPlantas.setCellRenderer(new Mirenderizado()); // le pongo mi renderizado creado previamente arriba
 		// le pongo un listener para que cuando el usuario este eligiendo una opcion el programa lo escuche y actue
 		listaPlantas.addListSelectionListener(new ListSelectionListener() { 
@@ -151,16 +177,33 @@ public class Simulacionv2 extends JFrame{
 				
 			}
 		});
+		JButton atras = new JButton("Volver");
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(() -> {
+					new Simulacionv1(resultadoZ, plantas);
+					
+				});
+				dispose();
+				
+			}
+		});
 		JPanel opciones = new JPanel();
 		add(opciones, BorderLayout.NORTH);
 		opciones.setLayout(new FlowLayout());
+		opciones.add(atras);
 		opciones.add(pala);
 		opciones.add(finalizar);
 		JScrollPane scroll = new JScrollPane(listaPlantas); //creo el scrollbar en el que voy a poner la jlist
-		add(scroll,BorderLayout.WEST); //lo pongo a la izquierda 
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		panelFondo.add(scroll);
+		add(panelFondo,BorderLayout.EAST); //lo pongo a la izquierda 
 		
-		JPanel panelCesped = new JPanel(); //creo el panel que va a simular el patio
-		panelCesped.setBackground(Color.GRAY);
+		BackgroundPanel panelCesped = new BackgroundPanel("src/imagenes/PvZ-CESPED.PNG"); //creo el panel que va a simular el patio
 		panelCesped.setLayout(new GridLayout(5, 9)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
 		//creo los 50 botones que voy a necesitar para interactuar con el patio
 		ArrayList<JButton> botones = new ArrayList<JButton>();
@@ -172,7 +215,10 @@ public class Simulacionv2 extends JFrame{
 			botones.add(espacio);			
 			espacio.putClientProperty("fila", fila);
 		    espacio.putClientProperty("columna", columna + 9);
-			//espacio.setBackground(Color.GREEN); 
+		    espacio.setBorder(BorderFactory.createEmptyBorder());
+	        espacio.setFocusPainted(false);
+	        espacio.setContentAreaFilled(false);
+	        espacio.setOpaque(false); 
 			//le pongo un listenner para que haga algo cada vez que lo aprieto
 			espacio.addActionListener(new ActionListener() {
 				
