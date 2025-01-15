@@ -1,7 +1,7 @@
-Girasol;Girasol 2;200;5;20;2;2
-Girasol;Solecito;100;5;10;2;1
+Girasol;Girasol 2;200;5;20;3;2
+Girasol;Solecito;100;5;10;3;1
 Girasol;Solsticio;100;3;20;3;3
-Humoseta;Humoseta;100;5;10;2;1
+Humoseta;Humoseta;100;5;10;3;1
 Apisonaflor;Apisonaflor;100;5;10;3;1
 Tripitidora;Tripitidora;100;5;10;3;1
 Jalapeno;Jalapeno;100;5;10;3;1
@@ -12,16 +12,16 @@ Coltapulta;Coltapulta;100;5;20;3;1
 Melonpulta;Melonpulta;100;5;20;3;1
 Guisantralladora;Guisantralladora;100;5;20;3;1
 MelonpultaCongelada;Melonpulta Congelada;100;5;20;3;1
-Lanzaguisantes;Verdito;200;5;20;2;2
-Lanzaguisantes;Guisantito;100;5;10;2;1
+Lanzaguisantes;Verdito;200;5;20;3;2
+Lanzaguisantes;Guisantito;100;5;10;3;1
 Lanzaguisantes;Terry;100;3;20;3;3
 Coltapulta;ColtaPUM;100;5;20;3;1
-Trebolador;Cuatro hojas;400;5;400;4;4
+Trebolador;Cuatro hojas;400;5;400;3;4
 Melonpulta;Melon;100;3;20;3;3
 Jalapeno;Guindilla;100;5;10;3;1
 NuezCascaraRabias;Mala nuez;100;5;20;3;1
-Cactus;Pinchon;100;6;300;2;3
-Humoseta;Humo;100;5;10;2;1
+Cactus;Pinchon;100;6;300;3;3
+Humoseta;Humo;100;5;10;3;1
 Apisonaflor;Pera;100;5;10;3;1
 Tripitidora;Triple Muerte;100;5;10;3;1
 Jalapeno;Explosivo rojo;100;5;10;3;1

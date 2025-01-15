@@ -1,10 +1,20 @@
-﻿ZombiAbanderado;Zombi Abanderado;100;1;10;3;4
-ZombiBuzo;Zombi Buzo;100;1;10;3;4
-ZombiCaracono;Zombi Caracono;100;1;10;3;1
-ZombiCaracubo;Zombi Caracubo;100;1;10;3;1
-ZombiDeportista;Zombi Deportista;100;1;10;3;1
-ZombiLector;Zombi Lector;100;1;10;3;1
-ZombiPortero;Zombiaiaiaia Portero;100;1;10;3;2
-Zombistein;Zombistein;100;1;10;3;2
-ZombiAbanderado;Zombi Abanderado;100;1;10;3;4
-ZombiBasico;Zombi;100;1;10;3;1
+﻿ZombiAbanderado;Bandera;300;1;300;3;4
+ZombiBuzo;Buceador;400;1;400;3;4
+ZombiCaracono;Conudo;100;1;100;3;1
+ZombiCaracubo;Cubete;100;1;10;3;1
+ZombiDeportista;Sprint;100;1;10;3;1
+ZombiLector;Libros;100;1;10;3;1
+ZombiPortero;Porteria;100;1;200;3;2
+Zombistein;Gran Zombie;100;1;10;3;2
+ZombiAbanderado;Bandera Blanca;100;1;10;3;4
+ZombiBasico;Zombi Comun;100;1;10;3;1
+ZombiBuzo;Zombi Hundido;100;1;10;3;1
+ZombiAbanderado;Banderitas;100;1;10;3;1
+ZombiCaracono;Cornudo;100;1;10;3;1
+ZombiCaracubo;Novivo;100;1;10;3;1
+ZombiDeportista;Olimpiada;100;1;10;3;1
+ZombiLector;Interesante;400;1;400;3;4
+ZombiPortero;Recepcionista;100;1;10;3;1
+Zombistein;Enorme ;100;1;10;3;1
+Zombistein;Gigantesco ;100;1;10;3;1
+Zombistein;Monumental ;100;1;10;3;1

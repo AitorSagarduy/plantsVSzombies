@@ -213,7 +213,7 @@ public class MenuZombies extends JFrame{
 					            
 					            panelbotonregadera1.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/alimentar.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -249,7 +249,7 @@ public class MenuZombies extends JFrame{
 					            
 					            panelbotonregadera2.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/alimentar.wav");
 					        }
 							try {
 								Thread.sleep(180); 
@@ -286,7 +286,7 @@ public class MenuZombies extends JFrame{
 					            
 					            panelbotonregadera3.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/alimentar.wav");
 					        }
 							try {
 								Thread.sleep(180); 
@@ -326,7 +326,7 @@ public class MenuZombies extends JFrame{
 					            
 					            panelbotonregadera4.repaint();
 					            cuantasplantas = cuantasplantas -1;
-					            reproducirSonido("src/sonidos/regada.wav");
+					            reproducirSonido("src/sonidos/alimentar.wav");
 					        }
 							try {
 								Thread.sleep(180); // poner a 210
@@ -363,7 +363,7 @@ public class MenuZombies extends JFrame{
 		     				
 		     				try {
 		     					//Modificar la planta segun el nombre y luego con el numero de la posicion del arraylist coger sus datos de la bd para modificarlos
-		     					gestorbd.Level_updater_Z(zombie.getNombre(), gestorbd.getZombies().get(posicion).getVida()+25,gestorbd.getZombies().get(posicion).getTmp_atac()-1,gestorbd.getZombies().get(posicion).getDanyo()+50,gestorbd.getZombies().get(posicion).getVelocidad()+1,gestorbd.getZombies().get(posicion).getNivel()+1);
+		     					gestorbd.Level_updater_Z(zombie.getNombre(), gestorbd.getZombies().get(posicion).getVida()+25,gestorbd.getZombies().get(posicion).getTmp_atac(),gestorbd.getZombies().get(posicion).getDanyo()+50,gestorbd.getZombies().get(posicion).getVelocidad(),gestorbd.getZombies().get(posicion).getNivel()+1);
 		     					
 		     					
 							} catch (SQLException e1) {
