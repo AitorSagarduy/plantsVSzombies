@@ -1,10 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,13 +10,12 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import db.GestorBD;
 import domain.Planta;
 import domain.Zombie;
-
+ 
 public class SelecAlmanaque extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
@@ -30,8 +27,7 @@ public class SelecAlmanaque extends JFrame{
 		
 		GestorBD gestorBD = new GestorBD();
         ArrayList<Planta> lol = gestorBD.getPlantasTienda();
-        System.out.println("esta abajo bro");
-        System.out.println(lol);
+
 		
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
@@ -77,7 +73,6 @@ public class SelecAlmanaque extends JFrame{
 		    public void componentResized(java.awt.event.ComponentEvent e) {
 		        // Redimensiona la imagen al tamaño actual del botón
 		        int width = zombies.getWidth();
-		        System.out.println(width);
 		        int height = zombies.getHeight();
 		        Image resizedImg = img1.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Ajusta tamaño
 		        zombies.setIcon(new ImageIcon(resizedImg)); // Configura el nuevo icono
