@@ -1,0 +1,1 @@
+Como puede ver en esa conversación copie el método que me dio y lo pegue en mi código de simulación v1 y v2 y lo aplique en las jlists correspondientes

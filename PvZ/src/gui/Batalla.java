@@ -88,6 +88,7 @@ public class Batalla extends JFrame{
 	public Batalla(HashMap<ArrayList<Integer>, Planta> mapaFinal1, HashMap<ArrayList<Integer>, Zombie> mapaFinal2) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("ventana de batalla");
+		setResizable(false);
 		this.mapaFinalPlantas = mapaFinal1;
 		this.mapaFinalZombies = mapaFinal2;
 		MusicaMenu.sonidoM = "/sonidos/batalla.wav";
