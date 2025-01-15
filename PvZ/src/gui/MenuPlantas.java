@@ -291,6 +291,11 @@ public class MenuPlantas extends JFrame{
 			        	barra2.setMaximum(ff);
 			        	panelbotonregadera2.add(barra2, BorderLayout.SOUTH);
 						for(int f = 0; f < ff; f++) {
+							  if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+					                System.out.println("Hilo detenido.");
+					             //   Thread.currentThread().interrupt();
+					                break;
+					            }
 					        barra2.setValue(f);
 							if(f == ff-1) {
 					            panellleno2 = false;
@@ -325,6 +330,11 @@ public class MenuPlantas extends JFrame{
 			        	barra3.setMaximum(gg);
 			        	panelbotonregadera3.add(barra3, BorderLayout.SOUTH);
 						for(int g = 0; g < gg; g++) {
+							  if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+					                System.out.println("Hilo detenido.");
+					             //   Thread.currentThread().interrupt();
+					                break;
+					            }
 					        barra3.setValue(g);
 							if(g == gg-1) {
 					            panellleno3 = false;
@@ -427,7 +437,7 @@ public class MenuPlantas extends JFrame{
 		     				
 		     				try {
 		     					//Modificar la planta segun el nombre y luego con el numero de la posicion del arraylist coger sus datos de la bd para modificarlos
-								gestorbd.Level_updater_P(planta.getNombre(), gestorbd.getPlantas().get(posicion).getVida()+25,gestorbd.getPlantas().get(posicion).getTmp_atac(),gestorbd.getPlantas().get(posicion).getDanyo()+50,gestorbd.getPlantas().get(posicion).getRango()+1,gestorbd.getPlantas().get(posicion).getNivel()+1);
+								gestorbd.Level_updater_P(planta.getNombre(), gestorbd.getPlantas().get(posicion).getVida()+25,gestorbd.getPlantas().get(posicion).getTmp_atac(),gestorbd.getPlantas().get(posicion).getDanyo()+50,gestorbd.getPlantas().get(posicion).getRango(),gestorbd.getPlantas().get(posicion).getNivel()+1);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

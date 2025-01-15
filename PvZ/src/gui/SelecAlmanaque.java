@@ -115,6 +115,7 @@ public class SelecAlmanaque extends JFrame{
 		central.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		central.setOpaque(true);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		setVisible(true);
 	}
 	

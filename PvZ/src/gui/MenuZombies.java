@@ -234,6 +234,11 @@ public class MenuZombies extends JFrame{
 			        	barra2.setMaximum(ff);
 			        	panelbotonregadera2.add(barra2, BorderLayout.SOUTH);
 						for(int f = 0; f < ff; f++) {
+							  if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+					                System.out.println("Hilo detenido.");
+					             //   Thread.currentThread().interrupt();
+					                break;
+					            }
 					        barra2.setValue(f);
 							if(f == ff-1) {
 					            panellleno2 = false;
@@ -271,6 +276,11 @@ public class MenuZombies extends JFrame{
 			        	barra3.setMaximum(gg);
 			        	panelbotonregadera3.add(barra3, BorderLayout.SOUTH);
 						for(int g = 0; g < gg; g++) {
+							  if (Thread.currentThread().isInterrupted()) { // Verifica si el hilo ha sido interrumpido
+					                System.out.println("Hilo detenido.");
+					             //   Thread.currentThread().interrupt();
+					                break;
+					            }
 					        barra3.setValue(g);
 							if(g == gg-1) {
 					            panellleno3 = false;

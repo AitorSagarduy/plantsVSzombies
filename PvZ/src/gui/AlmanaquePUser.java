@@ -43,7 +43,6 @@ public class AlmanaquePUser extends JFrame {
 
         setTitle("Almanaque Plantas");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
         JPanel mainPanel = new JPanel();
@@ -214,5 +213,4 @@ public class AlmanaquePUser extends JFrame {
 	    // Llamada recursiva para ordenar el resto de la lista
 	    ordenarPorNombre(plantas, n - 1);
 	}
-
 }

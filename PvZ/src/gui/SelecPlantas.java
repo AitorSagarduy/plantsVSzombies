@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -304,15 +303,9 @@ public class SelecPlantas extends JFrame {
         panelPlantas.setPreferredSize(new Dimension(0, 400));
         
         setResizable(false);
-
-        
- 
 		setLocationRelativeTo(null);
-
-        
         setVisible(true);
 	}
-	
 	
 	
 }
