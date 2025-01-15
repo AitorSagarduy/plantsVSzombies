@@ -135,7 +135,8 @@ public class AlmanaquePUser extends JFrame {
         mainPanel.add(panelTitulo, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         
-       
+        setResizable(false);
+
         
         add(mainPanel);
         setVisible(true);

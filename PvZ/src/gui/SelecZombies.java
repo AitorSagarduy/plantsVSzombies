@@ -1,8 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -35,18 +36,19 @@ public class SelecZombies extends JFrame {
         @SuppressWarnings("unused")
         SelecZombies ventana = new SelecZombies(null);
 	}
-	JPanel panelGeneral;
 	JPanel panelBotones;
 	JPanel panelZombies;
-	JPanel panelTodasZ;
+	JPanel mainPanel;
+	JPanel panelTodosZombies;
 	JPanel panelUsuarioZ;
+	JLabel tituloT;
+	JLabel tituloS;
 	ArrayList<Zombie> zombiesj = new ArrayList<Zombie>();
 	
 	public SelecZombies(ArrayList<Planta> resultadoP) {
 		//ajustes de la ventana y 
 		//cargar la lista de zombies con zombies desde el csv
 		GestorBD gestor = new GestorBD();
-		System.out.println(resultadoP);
 		ArrayList<Zombie> zombies = gestor.getZombies();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,7 +72,7 @@ public class SelecZombies extends JFrame {
 		// meter la tabla en un scrollPane
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		
-		// implementar el renderer del nombre a la columna 0 
+		// implementar el renderer del nombre a la columna 0 y ajustar el tamaño de las columnas
 		TableColumn nombreColumn = tabla.getColumnModel().getColumn(0);
 		nombreColumn.setCellRenderer(new RendererNombre());
 		nombreColumn.setMinWidth(150);
@@ -78,6 +80,7 @@ public class SelecZombies extends JFrame {
 		TableColumn columna1 = tabla.getColumnModel().getColumn(1);
 		columna1.setMinWidth(150);
 		
+		// centrar las columnas
 		DefaultTableCellRenderer centralRenderer = new DefaultTableCellRenderer();
 	    centralRenderer.setHorizontalAlignment(JLabel.CENTER); 
 	    centralRenderer.setVerticalAlignment(JLabel.CENTER);   
@@ -149,7 +152,7 @@ public class SelecZombies extends JFrame {
 				// mensaje de error si se selecciona mal el zombie
 				//(si el getSelectedrow no tiene ninguna fila seleccionada devuelve -1)
 				if(filaSeleccionada  == -1) {
-					JOptionPane.showMessageDialog(SelecZombies.this, "Selecciona una planta", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(SelecZombies.this, "Selecciona una zombie", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -165,6 +168,16 @@ public class SelecZombies extends JFrame {
 						modeloSelec.sumarCantidad(i);
 						Zombie plantaSeleccionada = zombies.get(filaSeleccionada);
 						zombiesj.add(plantaSeleccionada);
+						
+						int cantidad = modeloSelec.getCantidades().get(i);
+						if (cantidad == 6) {
+							JOptionPane.showMessageDialog(SelecZombies.this,
+									"No puedes añadir mas de 5 plantas iguales", "Error", JOptionPane.ERROR_MESSAGE);
+							modeloSelec.restarCantidad(i);
+							zombiesj.remove(plantaSeleccionada);
+							return;
+						}
+						
 						existe = true;
 						
 					}
@@ -203,7 +216,7 @@ public class SelecZombies extends JFrame {
 				int filaSeleccionada = tablaSelec.getSelectedRow();
 				//si el usuario selecciona mal la planta le saldra un mensaje de error
 				if(filaSeleccionada  == -1) {
-					JOptionPane.showMessageDialog(SelecZombies.this, "Selecciona una planta de la tabla de abajo", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(SelecZombies.this, "Selecciona un zombie de la tabla de abajo", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				//restar la cantidad
@@ -242,30 +255,57 @@ public class SelecZombies extends JFrame {
 	            tablaSelec.getColumnModel().getColumn(i).setCellRenderer(Renderer);
 	        }
       //Añadir todas los botones a un panel y ajustarlo todo
-        panelBotones = new JPanel();  
-        panelBotones.add(atras);
-        panelBotones.add(agregar);
-        panelBotones.add(eliminar);
-        panelBotones.add(batalla);
-        
-        panelBotones.setPreferredSize(new Dimension(0, 50));
-        add(panelBotones, BorderLayout.NORTH);
-        
-        
-        panelZombies = new JPanel();
-        add(panelZombies, BorderLayout.CENTER);
-        panelZombies.setBackground(Color.red);
-        panelZombies.setLayout(new GridLayout(2, 1));
-        panelZombies.setPreferredSize(new Dimension(0, 400));
-        
-        panelZombies.add(scrollPane);
-        panelZombies.add(scrollSelec);  
- 
-		setLocationRelativeTo(null);
-		
-        
-        setVisible(true);
-		
+		    mainPanel = new JPanel();
+		    mainPanel.setLayout(new BorderLayout());
+	        panelBotones = new JPanel();  
+	        panelBotones.add(atras);
+	        panelBotones.add(agregar);
+	        panelBotones.add(eliminar);
+	        panelBotones.add(batalla);
+	        
+	        panelTodosZombies = new JPanel();
+	        panelTodosZombies.setLayout(new BorderLayout());
+	        
+	        tituloT = new JLabel("Tus zombies escogidos", SwingConstants.CENTER);
+		    tituloT.setFont(new Font("Arial", Font.BOLD, 16));
+		    
+		    tituloS = new JLabel("Escoge tus zombies", SwingConstants.CENTER);
+		    tituloS.setFont(new Font("Arial", Font.BOLD, 16));
+	        
+	        panelTodosZombies.add(scrollPane, BorderLayout.CENTER);
+	        panelTodosZombies.add(tituloS, BorderLayout.NORTH);
+		    
+	        panelUsuarioZ = new JPanel();
+	        panelUsuarioZ.setLayout(new BorderLayout());
+	        
+	       
+	        
+	        panelUsuarioZ.add(scrollSelec, BorderLayout.CENTER);
+	        panelUsuarioZ.add(tituloT, BorderLayout.NORTH);
+	        
+	        
+	        
+	        panelBotones.setPreferredSize(new Dimension(0, 50));
+	        
+	        
+	        panelZombies = new JPanel();
+	        panelZombies.setLayout(new GridLayout(2, 1 , 10, 10));
+	        panelZombies.add(panelTodosZombies);
+	        panelZombies.add(panelUsuarioZ);
+	        
+	        mainPanel.add(panelBotones, BorderLayout.NORTH);
+	        mainPanel.add(panelZombies, BorderLayout.CENTER);
+	        
+	        add(mainPanel);
+	        
+	        panelZombies.setPreferredSize(new Dimension(0, 400));
+	        
+			setLocationRelativeTo(null);
+			
+	        setResizable(false);
+
+	        
+	        setVisible(true);
 	}
 
 }

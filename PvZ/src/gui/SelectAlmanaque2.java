@@ -1,23 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import db.GestorBD;
-import domain.Planta;
-import domain.Zombie;
 
 public class SelectAlmanaque2 extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -29,7 +23,6 @@ public class SelectAlmanaque2 extends JFrame{
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
 		GestorBD gestorBD = new GestorBD();
-        ArrayList<Planta> lol = gestorBD.getPlantasTienda();
 
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());

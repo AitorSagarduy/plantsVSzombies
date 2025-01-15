@@ -111,14 +111,11 @@ public class AlmanaqueZUser extends JFrame {
 		});
 
         JScrollPane scrollPane = new JScrollPane(zombiePanel);
-        JLabel titleLabel = new JLabel("Estos son tus zombies", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel tituloLabel = new JLabel("Estos son tus zombies", SwingConstants.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         JPanel panelTitulo = new JPanel(new BorderLayout());
 
-	     
-	     JLabel titulo = new JLabel("Estas son tus plantas", SwingConstants.CENTER);
-	     titulo.setFont(new Font("Arial", Font.BOLD, 16));
 	
 	     JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
 	     menuPanel.add(botonOrdenar);
@@ -126,13 +123,14 @@ public class AlmanaqueZUser extends JFrame {
 	     
 	     panelTitulo.add(menuPanel, BorderLayout.EAST);
 	     panelTitulo.add(atras, BorderLayout.WEST);
-	     panelTitulo.add(titulo, BorderLayout.CENTER); 
+	     panelTitulo.add(tituloLabel, BorderLayout.CENTER); 
 	
 	     
 	    mainPanel.add(panelTitulo, BorderLayout.NORTH);
         
         mainPanel.add(panelTitulo, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
+        setResizable(false);
        
         add(mainPanel);
         setVisible(true);
