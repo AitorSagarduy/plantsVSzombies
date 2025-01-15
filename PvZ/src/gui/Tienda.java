@@ -33,8 +33,8 @@ public class Tienda extends JFrame{
 	//Defino variables que seran usadas luego
 	Font fuentebarra = new Font("Arial", Font.BOLD, 20);
 	JLabel soleslabel;
-	int soles = 0;
-	int cerebros = 0;
+	int soles;
+	int cerebros;
 
 	public Tienda() {
 		GestorBD gestorbd = new GestorBD();
@@ -169,6 +169,8 @@ public class Tienda extends JFrame{
 		    					// TODO Auto-generated catch block
 		    					e1.printStackTrace();
 		    				}
+		    				
+		    				Main.solespublic = soles;
 		        			
 		        			soleslabel.setText("Soles: " + soles);
 		        			reproducirSonido("src/sonidos/solmas.wav");
@@ -237,16 +239,27 @@ public class Tienda extends JFrame{
 		        	if(pregunta == JOptionPane.YES_OPTION) {
 		        		//Si se responde que si y NO hay suficientes soles
 		        		//soles < precio
-		        		if(0==2) {
+		        		if(cerebros < precio) {
 		        			reproducirSonido("src/sonidos/mal.wav");
 		        			//Mostrar mensaje explicando la situacion
 		     				JOptionPane.showMessageDialog(null, "Necesitas mas cerebros","¡Cerebros insuficientes!", JOptionPane.ERROR_MESSAGE);
 		        		} else {
 		        			//En caso de tener suficiente soles...
-		        		/*	soles = soles - precio;
-		        			soleslabel.setText("Soles: " + soles);
+		        			cerebros = cerebros - precio;
+		    				try {
+		    					gestorbd.updateCoins(soles, cerebros);
+		    				} catch (SQLException e1) {
+		    					// TODO Auto-generated catch block
+		    					e1.printStackTrace();
+		    				}
+		    				
+		    				Main.cerebrospublic = cerebros;
+		        			
+		        			
+		        			
+		        			cerebroslabel.setText("Cerebros: " + cerebros);
 		        			reproducirSonido("src/sonidos/solmas.wav");
-		        		*/	
+		        			
 		       			//Coger de la lista la planta completa de la clase Planta que se quiere añadir a la base de datos
 		        			Zombie zombieinsertarbd = zombiesarray.get(tablazombies.getSelectedRow());
 		        			//Convertirlo en un array

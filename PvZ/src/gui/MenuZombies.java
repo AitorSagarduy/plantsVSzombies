@@ -50,13 +50,14 @@ public class MenuZombies extends JFrame{
 	   
 	 //public static Integer solespublic = 0;
 	   int soles = 0;
+	   int cerebros = 0;
+	   
        int contador = 0;
        int cuantasplantas = 0;
 	   int grids = 0;
 	   
 	   String ultimozombiseleccionado;
 	   String ultimobotonseleccionado = "";
-	   
 	   
 	   boolean apagado = false;
 	   boolean regada = false;
@@ -78,6 +79,7 @@ public class MenuZombies extends JFrame{
 	   private JLabel soleslabel;
 	
 	public MenuZombies(ArrayList<domain.Zombie> zombies) {
+		GestorBD gestorbd = new GestorBD();
 		setTitle("Almanaque Zombis");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -88,14 +90,9 @@ public class MenuZombies extends JFrame{
         MusicaMenu.sonidoM = "/sonidos/zengarden.wav";
         musicThread.start();
         
+        soles = Main.solespublic;
+        cerebros = Main.cerebrospublic;
         
-        
-        Main mainInstance = new Main();
-        int solesmain = mainInstance.solespublic;
-       // int solespublic = solesmain;
-        
-        soles = solesmain;
-		        
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(290, 330); //383
         Dimension botontamanyomini = new Dimension(184, 190);
@@ -348,17 +345,17 @@ public class MenuZombies extends JFrame{
 				
 				// Añadir los soles aleatoriamente
 				int numrandom = (int)(Math.random() * 80 + 1);
-				soles = soles + numrandom;
+				cerebros = cerebros + numrandom;
 				reproducirSonido("src/sonidos/regar.wav");
-				soleslabel.setText("Cerebros: " + soles);
+				soleslabel.setText("Cerebros: " + cerebros);
 				} else {
 					
 					if(mapaniveles.get(zombie.getNombre()) < 4) {
-						int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres mejorar «" +zombie.getNombre() + "» al nivel " + nivelmasuno(mapaniveles.get(zombie.getNombre())) + "?\nCuesta 100 soles", "Mejorar " +zombie.getNombre(), JOptionPane.YES_NO_OPTION);
+						int respuesta = JOptionPane.showConfirmDialog(null, "¿Quieres mejorar «" +zombie.getNombre() + "» al nivel " + nivelmasuno(mapaniveles.get(zombie.getNombre())) + "?\nCuesta 100 cerebros", "Mejorar " +zombie.getNombre(), JOptionPane.YES_NO_OPTION);
 					if(respuesta == JOptionPane.YES_OPTION) {
-		     			if(soles < 100) {
+		     			if(cerebros < 100) {
 		     				reproducirSonido("src/sonidos/mal.wav");
-		     				JOptionPane.showMessageDialog(null, "Necesitas mas soles","¡Soles insuficientes!", JOptionPane.ERROR_MESSAGE);
+		     				JOptionPane.showMessageDialog(null, "Necesitas mas cerebros","¡Cerebros insuficientes!", JOptionPane.ERROR_MESSAGE);
 		     			} else {
 		     				
 		     				GestorBD gestorbd = new GestorBD();
@@ -366,7 +363,9 @@ public class MenuZombies extends JFrame{
 		     				
 		     				try {
 		     					//Modificar la planta segun el nombre y luego con el numero de la posicion del arraylist coger sus datos de la bd para modificarlos
-								gestorbd.Level_updater_Z(zombie.getNombre(), 2,2,2,2,gestorbd.getZombies().get(posicion).getNivel()+1);
+		     					gestorbd.Level_updater_Z(zombie.getNombre(), gestorbd.getZombies().get(posicion).getVida()+25,gestorbd.getZombies().get(posicion).getTmp_atac()-1,gestorbd.getZombies().get(posicion).getDanyo()+50,gestorbd.getZombies().get(posicion).getVelocidad()+1,gestorbd.getZombies().get(posicion).getNivel()+1);
+		     					
+		     					
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -375,9 +374,19 @@ public class MenuZombies extends JFrame{
 		     				
 		     				Integer llave = mapaniveles.get(zombie.getNombre());
 		     				mapaniveles.put(zombie.getNombre(), llave+1); 
-		     				soles = soles - 100;
+		     				cerebros = cerebros - 100;
+		     				
+		     				try {
+									gestorbd.updateCoins(soles, cerebros);
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+			     				
+			     				Main.cerebrospublic=cerebros;
+		     				
 		     				reproducirSonido("src/sonidos/sol.wav");
-		     				soleslabel.setText("Soles: " + soles);
+		     				soleslabel.setText("Cerebros: " + cerebros);
 		     				if(mapaniveles.get(zombie.getNombre()) > 3) {
 		            			boton.setBackground(colornivelmax);
 		            			reproducirSonido("src/sonidos/solmas.wav");
@@ -407,10 +416,8 @@ public class MenuZombies extends JFrame{
         barra.setPreferredSize(new Dimension(0, 80));
         setJMenuBar(barra);
         ImageIcon solicono = new ImageIcon("src/imagenes/cerebro.png");
-        soleslabel = new JLabel("Cerebros: " + soles, solicono, JLabel.LEFT);
+        soleslabel = new JLabel("Cerebros: " + cerebros, solicono, JLabel.LEFT);
         soleslabel.setFont(fuentebarra);
-        
-        GestorBD bdgei = new GestorBD();
         
         JPanel panelbarra = new JPanel();
         JPanel panelatras = new JPanel();
@@ -421,12 +428,14 @@ public class MenuZombies extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					gestorbd.updateCoins(soles, cerebros);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Main.solespublic = soles;
+				
+				Main.cerebrospublic=cerebros;
+				
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);
@@ -561,8 +570,6 @@ public class MenuZombies extends JFrame{
         derecha.add(panelbotonregadera3, BorderLayout.CENTER);
         derecha.add(panelbotonregadera4, BorderLayout.CENTER);
         add(derecha, BorderLayout.EAST);
-        
-        
         setResizable(false);
         setVisible(true);
 	}

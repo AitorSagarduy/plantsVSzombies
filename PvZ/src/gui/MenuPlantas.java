@@ -51,8 +51,8 @@ public class MenuPlantas extends JFrame{
 	   JPanel panelbotonregadera3;
 	   JPanel panelbotonregadera4;
 	   
-	   int soles = 0;
-	   int cerebros = 0;
+	   int soles;
+	   int cerebros;
        int contador = 0;
 	   int cuantasplantas = 0;
 	   int grids = 0;
@@ -441,6 +441,16 @@ public class MenuPlantas extends JFrame{
 		     				soles = soles - 100;
 		     				reproducirSonido("src/sonidos/sol.wav");
 		     				
+		     				//Añadir a la base de datos
+		     				try {
+								gestorbd.updateCoins(soles, cerebros);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+		     				
+		     				Main.solespublic= soles;
+		     				
 		     				//Modificar el label de los soles con la cantidad correspondiente
 		     				soleslabel.setText("Soles: " + soles);
 		     				
@@ -495,12 +505,14 @@ public class MenuPlantas extends JFrame{
 				
 				//Actualizar la cantidad de soles
 				try {
+					System.out.println("llevas" + soles);
 					gestorbd.updateCoins(soles, cerebros);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
+				Main.solespublic = soles;
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);

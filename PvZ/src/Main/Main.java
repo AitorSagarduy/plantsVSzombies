@@ -15,7 +15,6 @@ public class Main {
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
 		gestorBD.getCoins();
-		
 
 		SwingUtilities.invokeLater(() -> new MenuInicial());
 
