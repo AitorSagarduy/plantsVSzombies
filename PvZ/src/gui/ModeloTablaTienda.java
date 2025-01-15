@@ -15,7 +15,7 @@ public class ModeloTablaTienda extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Planta> plantas;
-	private String[] columnas = {"Tipo" ,"Vida", "Velocidad.Atc", 
+	private String[] columnas = {"Tipo" ,"Nombre","Vida", "Velocidad.Atc", 
 			"Daño", "Rango", "Nivel", "Precio" };
 	
 	public ModeloTablaTienda(ArrayList<Planta> plantas) {
@@ -53,16 +53,18 @@ public class ModeloTablaTienda extends AbstractTableModel {
 		case 0:
 			return plantas.get(rowIndex).getTipo();
 		case 1:
-			return plantas.get(rowIndex).getVida();
+			return plantas.get(rowIndex).getNombre();
 		case 2:
-			return plantas.get(rowIndex).getTmp_atac();
+			return plantas.get(rowIndex).getVida();
 		case 3:
-			return plantas.get(rowIndex).getDanyo();
+			return plantas.get(rowIndex).getTmp_atac();
 		case 4:
-			return plantas.get(rowIndex).getRango();
+			return plantas.get(rowIndex).getDanyo();
 		case 5:
-			return plantas.get(rowIndex).getNivel();
+			return plantas.get(rowIndex).getRango();
 		case 6:
+			return plantas.get(rowIndex).getNivel();
+		case 7:
 			int resultado;
 			int nivel = plantas.get(rowIndex).getNivel();
 			int danyo = plantas.get(rowIndex).getDanyo();

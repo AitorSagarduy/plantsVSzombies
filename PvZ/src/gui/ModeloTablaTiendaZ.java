@@ -13,7 +13,7 @@ public class ModeloTablaTiendaZ extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Zombie> zombies;
-	private String[] columnas = {"Tipo","Vida", "Velocidad.Atc", 
+	private String[] columnas = {"Tipo","Nombre","Vida", "Velocidad.Atc", 
 			"Daño", "Rango", "Nivel", "Precio" };
 	
 	public ModeloTablaTiendaZ(ArrayList<Zombie> zombies) {
@@ -52,16 +52,19 @@ public class ModeloTablaTiendaZ extends AbstractTableModel {
 		case 0:
 			return zombies.get(rowIndex).getTipo();
 		case 1:
-			return zombies.get(rowIndex).getVida();
+			return zombies.get(rowIndex).getNombre();
 		case 2:
-			return zombies.get(rowIndex).getTmp_atac();
+			return zombies.get(rowIndex).getVida();
+			
 		case 3:
-			return zombies.get(rowIndex).getDanyo();
+			return zombies.get(rowIndex).getTmp_atac();
 		case 4:
-			return zombies.get(rowIndex).getVelocidad();
+			return zombies.get(rowIndex).getDanyo();
 		case 5:
-			return zombies.get(rowIndex).getNivel();
+			return zombies.get(rowIndex).getVelocidad();
 		case 6:
+			return zombies.get(rowIndex).getNivel();
+		case 7:
 			int resultado;
 			int nivel = zombies.get(rowIndex).getNivel();
 			int danyo = zombies.get(rowIndex).getDanyo();

@@ -150,8 +150,8 @@ public class Tienda extends JFrame{
 		        if (filaseleccionada != -1) { 
 		        	
 		        	//Coger algunos datos de la fila seleccionada para usarloas mas adelante, el 0 y 6 se refiere a la posicion del modelo de la que tendran que sacar el dato
-		            String nombre = (String) tabla.getModel().getValueAt(tabla.convertRowIndexToModel(filaseleccionada), 0);
-		            Integer precio = (Integer) tabla.getModel().getValueAt(tabla.convertRowIndexToModel(filaseleccionada), 6);
+		            String nombre = (String) tabla.getModel().getValueAt(tabla.convertRowIndexToModel(filaseleccionada), 1);
+		            Integer precio = (Integer) tabla.getModel().getValueAt(tabla.convertRowIndexToModel(filaseleccionada), 7);
 		        	int pregunta = JOptionPane.showConfirmDialog(null, "¿Quieres comprar la planta «" + nombre + "»?\nCuesta " + precio +" soles", "Comprar «"  +nombre + "»", JOptionPane.YES_NO_OPTION);
 		        	if(pregunta == JOptionPane.YES_OPTION) {
 		        		//Si se responde que si y NO hay suficientes soles
@@ -233,8 +233,8 @@ public class Tienda extends JFrame{
 		        if (filaseleccionada != -1) { 
 		        	
 		        	//Coger algunos datos de la fila seleccionada para usarloas mas adelante, el 0 y 6 se refiere a la posicion del modelo de la que tendran que sacar el dato
-		            String nombre = (String) tablazombies.getModel().getValueAt(tablazombies.convertRowIndexToModel(filaseleccionada), 0);
-		            Integer precio = (Integer) tablazombies.getModel().getValueAt(tablazombies.convertRowIndexToModel(filaseleccionada), 6);
+		            String nombre = (String) tablazombies.getModel().getValueAt(tablazombies.convertRowIndexToModel(filaseleccionada), 1);
+		            Integer precio = (Integer) tablazombies.getModel().getValueAt(tablazombies.convertRowIndexToModel(filaseleccionada), 7);
 		        	int pregunta = JOptionPane.showConfirmDialog(null, "¿Quieres comprar el zombi «" + nombre + "»?\nCuesta " + precio +" cerebros", "Comprar «"  +nombre + "»", JOptionPane.YES_NO_OPTION);
 		        	if(pregunta == JOptionPane.YES_OPTION) {
 		        		//Si se responde que si y NO hay suficientes soles
