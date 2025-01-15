@@ -1,0 +1,14 @@
+Conversación 1 2024-8-6_18-34
+Para saber  como hacer las celdas no editables 
+
+Conversación 2 2024-10-14_10-08
+Quitar los caracteres especiales, al final solo use el  nombre.replaceAll("[^a-zA-Z0-9\\s]", "")
+
+Conversación 3 2024-10-20_13-40
+Sin cambios
+
+Conversación 4 2024-11-7_20-55
+No lo use, un compañero me enseño el dispose()
+
+Conversación 5 2024-12-7_23:12
+Sin cambios

@@ -47,7 +47,7 @@ public class SelecZombies extends JFrame {
 	
 	public SelecZombies(ArrayList<Planta> resultadoP) {
 		//ajustes de la ventana y 
-		//cargar la lista de zombies con zombies desde el csv
+		//cargar la lista de zombies con la bd
 		GestorBD gestor = new GestorBD();
 		ArrayList<Zombie> zombies = gestor.getZombies();
 
@@ -56,7 +56,7 @@ public class SelecZombies extends JFrame {
 		setLocationRelativeTo(null);
 		setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
 		
-		
+		//limpiar los nombres de los zombies
 		for (Zombie zombie : zombies) {
 			zombie.setTipo(zombie.getTipo().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]", ""));
 		}
