@@ -52,6 +52,7 @@ public class MenuPlantas extends JFrame{
 	   JPanel panelbotonregadera4;
 	   
 	   int soles = 0;
+	   int cerebros = 0;
        int contador = 0;
 	   int cuantasplantas = 0;
 	   int grids = 0;
@@ -102,6 +103,8 @@ public class MenuPlantas extends JFrame{
 	}
 	
 	public MenuPlantas(ArrayList<domain.Planta> plantas) {
+		
+		GestorBD gestorbd = new GestorBD();
 		setTitle("Almanaque Plantas");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 
@@ -111,12 +114,9 @@ public class MenuPlantas extends JFrame{
         MusicaMenu.sonidoM = "/sonidos/zengarden.wav";
         musicThread.start();  
         
-        //////////////
-        Main mainInstance = new Main();
-        int solesmain = mainInstance.solespublic;
-       // int solespublic = solesmain;
-        
-        soles = solesmain;
+        //Cargar los soles y cerebros del main
+        soles = Main.solespublic;
+        cerebros = Main.cerebrospublic;
 		        
 		// Tamaños, fuentes y colores que se van a usar luego
         Dimension botontamanyo = new Dimension(290, 330); //383
@@ -399,6 +399,8 @@ public class MenuPlantas extends JFrame{
 				//Añadir los soles aleatoriamente
 				int numrandom = (int)(Math.random() * 80 + 1);
 				soles = soles + numrandom;
+				
+				
 				reproducirSonido("src/sonidos/regar.wav");
 				soleslabel.setText("Soles: " + soles);
 				
@@ -419,13 +421,13 @@ public class MenuPlantas extends JFrame{
 		     				
 		     				////////////////////
 		     				
-		     				GestorBD gestorbd = new GestorBD();
+		     				
 		     				//Mirar en el arraylist de las plantas en que posicion esta la planta que se quiere mejorar
 		     				int posicion = plantas.indexOf(planta);
 		     				
 		     				try {
 		     					//Modificar la planta segun el nombre y luego con el numero de la posicion del arraylist coger sus datos de la bd para modificarlos
-								gestorbd.Level_updater_P(planta.getNombre(), 2,2,2,2,gestorbd.getPlantas().get(posicion).getNivel()+1);
+								gestorbd.Level_updater_P(planta.getNombre(), gestorbd.getPlantas().get(posicion).getVida()+25,gestorbd.getPlantas().get(posicion).getTmp_atac()-1,gestorbd.getPlantas().get(posicion).getDanyo()+50,gestorbd.getPlantas().get(posicion).getRango()+1,gestorbd.getPlantas().get(posicion).getNivel()+1);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -481,7 +483,6 @@ public class MenuPlantas extends JFrame{
         soleslabel.setFont(fuentebarra);
         
         //Crear el boton de atras
-        GestorBD gestorbd = new GestorBD();  
         JPanel panelbarra = new JPanel();
         JPanel panelatras = new JPanel();
         panelatras.setLayout(new BorderLayout());
@@ -491,13 +492,15 @@ public class MenuPlantas extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(soles);
+				
+				//Actualizar la cantidad de soles
 				try {
-					gestorbd.updateCoins(Main.solespublic, Main.cerebrospublic);
+					gestorbd.updateCoins(soles, cerebros);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Main.solespublic = soles;
+				
 				player.stopPlaying();
 				MenuInicial ventana = new MenuInicial();
 				ventana.setLocationRelativeTo(null);

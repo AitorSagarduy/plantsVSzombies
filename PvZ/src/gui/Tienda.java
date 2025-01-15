@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -35,16 +33,14 @@ public class Tienda extends JFrame{
 	//Defino variables que seran usadas luego
 	Font fuentebarra = new Font("Arial", Font.BOLD, 20);
 	JLabel soleslabel;
-	int soles = 11110;
+	int soles = 0;
+	int cerebros = 0;
 
 	public Tienda() {
+		GestorBD gestorbd = new GestorBD();
 		
-		//Cagar los soles des
-	/*	Main mainInstance = new Main();
-        int solesmain = mainInstance.solespublic;
-        soles = solesmain;
-        
-       */ 
+		soles = Main.solespublic;
+        cerebros = Main.cerebrospublic;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Tienda");
@@ -53,10 +49,10 @@ public class Tienda extends JFrame{
 		ImageIcon solicono = new ImageIcon("src/imagenes/sol.png");
 		ImageIcon cerebroicono = new ImageIcon("src/imagenes/cerebro.png");
 		JLabel soleslabel = new JLabel("Soles: " + soles + "     ", solicono, JLabel.LEFT); 
-		JLabel cerebros = new JLabel("Cerebros: " + "900" + "      ", cerebroicono, JLabel.LEFT);
+		JLabel cerebroslabel = new JLabel("Cerebros: " + cerebros + "      ", cerebroicono, JLabel.LEFT);
 		
 		soleslabel.setFont(fuentebarra);
-		cerebros.setFont(fuentebarra);
+		cerebroslabel.setFont(fuentebarra);
 		
 		//Para que suene la musica
 		MusicaMenu player = new MusicaMenu();
@@ -96,7 +92,7 @@ public class Tienda extends JFrame{
 
 		//Poner el contador de soles y cerebros al panel de la barra superior
 		barra.add(soleslabel);
-		barra.add(cerebros);
+		barra.add(cerebroslabel);
 		
 		//Creo un boton de atras para poder volver al menu principal
 		JButton atras = new JButton("Atras");
@@ -166,6 +162,14 @@ public class Tienda extends JFrame{
 		        		} else {
 		        			//En caso de tener suficiente soles...
 		        			soles = soles - precio;
+		        			
+		    				try {
+		    					gestorbd.updateCoins(soles, cerebros);
+		    				} catch (SQLException e1) {
+		    					// TODO Auto-generated catch block
+		    					e1.printStackTrace();
+		    				}
+		        			
 		        			soleslabel.setText("Soles: " + soles);
 		        			reproducirSonido("src/sonidos/solmas.wav");
 		        			
