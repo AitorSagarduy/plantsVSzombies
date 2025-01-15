@@ -1,104 +1,99 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import db.GestorBD;
-import domain.Planta;
-import domain.Zombie;
 
 public class SelecAlmanaque extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	public SelecAlmanaque() {
-		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Selecciona el almanaque");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		
+		//GestorBD para poder usar la base de datos
 		GestorBD gestorBD = new GestorBD();
-        ArrayList<Planta> lol = gestorBD.getPlantasTienda();
-        System.out.println("esta abajo bro");
-        System.out.println(lol);
-		
+
+		//Crear un panel donde van a ir los botones
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
 		add(central);
-		central.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
+		//Crear los botones de las plantas y los zombies
 		JButton plantas = new JButton();
-
+		JButton zombies = new JButton();
+		
+		//Cargar las imagenes que van a ir en los botones
 		ImageIcon bannerplantas = new ImageIcon("src/imagenes/bannerplantas.png");
+		ImageIcon bannerzombies = new ImageIcon("src/imagenes/bannerzombies.png");
+		//Los botones necesitan Image y no ImageIcon, hay que convertirlos
 		Image img = bannerplantas.getImage();
-
-		// Escucha cambios en el tamaño del botón
+		Image img1 = bannerzombies.getImage();
+		
+		//Hacer que la imagen se ajuste dinamicamente al tamaño del boton
+		//El componentlistener detecta cuando el boton cambia de tamaño
 		plantas.addComponentListener(new java.awt.event.ComponentAdapter() {
 		    @Override
 		    public void componentResized(java.awt.event.ComponentEvent e) {
-		        // Redimensiona la imagen al tamaño actual del botón
+		        //Sacar el tamaño del boton, al ajustarse de forma dinamica, hay que hacerlo asi
 		        int width = plantas.getWidth();
 		        int height = plantas.getHeight();
-		        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Ajusta tamaño
-		        plantas.setIcon(new ImageIcon(resizedImg)); // Configura el nuevo icono
+		        Image redimensionada = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		        //Ponerle al boton la imagen
+		        plantas.setIcon(new ImageIcon(redimensionada));
 		    }
 		});
 
+		//Al darle click al boton de las plantas
 		plantas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		        GestorBD gestorBD = new GestorBD();
-
-		       // MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/TODAS.csv");
+				//Cargar de la base de datos la arraylist con las plantas
 		        MenuPlantas ventana = new MenuPlantas(gestorBD.getPlantas());
+		        //Cerrar esta ventana y dejar la nueva en el centro de la pantalla
 		        ventana.setLocationRelativeTo(null);
 		        dispose();
 			}
 		}); 
 		
-		JButton zombies = new JButton();
-		ImageIcon bannerzombies = new ImageIcon("src/imagenes/bannerzombies.png");
-		Image img1 = bannerzombies.getImage();
-
-		// Escucha cambios en el tamaño del botón
+		//Lo mismo que se hizo con la imagen de las plantas
 		zombies.addComponentListener(new java.awt.event.ComponentAdapter() {
 		    @Override
 		    public void componentResized(java.awt.event.ComponentEvent e) {
-		        // Redimensiona la imagen al tamaño actual del botón
 		        int width = zombies.getWidth();
-		        System.out.println(width);
 		        int height = zombies.getHeight();
-		        Image resizedImg = img1.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Ajusta tamaño
-		        zombies.setIcon(new ImageIcon(resizedImg)); // Configura el nuevo icono
+		        Image redimensionada = img1.getScaledInstance(width, height, Image.SCALE_SMOOTH); 
+		        zombies.setIcon(new ImageIcon(redimensionada)); 
 		    }
 		});
 
-		// Configura el botón con el icono redimensionado
+		//Al darle click al boton de los zombies
 		zombies.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Zombie> sig = new ArrayList<Zombie>();
-		        MenuZombies ventana = new MenuZombies(sig, "src/DatosCsv/zombies.csv");
+				MenuZombies ventana = new MenuZombies(gestorBD.getZombies());
 		        ventana.setLocationRelativeTo(null);
 		        dispose();
 			}
 		}); 
-		
-		central.setLayout(new GridLayout(2, 1, 20, 20));
-		central.setOpaque(true);
+
 		central.add(plantas);
 		central.add(zombies);
+		
+		//Hacer un gridlayout para que los botones salgan uno encima del otro
+		central.setLayout(new GridLayout(2, 1, 20, 20));
+		
+		central.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		central.setOpaque(true);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

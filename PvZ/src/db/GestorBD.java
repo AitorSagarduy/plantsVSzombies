@@ -68,7 +68,7 @@ public class GestorBD {
 			this.insertarZombieTienda(zombiesTienda.toArray(new Zombie[zombiesTienda.size()]));
 		}
 	}
-	private void insertarZombie(Zombie[] arrayz) {
+	public void insertarZombie(Zombie[] arrayz) {
 		//Se define la plantilla de la sentencia SQL
 		String sql = "INSERT INTO Zombies (Tipo, Nombre, Vida, Tmp_atac, Danyo, Velocidad, Nivel) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
@@ -122,7 +122,7 @@ public class GestorBD {
 		}
 		
 	}
-	private void insertarPlanta(Planta[] arrayp) {
+	public void insertarPlanta(Planta[] arrayp) {
 		//Se define la plantilla de la sentencia SQL
 				String sql = ";INSERT INTO Plantas (Tipo, Nombre, Vida, Tmp_atac, Danyo, Rango, Nivel) VALUES (?, ?, ?, ?, ?, ?, ?);";
 				

@@ -25,7 +25,6 @@ class RendererNombre extends JLabel implements TableCellRenderer{
 				setIcon(new ImageIcon(imagenleer.getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
 				
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
