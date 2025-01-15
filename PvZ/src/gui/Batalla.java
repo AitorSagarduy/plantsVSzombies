@@ -12,7 +12,9 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -50,6 +52,26 @@ public class Batalla extends JFrame{
 	            g.drawImage(backgroundImage, 0, 0, width, height, this);
 	        }
 	    }
+	}
+
+	private void mostrarVictoria(String rutaImagen) {
+	    JDialog dialog = new JDialog(this, "Victoria", true);
+	    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	    
+	    // Cargar la imagen
+	    JLabel labelImagen = new JLabel();
+	    try {
+	        ImageIcon icon = new ImageIcon(ImageIO.read(new File(rutaImagen)).getScaledInstance(400, 300, Image.SCALE_SMOOTH));
+	        labelImagen.setIcon(icon);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        labelImagen.setText("No se pudo cargar la imagen de victoria.");
+	    }
+	    
+	    dialog.add(labelImagen);
+	    dialog.pack();
+	    dialog.setLocationRelativeTo(this);
+	    dialog.setVisible(true);
 	}
 
 	public static void main(String[] args) {
@@ -167,6 +189,14 @@ public class Batalla extends JFrame{
                         if(finalI%18 == 0) {
 							detener = true;
 							System.out.println("Los zombies ganan");
+							mostrarVictoria("src/imagenes/ZombiesGanan1.png");
+							try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+							dispose();
+							SwingUtilities.invokeLater(() -> new MenuInicial());
 						}
                     }
 				});
@@ -181,53 +211,42 @@ public class Batalla extends JFrame{
 				hilo = new Thread(() -> {
 					int finalI = finalII;
 					while (!detener) {
-						int numeroZomb = 0;
-						for (int j = 0; j < 90; j++) {
-							if (botones.get(j).getClientProperty("planta") instanceof Zombie) {
-								numeroZomb++;
+						for(int u = finalI ; u%18 <= finalI%18+planta.getRango();u++ ){
+							if (finalI % 18+planta.getRango() > 18) {
+								planta.setRango(18-finalI%18);
 							}
-						}
-						if (numeroZomb <= 0){
-							detener = true;
-							System.out.println("Las plantas ganan");
-						}else{
-							for(int u = finalI ; u%18 <= finalI%18+planta.getRango();u++ ){
-								if (finalI % 18+planta.getRango() >= 18) {
-									break;
-								}
-								if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
-									System.out.println("Planta ataca a zombie en la columna: "+u%18);	
-									Zombie zombie = (Zombie) botones.get(u).getClientProperty("planta");
+							if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
+								System.out.println("Planta ataca a zombie en la columna: "+u%18);	
+								Zombie zombie = (Zombie) botones.get(u).getClientProperty("planta");
+								try {
+									zombie.setVida(zombie.getVida()-planta.getDanyo());
+								} catch (Exception e) {
 									try {
-										zombie.setVida(zombie.getVida()-planta.getDanyo());
-									} catch (Exception e) {
-										try {
-											((Zombie)botones.get(u-1).getClientProperty("planta")).setVida(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()-planta.getDanyo());
-                                            
-                                        } catch (Exception e2) {
-                                        	//aqui solamente llega si es que la planta muere en el instante de atacar
-                                        }
+										((Zombie)botones.get(u-1).getClientProperty("planta")).setVida(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()-planta.getDanyo());
+										
+									} catch (Exception e2) {
+										//aqui solamente llega si es que la planta muere en el instante de atacar
 									}
-									try {
-										if(((Zombie)botones.get(u).getClientProperty("planta")).getVida()<=0) {
-											botones.get(u).setIcon(null);
-											botones.get(u).putClientProperty("planta", null);
-										}
-									} catch (Exception e) {
-										if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
-											if(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()<=0) {
-												botones.get(u-1).setIcon(null);
-												botones.get(u-1).putClientProperty("planta", null);
-											}
+								}
+								try {
+									if(((Zombie)botones.get(u).getClientProperty("planta")).getVida()<=0) {
+										botones.get(u).setIcon(null);
+										botones.get(u).putClientProperty("planta", null);
+									}
+								} catch (Exception e) {
+									if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
+										if(((Zombie)botones.get(u-1).getClientProperty("planta")).getVida()<=0) {
+											botones.get(u-1).setIcon(null);
+											botones.get(u-1).putClientProperty("planta", null);
 										}
 									}
-									try {
-										Thread.sleep(planta.getTmp_atac() * 1000);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-									break;
 								}
+								try {
+									Thread.sleep(planta.getTmp_atac() * 1000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								break;
 							}
 						}
 					}
@@ -237,22 +256,36 @@ public class Batalla extends JFrame{
 		}
 		Thread hilo = new Thread();
 		hilo = new Thread(() -> {
-			if (detener) {
-                for (Thread thread : hilosZombies) {
-                    thread.interrupt();
-                }
-                for (Thread thread : hilosPlantas) {
-                    thread.interrupt();
-                }
-            }
+			while(!detener) {
+				int numeroZomb = 0;
+				for (int j = 0; j < 90; j++) {
+					if (botones.get(j).getClientProperty("planta") instanceof Zombie) {
+						numeroZomb++;
+					}
+				}
+				if (numeroZomb <= 0){
+					detener = true;
+					System.out.println("Las plantas ganan");
+					mostrarVictoria("src/imagenes/PlantasGanan.png");
+					try {
+						hilo.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					dispose();
+					SwingUtilities.invokeLater(() -> new MenuInicial());
+					return;
+				}
+				
+			}
 		});
+		hilo.start();
 		for (Thread thread : hilosZombies) {
 			thread.start();
 		}
 		for (Thread thread : hilosPlantas) {
 			thread.start();
 		}
-		hilo.start();
 	}
 	
 

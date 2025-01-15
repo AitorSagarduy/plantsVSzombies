@@ -69,14 +69,14 @@ public class Simulacionv1 extends JFrame{
 				// lo casteo para tener sus metodos
 	            Planta planta = (Planta) value;
 	            // hago que se muestre el nombre
-	            //setText(planta.getNombre()); // solo muestra el nombre
-	            setText("");
+	            setText(planta.getNombre()); // solo muestra el nombre
+	            //setText("");
 	            //hacer transparente con cuadrito
 	            //etiqueta.setForeground(Color.WHITE);
 	            setAlignmentX(JLabel.CENTER_ALIGNMENT);
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
 	            try {
-	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(Ajustes.resolucionx()/7, Ajustes.resolucionx()/7, Image.SCALE_SMOOTH))); //le pongo un icono 
+	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(50, 50, Image.SCALE_SMOOTH))); //le pongo un icono 
 				} catch (IOException e) {
 					// si no lo encuentra esntonces saco el error por consola
 					e.printStackTrace();
@@ -130,19 +130,27 @@ public class Simulacionv1 extends JFrame{
 		setTitle("ventana de simulacion");
 		// Saco la resolucion del ajustes.properties
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+		setResizable(false);
 		
 		ArrayList<Planta> plantas = resultadoP; // creo el arraylist de plantas en la que voy a cargar las plantas leidas que hay en csv
 		HashMap<ArrayList<Integer>, Planta> mapaFinal = new HashMap<ArrayList<Integer>, Planta>();
 		DefaultListModel<Planta> modelo = new DefaultListModel<Planta>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
 		for(int i = 0; i<plantas.size();i++) {
-			modelo.add(i, plantas.get(i));
+			Planta planta1 = plantas.get(i);
+			if(plantas.contains(plantas.get(i))) {
+				Planta planta = new Planta(planta1.getTipo(), planta1.getNombre()+""+i, planta1.getVida(), planta1.getTmp_atac(), planta1.getDanyo(), planta1.getRango(), planta1.getNivel());
+				modelo.add(i, planta);
+			}else {				
+				modelo.add(i, planta1);
+			}
 		}
 		BackgroundPanel panelFondo = new BackgroundPanel("src/imagenes/PvZ-CASA.PNG");
 		JList<Planta> listaPlantas = new JList<Planta>(modelo); //creo el jlist en base al modelo de lista
-		listaPlantas.setOpaque(false);
-		listaPlantas.setBackground(new Color(0,0,0,0));
+		listaPlantas.setOpaque(true);
+		//listaPlantas.setBackground(new Color(0,0,0,0));
 		listaPlantas.setFixedCellWidth(Ajustes.resolucionx()/5); //le pongo una largura definida
+		listaPlantas.setFixedCellHeight(Ajustes.resoluciony()/10);
 		listaPlantas.setCellRenderer(new Mirenderizado()); // le pongo mi renderizado creado previamente arriba
 		// le pongo un listener para que cuando el usuario este eligiendo una opcion el programa lo escuche y actue
 		listaPlantas.addListSelectionListener(new ListSelectionListener() { 
