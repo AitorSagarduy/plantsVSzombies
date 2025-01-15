@@ -230,8 +230,6 @@ public class Simulacionv2 extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// funcion de interaccion del mouse con los botones
-					System.out.println(espacio.getClientProperty("fila"));
-					System.out.println(espacio.getClientProperty("columna"));
 					if(!desplantando) {
 						
 						if(plantaSeleccionada == null) {
@@ -294,7 +292,6 @@ public class Simulacionv2 extends JFrame{
 					mapaFinal.put(coordenadas, (Zombie) botoncito.getClientProperty("planta"));
 					
 				}
-				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
 					new Batalla(mapaFinalPlanta, mapaFinalZombie);
 					dispose();

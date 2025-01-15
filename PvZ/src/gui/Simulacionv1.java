@@ -208,10 +208,7 @@ public class Simulacionv1 extends JFrame{
 		panelFondo.add(scroll);
 		add(panelFondo,BorderLayout.WEST); //lo pongo a la izquierda 
 		
-		//JPanel panelCesped = new JPanel(); //creo el panel que va a simular el patio
-		//panelCesped.setBackground(Color.GRAY);
-		//panelCesped.setLayout(new GridLayout(5, 9)); //en el juego original el patio es un 5*10 (incluyendo los cortacesped)
-		//creo los 50 botones que voy a necesitar para interactuar con el patio
+		//creo los 45 botones que voy a necesitar para interactuar con el patio
 		BackgroundPanel panelCesped = new BackgroundPanel("src/imagenes/PvZ-CESPED.PNG");
 	    panelCesped.setLayout(new GridLayout(5, 9));
 		ArrayList<JButton> botones = new ArrayList<JButton>();
@@ -233,8 +230,6 @@ public class Simulacionv1 extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// funcion de interaccion del mouse con los botones
-					System.out.println(espacio.getClientProperty("fila"));
-					System.out.println(espacio.getClientProperty("columna"));
 					if(!desplantando) {
 						
 						if(plantaSeleccionada == null) {
@@ -284,10 +279,8 @@ public class Simulacionv1 extends JFrame{
 					mapaFinal.put(coordenadas, (Planta) botoncito.getClientProperty("planta"));
 					
 				}
-				System.out.println(mapaFinal);
 				SwingUtilities.invokeLater(() -> {
-					@SuppressWarnings("unused")
-					Simulacionv2 ventana2 = new Simulacionv2(mapaFinal, resultadoZ, resultadoP);
+					new Simulacionv2(mapaFinal, resultadoZ, resultadoP);
 					
 				});
 				dispose();
