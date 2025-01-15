@@ -331,5 +331,4 @@ public class Tienda extends JFrame{
 		Tienda ventana = new Tienda();
 		ventana.setLocationRelativeTo(null);
 	}
-
 }
