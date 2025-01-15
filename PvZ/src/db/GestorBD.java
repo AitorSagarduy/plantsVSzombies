@@ -1,7 +1,5 @@
 package db;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,11 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+
 
 import Main.Main;
 import domain.Planta;
@@ -30,7 +25,6 @@ public class GestorBD {
 	
 	private Properties properties;
 	private String driverName;
-	private String databaseFile;
 	private String connectionString;
 	
 	public GestorBD() {
@@ -42,7 +36,6 @@ public class GestorBD {
 			properties.load(new FileReader(PROPERTIES_FILE));
 			
 			driverName = properties.getProperty("driver");
-			databaseFile = properties.getProperty("file");
 			connectionString = properties.getProperty("connection");
 			
 			//Cargar el diver SQLite
@@ -51,10 +44,8 @@ public class GestorBD {
 		}
 	}
 	public void initilizeFromCSV() {
-		System.out.println("lol");
 		//Sólo se inicializa la BBDD si la propiedad initBBDD es true.
 		if (properties.get("loadCSV").equals("true")) {
-			System.out.println("xD lol");
 			//Se borran los datos, si existía alguno
 			this.borrarDatos();
 			this.borrarDatosTienda();
@@ -150,7 +141,6 @@ public class GestorBD {
 						pStmt.setInt(6, planta.getRango());
 						pStmt.setInt(7, planta.getNivel());
 						pStmt.executeUpdate();
-						System.out.println("exito");
 					}
 					
 				} catch (Exception ex) {
@@ -178,7 +168,7 @@ public class GestorBD {
 						pStmt.setInt(6, planta.getRango());
 						pStmt.setInt(7, planta.getNivel());
 						pStmt.executeUpdate();
-						System.out.println("exito");
+						
 					}
 					
 				} catch (Exception ex) {
@@ -255,7 +245,6 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println("lo lograste chacalillo");
 		} catch (Exception ex) {
 			System.out.println("f, chacalillo");
 		}		
@@ -290,7 +279,6 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println("lo lograste chacalillo");
 		} catch (Exception ex) {
 			System.out.println("f, chacalillo");
 		}		
@@ -325,7 +313,6 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println("lo lograste chacalillo");
 		} catch (Exception ex) {
 			System.out.println("f, chacalillo");
 		}		
@@ -360,7 +347,6 @@ public class GestorBD {
 			//Se cierra el ResultSet
 			rs.close();
 			
-			System.out.println("lo lograste chacalillo");
 		} catch (Exception ex) {
 			System.out.println("f, chacalillo");
 		}		
@@ -376,13 +362,12 @@ public class GestorBD {
 				
 			//Se añaden los parámetros al PreparedStatement
 			pStmt.setString(1, nombre);
-			if (pStmt.executeUpdate() != 1) {					
-				System.out.println("epico hermano");
+			if (pStmt.executeUpdate() != 1) {
 			} else {
-				System.out.println("no tan epico hermano");
+				System.out.println("fallo");
 			}
 		} catch (Exception ex) {
-			System.out.println("vaya mierdon hermano");
+			System.out.println("fallo 2");
 		}				
 	}
 	public void borrarPlantaTienda(String nombre) {
@@ -395,12 +380,12 @@ public class GestorBD {
 			//Se añaden los parámetros al PreparedStatement
 			pStmt.setString(1, nombre);
 			if (pStmt.executeUpdate() != 1) {					
-				System.out.println("epico hermano");
+				
 			} else {
-				System.out.println("no tan epico hermano");
+				System.out.println("fallo 1");
 			}
 		} catch (Exception ex) {
-			System.out.println("vaya mierdon hermano");
+			System.out.println("fallo 2");
 		}				
 	}
 	
@@ -414,12 +399,12 @@ public class GestorBD {
 			//Se añaden los parámetros al PreparedStatement
 			pStmt.setString(1, nombre);
 			if (pStmt.executeUpdate() != 1) {					
-				System.out.println("epico hermano");
+				
 			} else {
-				System.out.println("no tan epico hermano");
+				System.out.println("fallo 1");
 			}
 		} catch (Exception ex) {
-			System.out.println("vaya mierdon hermano");
+			System.out.println("fallo 2");
 		}				
 	}
 	public void borrarZombieTienda(String nombre) {
@@ -432,7 +417,7 @@ public class GestorBD {
 			//Se añaden los parámetros al PreparedStatement
 			pStmt.setString(1, nombre);
 			if (pStmt.executeUpdate() != 1) {					
-				System.out.println("epico hermano");
+				
 			} else {
 				System.out.println("no tan epico hermano");
 			}
@@ -447,8 +432,6 @@ public class GestorBD {
 	            + "SET Vida = ?, Tmp_atac = ?, Danyo = ?, Rango = ?, Nivel = ? "
 	            + "WHERE Nombre = ?;";
 		ArrayList<Planta> listaP = getPlantas();
-		System.out.println(listaP.size() - 1);
-		System.out.println(listaP);
 		rp_recurs(listaP, listaP.size() - 1, r2d2, vida, tmp_atac, danyo, rango, nivel, sql2);
 				return listaP;
 		
@@ -479,7 +462,7 @@ public class GestorBD {
 			
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
-				System.out.println("3");
+				
 						pStmt2.setString(6, listaZ.get(i).getNombre());
 						pStmt2.setInt(1, listaZ.get(i).getVida());
 						pStmt2.setInt(2, listaZ.get(i).getTmp_atac());
@@ -487,7 +470,6 @@ public class GestorBD {
 						pStmt2.setInt(4, listaZ.get(i).getVelocidad());
 						pStmt2.setInt(5, listaZ.get(i).getNivel());
 						pStmt2.executeUpdate();
-						System.out.println("exito");
 					
 					
 				} catch (Exception ex) {
@@ -511,7 +493,7 @@ public class GestorBD {
 			listaP.get(i).setNivel(nivel);
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
-				System.out.println("3");
+				
 						pStmt2.setString(6, listaP.get(i).getNombre());
 						pStmt2.setInt(1, listaP.get(i).getVida());
 						pStmt2.setInt(2, listaP.get(i).getTmp_atac());
@@ -519,7 +501,6 @@ public class GestorBD {
 						pStmt2.setInt(4, listaP.get(i).getRango());
 						pStmt2.setInt(5, listaP.get(i).getNivel());
 						pStmt2.executeUpdate();
-						System.out.println("exito");
 					
 					
 				} catch (Exception ex) {
@@ -550,7 +531,7 @@ public class GestorBD {
 				//Se cierra el ResultSet
 				rs.close();
 				
-				System.out.println("lo lograste chacalillo");
+				
 			} catch (Exception ex) {
 				System.out.println("f, chacalillo");
 			}		
@@ -565,11 +546,11 @@ public class GestorBD {
 		}
 		try (Connection con2 = DriverManager.getConnection(connectionString);
 				 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
-			System.out.println("3");
+			
 					pStmt2.setInt(1, soles);
 					pStmt2.setInt(2, cerebros);
 					pStmt2.executeUpdate();
-					System.out.println("exito");
+					
 				
 			} catch (Exception ex) {
 				System.err.println("exito " + ex);
@@ -587,13 +568,12 @@ public class GestorBD {
 	            + "WHERE Nombre = ?;";
 		ArrayList<Planta> listaP = getPlantas();
 		np_recurs(listaP ,nombreOrigen, r2d2, sql2, listaP.size() - 1);
-		System.out.println(listaP.size() - 1);
-		System.out.println(listaP);
+		
 		
 	}
 	public void np_recurs(ArrayList<Planta> listaP, String nombreO, String nombre, String sql2, int i) throws SQLException {
 		if(listaP.get(i).getNombre().equals(nombreO)) {
-			System.out.println("1");
+			
 			listaP.get(i).setNombre(nombre);
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
@@ -601,7 +581,7 @@ public class GestorBD {
 						pStmt2.setString(1, listaP.get(i).getNombre());
 						pStmt2.setString(2, nombreO);
 						pStmt2.executeUpdate();
-						System.out.println("exito");
+						
 					
 					
 				} catch (Exception ex) {
@@ -623,21 +603,20 @@ public class GestorBD {
 	            + "WHERE Nombre = ?;";
 		ArrayList<Zombie> listaZ = getZombies();
 		nz_recurs(listaZ ,nombreOrigen, r2d2, sql2, listaZ.size() - 1);
-		System.out.println(listaZ.size() - 1);
-		System.out.println(listaZ);
+		
 		
 	}
 	public void nz_recurs(ArrayList<Zombie> listaZ, String nombreO, String nombre, String sql2, int i) throws SQLException {
 		if(listaZ.get(i).getNombre().equals(nombreO)) {
-			System.out.println("1");
+			
 			listaZ.get(i).setNombre(nombre);
 			try (Connection con2 = DriverManager.getConnection(connectionString);
 					 PreparedStatement pStmt2 = con2.prepareStatement(sql2)) {
-				System.out.println("3");
+				
 						pStmt2.setString(1, listaZ.get(i).getNombre());
 						pStmt2.setString(2, nombreO);
 						pStmt2.executeUpdate();
-						System.out.println("exito");
+						
 					
 					
 				} catch (Exception ex) {

@@ -34,15 +34,15 @@ public class Creditos extends JFrame{
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                BufferedImage envy = null; // la imagen
+                BufferedImage imagenf = null; // la imagen
                 try {
                     // Cargar imagen de fondo
-                    envy = ImageIO.read(getClass().getResourceAsStream("/imagenes/p1.png"));
+                    imagenf = ImageIO.read(getClass().getResourceAsStream("/imagenes/p1.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 // Dibujar la imagen de fondo
-                g.drawImage(envy, 0, 0, getWidth(), getHeight(), null);
+                g.drawImage(imagenf, 0, 0, getWidth(), getHeight(), null);
             }
 		
 		};

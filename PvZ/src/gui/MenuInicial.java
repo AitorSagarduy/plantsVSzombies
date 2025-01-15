@@ -67,12 +67,12 @@ public class MenuInicial extends JFrame {
         botonPanel.setOpaque(false); // Hacer que el fondo de los botones sea transparente
 
         // Crear botones
-        JButton selim = createButton("SIMULADOR");
-        JButton yoki = createButton("JARDIN ZEN");
-        JButton alphonse = createButton("AJUSTES");
-        JButton mustang = createButton("CREDITOS");
-        JButton tienda = createButton("TIENDA"); // vale, me puse serio
-        JButton almanaque = createButton("ALMANAQUE");
+        JButton bSimu = createButton("SIMULADOR"); // boton de simu
+        JButton bJardin = createButton("JARDIN ZEN"); // boton de jardin
+        JButton bAjustes = createButton("AJUSTES"); // boton de ajustes
+        JButton bCreditos = createButton("CREDITOS"); // boton de creditos
+        JButton bTienda = createButton("TIENDA");  // boton de tienda
+        JButton bAlmanaque = createButton("ALMANAQUE"); // boton de almanaque 
         gbc.fill = GridBagConstraints.HORIZONTAL;  // Para que los botones ocupen todo el ancho disponible
         gbc.insets = new java.awt.Insets(10, 10, 10, 10); // Separación entre los botones
 
@@ -80,22 +80,22 @@ public class MenuInicial extends JFrame {
         gbc.gridy = 0;   // Fila 0
         gbc.gridwidth = 1; // Un solo botón por celda
         gbc.weightx = 1.0; // El botón ocupa todo el ancho de la ventana
-        botonPanel.add(selim, gbc);
+        botonPanel.add(bSimu, gbc);
         
         gbc.gridy = 1;   // F1
-        botonPanel.add(yoki, gbc);
+        botonPanel.add(bAlmanaque, gbc);
 
         gbc.gridy = 2;   // F2
-        botonPanel.add(alphonse, gbc);
+        botonPanel.add(bTienda, gbc);
 
         gbc.gridy = 3;   // F 3
-        botonPanel.add(mustang, gbc);
+        botonPanel.add(bJardin, gbc);
         
         gbc.gridy = 4; //f4
-        botonPanel.add(tienda, gbc);
+        botonPanel.add(bAjustes, gbc);
         
         gbc.gridy = 5; //f4
-        botonPanel.add(almanaque, gbc);
+        botonPanel.add(bCreditos, gbc);
         
         // Añadir el panel de botones al fondoPanel
         fondoPanel.add(botonPanel);

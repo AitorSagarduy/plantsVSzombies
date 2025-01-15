@@ -12,19 +12,12 @@ public class Main {
 	public static int cerebrospublic;
 
 	public static void main(String[] args) throws SQLException {
-		
-		
 		GestorBD gestorBD = new GestorBD();
 		gestorBD.initilizeFromCSV();
-		
 		gestorBD.getCoins();
-		System.out.println(gestorBD.getPlantas());
-		System.out.println(gestorBD.getZombies());
-//		gestorBD.Level_updater_Z("Zombi Buzo", 0, 0, 0, 0, 0);
-		System.out.println(gestorBD.getPlantas());
+
 		SwingUtilities.invokeLater(() -> new MenuInicial());
 
-		gestorBD.Name_updater_Z("Zombi Buzo", "el lado oscuro");
 	}
 
 }

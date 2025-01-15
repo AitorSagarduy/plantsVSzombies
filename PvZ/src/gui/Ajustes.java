@@ -1,12 +1,9 @@
 package gui;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.util.Properties;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class Ajustes extends JFrame {
     private static final long serialVersionUID = 1L;
