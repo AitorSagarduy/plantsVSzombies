@@ -11,13 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import db.GestorBD;
-<<<<<<< HEAD
 
-=======
-import domain.Planta;
-import domain.Zombie;
  
->>>>>>> branch 'master' of https://github.com/WhiteCatMaster/plantsVSzombies.git
+
 public class SelecAlmanaque extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
@@ -28,14 +24,12 @@ public class SelecAlmanaque extends JFrame{
 		
 		//GestorBD para poder usar la base de datos
 		GestorBD gestorBD = new GestorBD();
-<<<<<<< HEAD
+
 
 		//Crear un panel donde van a ir los botones
-=======
-        ArrayList<Planta> lol = gestorBD.getPlantasTienda();
 
 		
->>>>>>> branch 'master' of https://github.com/WhiteCatMaster/plantsVSzombies.git
+
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
 		add(central);
