@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -38,15 +39,20 @@ public class AlmanaqueZUser extends JFrame {
 	
 	public AlmanaqueZUser (ArrayList<Zombie> zombies) {
         setTitle("Almanaque Zombies");
-		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
+	//	setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		
         JPanel mainPanel = new JPanel();
+        
+		Color colorfondo = new Color(38, 116, 68);
+		mainPanel.setBackground(colorfondo);
+
         mainPanel.setLayout(new BorderLayout());
 
         JPanel zombiePanel = new JPanel();
+        zombiePanel.setBackground(colorfondo);
         zombiePanel.setLayout(new GridLayout(0, 3, 10, 10)); 
         zombiePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
@@ -90,6 +96,19 @@ public class AlmanaqueZUser extends JFrame {
                 menuOrdenar.show(botonOrdenar, botonOrdenar.getWidth(), botonOrdenar.getHeight());
             }
         });
+        
+        JButton atras = new JButton("Atras");
+        // añadir actionlistener para q al pulsar se abra el menuinicial
+        atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuInicial();
+				// dispose es para que al abrir la nueva ventana se cierre la anterior
+				dispose();
+				
+			}
+		});
 
         JScrollPane scrollPane = new JScrollPane(zombiePanel);
         JLabel titleLabel = new JLabel("Estos son tus zombies", SwingConstants.CENTER);
@@ -105,7 +124,8 @@ public class AlmanaqueZUser extends JFrame {
 	     menuPanel.add(botonOrdenar);
 	
 	     
-	     panelTitulo.add(menuPanel, BorderLayout.WEST); 
+	     panelTitulo.add(menuPanel, BorderLayout.EAST);
+	     panelTitulo.add(atras, BorderLayout.WEST);
 	     panelTitulo.add(titulo, BorderLayout.CENTER); 
 	
 	     
@@ -126,6 +146,12 @@ public class AlmanaqueZUser extends JFrame {
            // Crear un botón para cada planta ordenada
            JButton zombieButton = new JButton(zombie.getNombre().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]", ""));
            zombieButton.setFont(new Font("Arial", Font.BOLD, 12));
+           Color colorboton = new Color(103, 255, 102);
+	   	   Color colornivelmax = new Color(255, 216, 0);
+	   	   zombieButton.setBackground(colorboton);
+	   	   if (zombie.getNivel() == 4) {
+	   		   zombieButton.setBackground(colornivelmax);
+	   	   }
            ImageIcon icono = new ImageIcon("src/imagenes/" + zombie.getTipo().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ]", "") + ".png");
            zombieButton.setIcon(icono);
            zombieButton.setHorizontalTextPosition(SwingConstants.CENTER);

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -36,7 +37,7 @@ public class SelecZombies extends JFrame {
 	}
 	JPanel panelGeneral;
 	JPanel panelBotones;
-	JPanel panelPlantas;
+	JPanel panelZombies;
 	JPanel panelTodasZ;
 	JPanel panelUsuarioZ;
 	ArrayList<Zombie> zombiesj = new ArrayList<Zombie>();
@@ -52,6 +53,11 @@ public class SelecZombies extends JFrame {
 		setTitle("Selecciona Zombies");
 		setLocationRelativeTo(null);
 		setSize(Ajustes.resolucionx(), Ajustes.resoluciony());
+		
+		
+		for (Zombie zombie : zombies) {
+			zombie.setTipo(zombie.getTipo().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]", ""));
+		}
 		
 		
 		
@@ -246,13 +252,14 @@ public class SelecZombies extends JFrame {
         add(panelBotones, BorderLayout.NORTH);
         
         
-        panelPlantas = new JPanel();
-        add(panelPlantas, BorderLayout.CENTER);
-        panelPlantas.setLayout(new GridLayout(2, 1));
-        panelPlantas.setPreferredSize(new Dimension(0, 400));
+        panelZombies = new JPanel();
+        add(panelZombies, BorderLayout.CENTER);
+        panelZombies.setBackground(Color.red);
+        panelZombies.setLayout(new GridLayout(2, 1));
+        panelZombies.setPreferredSize(new Dimension(0, 400));
         
-        panelPlantas.add(scrollPane);
-        panelPlantas.add(scrollSelec);  
+        panelZombies.add(scrollPane);
+        panelZombies.add(scrollSelec);  
  
 		setLocationRelativeTo(null);
 		

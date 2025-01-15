@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import domain.Planta;
 import domain.Zombie;
 
 public class ModeloTablaZ extends AbstractTableModel {

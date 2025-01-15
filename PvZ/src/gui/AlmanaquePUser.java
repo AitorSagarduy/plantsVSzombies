@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -32,21 +33,28 @@ public class AlmanaquePUser extends JFrame {
 		ArrayList<Planta> plantas = new ArrayList<Planta>();
 		MenuPlantas.cargarPlantasCSV(plantas, "src/DatosCsv/TODAS.csv");
         AlmanaquePUser ventana = new AlmanaquePUser(plantas);
+
+		ventana.setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
         ventana.setLocationRelativeTo(null);
 
 	}
 	
 	public AlmanaquePUser (ArrayList<Planta> plantas) {
+
         setTitle("Almanaque Plantas");
 		setSize(Ajustes.resolucionx(),Ajustes.resoluciony());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		
         JPanel mainPanel = new JPanel();
+		Color colorfondo = new Color(38, 116, 68);
+
+	    mainPanel.setBackground(colorfondo);
+
         mainPanel.setLayout(new BorderLayout());
 
         JPanel plantsPanel = new JPanel();
+        plantsPanel.setBackground(colorfondo);
         plantsPanel.setLayout(new GridLayout(0, 3, 10, 10)); 
         plantsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
@@ -90,6 +98,19 @@ public class AlmanaquePUser extends JFrame {
                 menuOrdenar.show(botonOrdenar, botonOrdenar.getWidth(), botonOrdenar.getHeight());
             }
         });
+        
+        JButton atras = new JButton("Atras");
+        // añadir actionlistener para q al pulsar se abra el menuinicial
+        atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MenuInicial();
+				// dispose es para que al abrir la nueva ventana se cierre la anterior
+				dispose();
+				
+			}
+		});
 
         JScrollPane scrollPane = new JScrollPane(plantsPanel);
         JLabel titleLabel = new JLabel("Estas son tus plantas", SwingConstants.CENTER);
@@ -105,15 +126,17 @@ public class AlmanaquePUser extends JFrame {
 	     menuPanel.add(botonOrdenar);
 	
 	     
-	     panelTitulo.add(menuPanel, BorderLayout.WEST); 
+	     panelTitulo.add(menuPanel, BorderLayout.EAST); 
+	     panelTitulo.add(atras, BorderLayout.WEST);
 	     panelTitulo.add(titulo, BorderLayout.CENTER); 
-	
-	     
+	   
 	    mainPanel.add(panelTitulo, BorderLayout.NORTH);
         
         mainPanel.add(panelTitulo, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
+        
        
+        
         add(mainPanel);
         setVisible(true);
 		
@@ -124,8 +147,14 @@ public class AlmanaquePUser extends JFrame {
        panel.removeAll(); // Eliminar todos los botones actuales
        for (Planta planta : plantas) {
            // Crear un botón para cada planta ordenada
-           JButton plantaButton = new JButton(planta.getTipo());
+           JButton plantaButton = new JButton(planta.getNombre());
            plantaButton.setFont(new Font("Arial", Font.BOLD, 12));
+	   	   Color colorboton = new Color(103, 255, 102);
+	   	   Color colornivelmax = new Color(255, 216, 0);
+	   	   plantaButton.setBackground(colorboton);
+	   	   if (planta.getNivel() == 4) {
+	   		   plantaButton.setBackground(colornivelmax);
+	   	   }
            plantaButton.setIcon(new ImageIcon("src/imagenes/" + planta.getTipo() + ".png"));
            plantaButton.setHorizontalTextPosition(SwingConstants.CENTER);
            plantaButton.setVerticalTextPosition(SwingConstants.BOTTOM);

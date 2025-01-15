@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import src.es.deusto.prog.examen.parcial.threads.Thread;
 
 import java.util.Random;
 

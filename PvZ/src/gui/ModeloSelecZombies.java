@@ -53,7 +53,7 @@ public class ModeloSelecZombies extends AbstractTableModel {
 		case 0:
 			return zombies.get(rowIndex).getTipo();
 		case 1:
-			return zombies.get(rowIndex).getNombre();
+			return zombies.get(rowIndex).getNombre().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]", "");
 		case 2:
 			return zombies.get(rowIndex).getVida();
 		case 3:

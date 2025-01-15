@@ -9,9 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-
-import domain.Planta;
-import domain.Zombie;
 class RendererNombre extends JLabel implements TableCellRenderer{
     /**
      *
