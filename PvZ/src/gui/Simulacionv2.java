@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -36,7 +35,6 @@ import javax.swing.event.ListSelectionListener;
 
 import domain.Planta;
 import domain.Zombie;
-import gui.Simulacionv1.BackgroundPanel;
 
 public class Simulacionv2 extends JFrame{
 	private static final long serialVersionUID = 1L;

@@ -26,6 +26,9 @@ public class Batalla extends JFrame{
 	private HashMap<ArrayList<Integer>, Planta> mapaFinalPlantas;
 	private HashMap<ArrayList<Integer>, Zombie> mapaFinalZombies;
 	
+	MusicaMenu player = new MusicaMenu();
+    Thread musicThread = new Thread(player);
+	
 	private static boolean detener;
 	
 	public class BackgroundPanel extends JPanel {
@@ -87,7 +90,8 @@ public class Batalla extends JFrame{
 		setTitle("ventana de batalla");
 		this.mapaFinalPlantas = mapaFinal1;
 		this.mapaFinalZombies = mapaFinal2;
-		
+		MusicaMenu.sonidoM = "/sonidos/batalla.wav";
+        musicThread.start();
 		BackgroundPanel backgroundPanel = new BackgroundPanel("src/imagenes/PvZ-Patio4.PNG");
         backgroundPanel.setLayout(new GridLayout(5, 18));
         setContentPane(backgroundPanel);
@@ -195,6 +199,7 @@ public class Batalla extends JFrame{
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+							musicThread.interrupt();
 							dispose();
 							SwingUtilities.invokeLater(() -> new MenuInicial());
 						}
@@ -268,10 +273,11 @@ public class Batalla extends JFrame{
 					System.out.println("Las plantas ganan");
 					mostrarVictoria("src/imagenes/PlantasGanan.png");
 					try {
-						hilo.sleep(3000);
+						Thread.sleep(3000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					musicThread.interrupt();
 					dispose();
 					SwingUtilities.invokeLater(() -> new MenuInicial());
 					return;
