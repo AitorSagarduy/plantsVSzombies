@@ -15,6 +15,7 @@ import db.GestorBD;
  
 
 public class SelecAlmanaque extends JFrame{
+	public static int estado;
 	private static final long serialVersionUID = 1L;
 	
 	public SelecAlmanaque() {
@@ -64,9 +65,16 @@ public class SelecAlmanaque extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Cargar de la base de datos la arraylist con las plantas
-		        MenuPlantas ventana = new MenuPlantas(gestorBD.getPlantas());
+				if (estado == 0) {
+					MenuPlantas ventana = new MenuPlantas(gestorBD.getPlantas());
+					ventana.setLocationRelativeTo(null);
+				}else {
+					AlmanaquePUser ventana = new AlmanaquePUser(gestorBD.getPlantas());
+					ventana.setLocationRelativeTo(null);
+				}
+		        
 		        //Cerrar esta ventana y dejar la nueva en el centro de la pantalla
-		        ventana.setLocationRelativeTo(null);
+		        
 		        dispose();
 			}
 		}); 
@@ -86,8 +94,14 @@ public class SelecAlmanaque extends JFrame{
 		zombies.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuZombies ventana = new MenuZombies(gestorBD.getZombies());
-		        ventana.setLocationRelativeTo(null);
+				if (estado == 0) {
+					MenuZombies ventana = new MenuZombies(gestorBD.getZombies());
+			        ventana.setLocationRelativeTo(null);
+				}else {
+					AlmanaqueZUser ventana = new AlmanaqueZUser(gestorBD.getZombies());
+			        ventana.setLocationRelativeTo(null);
+				}
+				
 		        dispose();
 			}
 		}); 

@@ -8,6 +8,7 @@ import gui.MenuInicial;
 public class Main {
 	public static int solespublic;
 	public static int cerebrospublic;
+	
 
 	public static void main(String[] args) throws SQLException {
 		GestorBD gestorBD = new GestorBD();

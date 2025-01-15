@@ -123,6 +123,7 @@ public class MenuInicial extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     dispose();
+                   
                     player.stopPlaying();
                     new SelecPlantas();
                     try {
@@ -138,6 +139,7 @@ public class MenuInicial extends JFrame {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                	SelecAlmanaque.estado=0;
                     ArrayList<Planta> sig = new ArrayList<Planta>(); //plantas 
                     MenuPlantas.cargarPlantasCSV(sig, "src/DatosCsv/plantas.csv");
                     new SelecAlmanaque();
@@ -201,7 +203,8 @@ public class MenuInicial extends JFrame {
         	button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new SelectAlmanaque2();
+                	SelecAlmanaque.estado=1;
+                    new SelecAlmanaque();
                     dispose();
                     player.stopPlaying();
                     try {
