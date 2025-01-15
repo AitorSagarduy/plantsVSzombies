@@ -167,6 +167,7 @@ public class Batalla extends JFrame{
 								finalI--;
 							}
 							System.out.println ("Zombie ataca");
+							Simulacionv1.reproducirSonido("src/sonidos/comiendo.wav");
 							try {
 								Thread.sleep(zombie.getTmp_atac()*1000);
 							} catch (InterruptedException e) {
@@ -193,13 +194,14 @@ public class Batalla extends JFrame{
                         if(finalI%18 == 0) {
 							detener = true;
 							System.out.println("Los zombies ganan");
+							musicThread.interrupt();
+							Simulacionv1.reproducirSonido("src/sonidos/zombiesganan.wav");
 							mostrarVictoria("src/imagenes/ZombiesGanan1.png");
 							try {
-                                Thread.sleep(3000);
+                                Thread.sleep(1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-							musicThread.interrupt();
 							dispose();
 							SwingUtilities.invokeLater(() -> new MenuInicial());
 						}
@@ -222,6 +224,7 @@ public class Batalla extends JFrame{
 							}
 							if(botones.get(u).getClientProperty("planta") instanceof Zombie) {
 								System.out.println("Planta ataca a zombie en la columna: "+u%18);	
+								Simulacionv1.reproducirSonido("src/sonidos/disparo.wav");
 								Zombie zombie = (Zombie) botones.get(u).getClientProperty("planta");
 								try {
 									zombie.setVida(zombie.getVida()-planta.getDanyo());
@@ -271,13 +274,14 @@ public class Batalla extends JFrame{
 				if (numeroZomb <= 0){
 					detener = true;
 					System.out.println("Las plantas ganan");
+					musicThread.interrupt();
+					Simulacionv1.reproducirSonido("src/sonidos/solmas.wav");
 					mostrarVictoria("src/imagenes/PlantasGanan.png");
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					musicThread.interrupt();
 					dispose();
 					SwingUtilities.invokeLater(() -> new MenuInicial());
 					return;

@@ -266,20 +266,7 @@ public class Simulacionv1 extends JFrame{
 					
 				}
 
-				private void reproducirSonido(String ruta) {
-					try {
-				        // Cargar el archivo de sonido
-				        File archivoSonido = new File(ruta);
-				        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
-
-				        // Preparar y reproducir el sonido
-				        Clip clip = AudioSystem.getClip();
-				        clip.open(audioStream);
-				        clip.start();  // Iniciar reproducción
-				    } catch (Exception e) {
-				        e.printStackTrace();  // Manejar excepciones
-				    }
-				}
+				
 			});
 			panelCesped.add(espacio); // añado el boton creado al panel
 		}
@@ -311,5 +298,19 @@ public class Simulacionv1 extends JFrame{
 		setVisible(true);
 		this.mapaFinal = mapaFinal;
 		setLocationRelativeTo(null);
+	}
+	public static void reproducirSonido(String ruta) {
+		try {
+	        // Cargar el archivo de sonido
+	        File archivoSonido = new File(ruta);
+	        AudioInputStream audioStream = AudioSystem.getAudioInputStream(archivoSonido);
+
+	        // Preparar y reproducir el sonido
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioStream);
+	        clip.start();  // Iniciar reproducción
+	    } catch (Exception e) {
+	        e.printStackTrace();  // Manejar excepciones
+	    }
 	}
 }
