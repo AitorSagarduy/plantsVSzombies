@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -36,7 +35,6 @@ import javax.swing.event.ListSelectionListener;
 
 import domain.Planta;
 import domain.Zombie;
-import gui.Simulacionv1.BackgroundPanel;
 
 public class Simulacionv2 extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -73,11 +71,11 @@ public class Simulacionv2 extends JFrame{
 				// lo casteo para tener sus metodos
 	            Zombie planta = (Zombie) value;
 	            // hago que se muestre el nombre
-	            setText(""); // solo muestra el nombre
+	            setText(planta.getNombre()); // solo muestra el nombre
 	            // pruebo a ponerle un icono con el metodo getIconoPlanta
 	            etiqueta.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 	            try {
-	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(Ajustes.resolucionx()/7, Ajustes.resolucionx()/7, Image.SCALE_SMOOTH))); //le pongo un icono 
+	            	setIcon(new ImageIcon(getBuferedimagePlanta(planta).getScaledInstance(50, 50, Image.SCALE_SMOOTH))); //le pongo un icono 
 				} catch (IOException e) {
 					// si no lo encuentra esntonces saco el error por consola
 					e.printStackTrace();
@@ -115,7 +113,7 @@ public class Simulacionv2 extends JFrame{
 		// dandole una planta me devulve su icono que deberia estar en imagenes
 		try {
 			// Leo la imagen en imagenLeer 
-			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + zombie.getTipo() + ".png"));
+			BufferedImage imagenLeer = ImageIO.read(new File("src/imagenes/" + zombie.getTipo() + "PNG.png"));
 			return imagenLeer;
 		} catch (Exception e) {
 			// Si es que no encuentro la imagen entonces mando la imagen NoIdentificada
@@ -137,13 +135,20 @@ public class Simulacionv2 extends JFrame{
 		DefaultListModel<Zombie> modelo = new DefaultListModel<Zombie>(); // creo un modelo de lista predeterminado parametrizado a el objeto Planta
 		// añado cada planta del arraylist al modelo de lista
 		for(int i = 0; i<zombies.size();i++) {
-			modelo.add(i, zombies.get(i));
+			Zombie planta1 = zombies.get(i);
+			if(zombies.contains(zombies.get(i))) {
+				Zombie planta = new Zombie(planta1.getTipo(), planta1.getNombre()+""+i, planta1.getVida(), planta1.getTmp_atac(), planta1.getDanyo(), planta1.getVelocidad(), planta1.getNivel());
+				modelo.add(i, planta);
+			}else {				
+				modelo.add(i, planta1);
+			}
 		}
 		BackgroundPanel panelFondo = new BackgroundPanel("src/imagenes/PvZ-CALLE.PNG");
 		JList<Zombie> listaPlantas = new JList<Zombie>(modelo); //creo el jlist en base al modelo de lista
-		listaPlantas.setOpaque(false);
-		listaPlantas.setBackground(new Color(0,0,0,0));
+		listaPlantas.setOpaque(true);
+		//listaPlantas.setBackground(new Color(0,0,0,0));
 		listaPlantas.setFixedCellWidth(Ajustes.resolucionx()/5); //le pongo una largura definida
+		listaPlantas.setFixedCellHeight(Ajustes.resoluciony()/10);
 		listaPlantas.setCellRenderer(new Mirenderizado()); // le pongo mi renderizado creado previamente arriba
 		// le pongo un listener para que cuando el usuario este eligiendo una opcion el programa lo escuche y actue
 		listaPlantas.addListSelectionListener(new ListSelectionListener() { 

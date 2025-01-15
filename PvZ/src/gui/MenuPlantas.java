@@ -427,7 +427,7 @@ public class MenuPlantas extends JFrame{
 		     				
 		     				try {
 		     					//Modificar la planta segun el nombre y luego con el numero de la posicion del arraylist coger sus datos de la bd para modificarlos
-								gestorbd.Level_updater_P(planta.getNombre(), gestorbd.getPlantas().get(posicion).getVida()+25,gestorbd.getPlantas().get(posicion).getTmp_atac()-1,gestorbd.getPlantas().get(posicion).getDanyo()+50,gestorbd.getPlantas().get(posicion).getRango()+1,gestorbd.getPlantas().get(posicion).getNivel()+1);
+								gestorbd.Level_updater_P(planta.getNombre(), gestorbd.getPlantas().get(posicion).getVida()+25,gestorbd.getPlantas().get(posicion).getTmp_atac(),gestorbd.getPlantas().get(posicion).getDanyo()+50,gestorbd.getPlantas().get(posicion).getRango(),gestorbd.getPlantas().get(posicion).getNivel()+1);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();

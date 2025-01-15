@@ -1,9 +1,7 @@
 package Main;
 
 import java.sql.SQLException;
-
 import javax.swing.SwingUtilities;
-
 import db.GestorBD;
 import gui.MenuInicial;
 
