@@ -30,9 +30,7 @@ public class SelectAlmanaque2 extends JFrame{
 		
 		GestorBD gestorBD = new GestorBD();
         ArrayList<Planta> lol = gestorBD.getPlantasTienda();
-        System.out.println("esta abajo bro");
-        System.out.println(lol);
-		
+
 		JPanel central = new JPanel();
 		central.setLayout(new BorderLayout());
 		add(central);
@@ -88,7 +86,6 @@ public class SelectAlmanaque2 extends JFrame{
 		zombies.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Zombie> sig = new ArrayList<Zombie>();
 		        AlmanaqueZUser ventana = new AlmanaqueZUser(gestorBD.getZombies());
 		        ventana.setLocationRelativeTo(null);
 		        dispose();
