@@ -125,7 +125,7 @@ public class Simulacionv2 extends JFrame{
 	// creo la ventana
 	public Simulacionv2(HashMap<ArrayList<Integer>, Planta> mapaFinal1, ArrayList<Zombie> resultadoZ, ArrayList<Planta> plantas) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setResizable(false);
 		setTitle("ventana de simulacion");
 		
 		this.mapaFinalPlanta = mapaFinal1;
