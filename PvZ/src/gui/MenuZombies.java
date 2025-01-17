@@ -140,7 +140,7 @@ public class MenuZombies extends JFrame{
         	boolean parar = false;
         	for (String nombreplanta : posibleszombies) {
         		if(zombie.getTipo().contains(nombreplanta)) {
-        			plantadireccionimagen = "src/imagenes/" + zombie.getTipo() + ".png";
+        			plantadireccionimagen = "src/imagenes/" + zombie.getTipo().replaceAll("[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]", "") + ".png";
         			parar = true;
         			break;
         		} else {

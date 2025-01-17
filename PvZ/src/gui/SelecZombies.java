@@ -172,7 +172,7 @@ public class SelecZombies extends JFrame {
 						int cantidad = modeloSelec.getCantidades().get(i);
 						if (cantidad == 6) {
 							JOptionPane.showMessageDialog(SelecZombies.this,
-									"No puedes añadir mas de 5 plantas iguales", "Error", JOptionPane.ERROR_MESSAGE);
+									"No puedes añadir mas de 5 zombies iguales", "Error", JOptionPane.ERROR_MESSAGE);
 							modeloSelec.restarCantidad(i);
 							zombiesj.remove(plantaSeleccionada);
 							return;
