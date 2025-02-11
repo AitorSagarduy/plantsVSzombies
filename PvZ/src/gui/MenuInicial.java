@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -73,6 +74,7 @@ public class MenuInicial extends JFrame {
         JButton bCreditos = createButton("CREDITOS"); // boton de creditos
         JButton bTienda = createButton("TIENDA");  // boton de tienda
         JButton bAlmanaque = createButton("ALMANAQUE"); // boton de almanaque 
+        JButton bMinijuegos = createButton("MINIJUEGOS"); // boton de minijuegos
         gbc.fill = GridBagConstraints.HORIZONTAL;  // Para que los botones ocupen todo el ancho disponible
         gbc.insets = new java.awt.Insets(10, 10, 10, 10); // Separación entre los botones
 
@@ -94,8 +96,12 @@ public class MenuInicial extends JFrame {
         gbc.gridy = 4; //f4
         botonPanel.add(bAjustes, gbc);
         
-        gbc.gridy = 5; //f4
+        gbc.gridy = 5; //f5
         botonPanel.add(bCreditos, gbc);
+        
+        gbc.gridy = 6; //f6
+        botonPanel.add(bMinijuegos, gbc);
+        
         
         // Añadir el panel de botones al fondoPanel
         fondoPanel.add(botonPanel);
@@ -215,7 +221,31 @@ public class MenuInicial extends JFrame {
 					}
                 }
             });
+        }else if (text.equals("MINIJUEGOS")) {
+        	button.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					List<String> minijuegos = List.of(
+				            "plantanueces", "plantapon", "apocalipsis", 
+				            "coming_soon", "coming_soon", "coming_soon",
+				            "coming_soon", "coming_soon", "coming_soon",
+				            "coming_soon", "coming_soon", "coming_soon"
+				        );
+					new Minijuegos(minijuegos);
+					dispose();
+					player.stopPlaying();
+					try {
+						bdgei.updateCoins(Main.solespublic, Main.cerebrospublic);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					
+					
+				}
+			});
         }
+        
         
 
         return button;
