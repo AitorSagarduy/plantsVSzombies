@@ -1,5 +1,5 @@
 
-<h3 align=center>Plants VS Zombies: Java Edition</h3>
+<h3 align=center>Plants vs Zombies: Java Edition</h3>
 
 <h2 align=center>AitorSagarduy : Almanaque y Tienda</h2>
 <h2 align=center>Redecorau : Tablas de Seleccion y Alamanaque</h2>
