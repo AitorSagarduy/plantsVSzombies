@@ -8,4 +8,4 @@
 
 <img src="http://drive.google.com/thumbnail?id=1TLDYApju0KvYUOnvQeMqf7OeFDkNWAjJ&sz=w1000">
 
-<p align=center>Todos los derechos de autor van dirigidos a PopCap Games</p>
+<p align=center>Todos los derechos de autor van dirigidos a PopCap Games y Electronic Arts</p>
