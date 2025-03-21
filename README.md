@@ -6,7 +6,7 @@
 <h3 align=center> r2213432: Simulador Batalla</h3>
 <h3 align=center> WhiteCatMaster: BD y Menu </h3>
 
-<h3 align=center> Versión hecha en Java del aclamado juego "Plants vs Zombies". No es port en Java del juego, es una adaptación. </h3>
+<p align=center>Versión hecha en Java del aclamado juego "Plants vs Zombies". No es port en Java del juego, es una adaptación.</p>
 
 <img src="http://drive.google.com/thumbnail?id=1TLDYApju0KvYUOnvQeMqf7OeFDkNWAjJ&sz=w1000">
 
